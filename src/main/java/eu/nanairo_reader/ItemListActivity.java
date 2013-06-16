@@ -15,6 +15,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.TextView;
 import eu.nanairo_reader.bean.Item;
+import eu.nanairo_reader.service.RssService;
 
 public class ItemListActivity extends RoboListActivity {
 	@Inject
