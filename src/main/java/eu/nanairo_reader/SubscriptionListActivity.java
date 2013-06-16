@@ -25,7 +25,7 @@ public class SubscriptionListActivity extends RoboListActivity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.main);
+		setContentView(R.layout.subscription_list);
 
 		List<Subscription> list = this.rssService.getSubscriptionList();
 		ListAdapter adapter = new ListAdapter(getApplicationContext(), list);

@@ -24,7 +24,7 @@ public class ItemListActivity extends RoboListActivity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.main);
+		setContentView(R.layout.item_list);
 
 		List<Item> list = this.rssService.getItemList();
 		ListAdapter adapter = new ListAdapter(getApplicationContext(), list);
