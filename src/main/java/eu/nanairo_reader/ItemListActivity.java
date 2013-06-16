@@ -6,6 +6,7 @@ import javax.inject.Inject;
 
 import roboguice.activity.RoboListActivity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +16,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.TextView;
 import eu.nanairo_reader.bean.Item;
+import eu.nanairo_reader.bean.Subscription;
 import eu.nanairo_reader.service.RssService;
 
 public class ItemListActivity extends RoboListActivity {
@@ -26,7 +28,9 @@ public class ItemListActivity extends RoboListActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.item_list);
 
-		List<Item> list = this.rssService.getItemList();
+		Intent intent = getIntent();
+		Subscription subscription = (Subscription) intent.getSerializableExtra("subscription");
+		List<Item> list = this.rssService.getItemList(subscription.getUrl());
 		ListAdapter adapter = new ListAdapter(getApplicationContext(), list);
 
 		setListAdapter(adapter);

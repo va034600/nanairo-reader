@@ -1,11 +1,16 @@
 package eu.nanairo_reader.bean;
 
+import java.io.Serializable;
+
 /**
  * 
  * @author eisakuu
  * 
  */
-public class Subscription {
+public class Subscription implements Serializable {
+	/***/
+	private static final long serialVersionUID = 1L;
+
 	/***/
 	private String title;
 

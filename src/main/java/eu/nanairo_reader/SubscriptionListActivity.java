@@ -48,15 +48,16 @@ public class SubscriptionListActivity extends RoboListActivity {
 			if (convertView == null) {
 				convertView = mInflater.inflate(R.layout.subscription_row, null);
 			}
-			final Subscription item = this.getItem(position);
-			if (item != null) {
+			final Subscription subscription = this.getItem(position);
+			if (subscription != null) {
 				mTitle = (TextView) convertView.findViewById(R.id.nameText);
-				mTitle.setText(item.getTitle());
+				mTitle.setText(subscription.getTitle());
 				mButton = (Button) convertView.findViewById(R.id.detailButton);
 				mButton.setOnClickListener(new OnClickListener() {
 					public void onClick(View v) {
 						// インテントのインスタンス生成
 						Intent intent = new Intent(SubscriptionListActivity.this, ItemListActivity.class);
+						intent.putExtra("subscription", subscription);
 						// 次画面のアクティビティ起動
 						startActivity(intent);
 					}
