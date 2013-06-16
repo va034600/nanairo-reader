@@ -28,7 +28,9 @@ public class RssServiceImpl implements RssService {
 		List<Item> list = new ArrayList<Item>();
 
 		Item item1 = new Item();
-		item1.setTitle("Yahoo");
+		item1.setTitle("6月16日(日)");
+		item1.setContent("bbb<br>aa");
+		item1.setLink("http://tbn17.com/archives/1764915.html");
 		list.add(item1);
 
 		Item item2 = new Item();

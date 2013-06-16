@@ -15,7 +15,10 @@ public class Item implements Serializable {
 	private String title;
 
 	/***/
-	private String url;
+	private String content;
+
+	/***/
+	private String link;
 
 	public String getTitle() {
 		return title;
@@ -25,11 +28,19 @@ public class Item implements Serializable {
 		this.title = title;
 	}
 
-	public String getUrl() {
-		return url;
+	public String getContent() {
+		return content;
 	}
 
-	public void setUrl(String url) {
-		this.url = url;
+	public void setContent(String content) {
+		this.content = content;
+	}
+
+	public String getLink() {
+		return link;
+	}
+
+	public void setLink(String link) {
+		this.link = link;
 	}
 }

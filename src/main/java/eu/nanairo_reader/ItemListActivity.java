@@ -57,6 +57,9 @@ public class ItemListActivity extends RoboListActivity {
 				mButton = (Button) convertView.findViewById(R.id.detailButton);
 				mButton.setOnClickListener(new OnClickListener() {
 					public void onClick(View v) {
+						Intent intent = new Intent(ItemListActivity.this, ItemActivity.class);
+						intent.putExtra("item", item);
+						startActivity(intent);
 					}
 				});
 			}
