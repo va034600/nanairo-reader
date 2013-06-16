@@ -2,4 +2,5 @@
 <resources>
     <string name="hello">ようこそ、七色リーダー!!</string>
     <string name="app_name">nanairo-reader 七色リーダー</string>
+<string name="detail">詳細</string>
 </resources>
