@@ -19,7 +19,6 @@ public class ItemActivity extends RoboActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.item);
 
-
 		Intent intent = getIntent();
 		Item item = (Item) intent.getSerializableExtra("item");
 
