@@ -29,12 +29,14 @@ public class RssServiceImpl implements RssService {
 
 		Item item1 = new Item();
 		item1.setTitle("6月16日(日)");
-		item1.setContent("bbb<br>aa");
 		item1.setLink("http://tbn17.com/archives/1764915.html");
+		item1.setContent("bbb<br>aa<br>aa<br>aa<br>aa<br>aa<br>aa<br>aa<br>aa<br>aa<br>aa<br>aa<br>aa<br>aa<br>aa<br>aa<br>aa<br>aa<br>aaaa<br>aa<br>aa<br>aa<br>aa<br>aa<br>aa<br>aa<br>aa<br>aa<br>aa");
 		list.add(item1);
 
 		Item item2 = new Item();
 		item2.setTitle("Google");
+		item2.setLink("http://tbn17.com/archives/1764915.html");
+		item2.setContent("bbb<br>aa");
 		list.add(item2);
 
 		if("http://matome.naver.jp/feed/hot".equals(url)){

@@ -1,19 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:orientation="vertical" >
+    android:layout_height="fill_parent" >
 
-    <WebView
-        android:id="@+id/content"
+    <LinearLayout
+        android:id="@+id/LinearLayout"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
 
-    <TextView
-        android:id="@+id/link"
-        android:layout_width="fill_parent"
-        android:layout_height="20dp"
-        android:autoLink="web">
-    </TextView>
-    
-</LinearLayout>
+        <WebView
+            android:id="@+id/content"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:isScrollContainer="false" />
+
+        <TextView
+            android:id="@+id/link"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:autoLink="web">
+        </TextView>
+    </LinearLayout>
+
+</ScrollView>
