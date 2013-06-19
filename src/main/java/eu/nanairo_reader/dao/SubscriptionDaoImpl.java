@@ -17,6 +17,7 @@ public class SubscriptionDaoImpl extends BaseDaoImpl implements SubscriptionDao 
 		while (cursor.moveToNext()) {
 			Subscription subscription = new Subscription();
 
+			subscription.setId(cursor.getInt(cursor.getColumnIndex("ID")));
 			subscription.setTitle(cursor.getString(cursor.getColumnIndex("TITLE")));
 			subscription.setUrl(cursor.getString(cursor.getColumnIndex("URL")));
 

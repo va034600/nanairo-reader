@@ -30,7 +30,7 @@ public class ItemListActivity extends RoboListActivity {
 
 		Intent intent = getIntent();
 		Subscription subscription = (Subscription) intent.getSerializableExtra("subscription");
-		List<Item> list = this.rssService.getItemList(subscription.getUrl());
+		List<Item> list = this.rssService.getItemList(subscription.getId());
 		ListAdapter adapter = new ListAdapter(getApplicationContext(), list);
 
 		setListAdapter(adapter);

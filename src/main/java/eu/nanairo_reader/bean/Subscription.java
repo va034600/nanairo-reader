@@ -12,6 +12,9 @@ public class Subscription implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	/***/
+	private int id;
+
+	/***/
 	private String title;
 
 	/***/
@@ -31,5 +34,13 @@ public class Subscription implements Serializable {
 
 	public void setUrl(String url) {
 		this.url = url;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 }

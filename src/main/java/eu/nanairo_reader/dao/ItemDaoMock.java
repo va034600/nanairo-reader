@@ -7,7 +7,7 @@ import eu.nanairo_reader.bean.Item;
 
 public class ItemDaoMock implements ItemDao {
 	@Override
-	public List<Item> getList(String url) {
+	public List<Item> getList(int id) {
 		List<Item> list = new ArrayList<Item>();
 
 		Item item1 = new Item();
@@ -22,7 +22,7 @@ public class ItemDaoMock implements ItemDao {
 		item2.setContent("bbb<br>aa");
 		list.add(item2);
 
-		if("http://matome.naver.jp/feed/hot".equals(url)){
+		if(1 == id){
 			Item item3 = new Item();
 			item3.setTitle("y");
 			list.add(item3);

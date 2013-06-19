@@ -21,7 +21,7 @@ public class RssServiceImpl implements RssService {
 	}
 
 	@Override
-	public List<Item> getItemList(String url) {
-		return this.itemDao.getList(url);
+	public List<Item> getItemList(int id) {
+		return this.itemDao.getList(id);
 	}
 }
