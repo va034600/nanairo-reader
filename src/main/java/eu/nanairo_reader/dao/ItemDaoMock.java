@@ -6,6 +6,7 @@ import java.util.List;
 import eu.nanairo_reader.bean.Item;
 
 public class ItemDaoMock implements ItemDao {
+	@Override
 	public List<Item> getList(String url) {
 		List<Item> list = new ArrayList<Item>();
 

@@ -6,6 +6,7 @@ import java.util.List;
 import eu.nanairo_reader.bean.Subscription;
 
 public class SubscriptionDaoImpl implements SubscriptionDao {
+	@Override
 	public List<Subscription> getList() {
 		List<Subscription> list = new ArrayList<Subscription>();
 
