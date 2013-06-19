@@ -21,7 +21,7 @@ import eu.nanairo_reader.service.RssService;
 
 public class ItemListActivity extends RoboListActivity {
 	@Inject
-	RssService rssService;
+	private RssService rssService;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {

@@ -1,19 +1,13 @@
 package eu.nanairo_reader;
 
-import javax.inject.Inject;
-
 import roboguice.activity.RoboActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.webkit.WebView;
 import android.widget.TextView;
 import eu.nanairo_reader.bean.Item;
-import eu.nanairo_reader.service.RssService;
 
 public class ItemActivity extends RoboActivity {
-	@Inject
-	RssService rssService;
-
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
