@@ -5,9 +5,12 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
+	private static final String DATABASE_NAME = "nanairo.db";
+	private static final int DATABASE_VERSION = 1;
+
 	public DatabaseHelper(Context context) {
 		// ストレージ(ローカルファイル)にDBを作成
-		super(context, "nanairo.db", null, 1);
+		super(context, DATABASE_NAME, null, DATABASE_VERSION);
 	}
 
 	@Override
@@ -19,6 +22,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		sql += "URL TEXT";
 		sql += ");";
 		db.execSQL(sql);
+
+		// TODO 今だけ
+		db.execSQL("INSERT INTO SUBSCRIPTION (TITLE, URL) VALUES('注目ま','http://matome.naver.jp/feed/hot');");
+		db.execSQL("INSERT INTO SUBSCRIPTION (TITLE, URL) VALUES('TBN','http://tbn17.com/index.rdf');");
 	}
 
 	@Override

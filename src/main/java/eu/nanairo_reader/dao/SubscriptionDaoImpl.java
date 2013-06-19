@@ -3,6 +3,8 @@ package eu.nanairo_reader.dao;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.database.Cursor;
+import eu.nanairo_reader.SubscriptionListActivity;
 import eu.nanairo_reader.bean.Subscription;
 
 public class SubscriptionDaoImpl implements SubscriptionDao {
@@ -10,15 +12,20 @@ public class SubscriptionDaoImpl implements SubscriptionDao {
 	public List<Subscription> getList() {
 		List<Subscription> list = new ArrayList<Subscription>();
 
-		Subscription google = new Subscription();
-		google.setTitle("注目まとめ（総合） - NAVER まとめ");
-		google.setUrl("http://matome.naver.jp/feed/hot");
-		list.add(google);
+		//TODO dao base クラス作成
+		String[] columns = { "ID", "TITLE", "URL" };
+		Cursor cursor = SubscriptionListActivity.db.query("SUBSCRIPTION", columns, null, null, null, null, "ID");
 
-		Subscription yahoo = new Subscription();
-		yahoo.setTitle("TBN　-Today's Best News-");
-		yahoo.setUrl("http://tbn17.com/index.rdf");
-		list.add(yahoo);
+		while (cursor.moveToNext()) {
+			Subscription subscription = new Subscription();
+
+			subscription.setTitle(cursor.getString(cursor.getColumnIndex("TITLE")));
+			subscription.setUrl(cursor.getString(cursor.getColumnIndex("URL")));
+
+			list.add(subscription);
+		}
+
+		cursor.close();
 
 		return list;
 	}
