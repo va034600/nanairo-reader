@@ -10,9 +10,6 @@ public class NanairoApplication extends Application {
 	// データベースの宣言
 	public static SQLiteDatabase db;
 
-	public NanairoApplication() {
-	}
-
 	@Override
 	public void onCreate() {
 		super.onCreate();
