@@ -4,17 +4,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.database.Cursor;
-import eu.nanairo_reader.SubscriptionListActivity;
 import eu.nanairo_reader.bean.Subscription;
 
-public class SubscriptionDaoImpl implements SubscriptionDao {
+public class SubscriptionDaoImpl extends BaseDaoImpl implements SubscriptionDao {
 	@Override
 	public List<Subscription> getList() {
 		List<Subscription> list = new ArrayList<Subscription>();
 
-		//TODO dao base クラス作成
 		String[] columns = { "ID", "TITLE", "URL" };
-		Cursor cursor = SubscriptionListActivity.db.query("SUBSCRIPTION", columns, null, null, null, null, "ID");
+		Cursor cursor = super.db.query("SUBSCRIPTION", columns, null, null, null, null, "ID");
 
 		while (cursor.moveToNext()) {
 			Subscription subscription = new Subscription();

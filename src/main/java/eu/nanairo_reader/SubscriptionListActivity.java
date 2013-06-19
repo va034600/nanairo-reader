@@ -7,7 +7,6 @@ import javax.inject.Inject;
 import roboguice.activity.RoboListActivity;
 import android.content.Context;
 import android.content.Intent;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,29 +21,16 @@ import eu.nanairo_reader.service.RssService;
 public class SubscriptionListActivity extends RoboListActivity {
 	@Inject
 	private RssService rssService;
-	// データベースヘルパーの作成
-	private DatabaseHelper helper = new DatabaseHelper(this);
-	// データベースの宣言
-	public static SQLiteDatabase db;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.subscription_list);
 
-		// データベースをオープン
-		db = helper.getWritableDatabase();
-
 		List<Subscription> list = this.rssService.getSubscriptionList();
 		ListAdapter adapter = new ListAdapter(getApplicationContext(), list);
 
 		setListAdapter(adapter);
-	}
-
-	@Override
-	public void onDestroy() {
-		super.onDestroy();
-		helper.close();
 	}
 
 	class ListAdapter extends ArrayAdapter<Subscription> {
