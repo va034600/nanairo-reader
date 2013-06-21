@@ -1,4 +1,4 @@
-package eu.nanairo_reader.dao;
+package eu.nanairo_reader.data.dao;
 
 import android.database.sqlite.SQLiteDatabase;
 import eu.nanairo_reader.NanairoApplication;

@@ -1,22 +1,22 @@
-package eu.nanairo_reader.dao;
+package eu.nanairo_reader.data.dao;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import eu.nanairo_reader.bean.Subscription;
+import eu.nanairo_reader.data.entity.SubscriptionEntity;
 
 public class SubscriptionDaoMock implements SubscriptionDao {
 	@Override
-	public List<Subscription> getList() {
-		List<Subscription> list = new ArrayList<Subscription>();
+	public List<SubscriptionEntity> getList() {
+		List<SubscriptionEntity> list = new ArrayList<SubscriptionEntity>();
 
-		Subscription subscription1 = new Subscription();
+		SubscriptionEntity subscription1 = new SubscriptionEntity();
 		subscription1.setId(1);
 		subscription1.setTitle("注目まとめ（総合） - NAVER まとめ");
 		subscription1.setUrl("http://matome.naver.jp/feed/hot");
 		list.add(subscription1);
 
-		Subscription subscription2 = new Subscription();
+		SubscriptionEntity subscription2 = new SubscriptionEntity();
 		subscription2.setId(2);
 		subscription2.setTitle("TBN　-Today's Best News-");
 		subscription2.setUrl("http://tbn17.com/index.rdf");

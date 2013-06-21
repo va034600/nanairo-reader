@@ -1,4 +1,4 @@
-package eu.nanairo_reader.bean;
+package eu.nanairo_reader.data.entity;
 
 import java.io.Serializable;
 
@@ -7,7 +7,7 @@ import java.io.Serializable;
  * @author eisakuu
  * 
  */
-public class Item implements Serializable {
+public class ItemEntity implements Serializable {
 	/***/
 	private static final long serialVersionUID = 1L;
 

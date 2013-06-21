@@ -4,10 +4,10 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import eu.nanairo_reader.bean.Item;
-import eu.nanairo_reader.bean.Subscription;
-import eu.nanairo_reader.dao.ItemDao;
-import eu.nanairo_reader.dao.SubscriptionDao;
+import eu.nanairo_reader.data.dao.ItemDao;
+import eu.nanairo_reader.data.dao.SubscriptionDao;
+import eu.nanairo_reader.data.entity.ItemEntity;
+import eu.nanairo_reader.data.entity.SubscriptionEntity;
 
 public class RssServiceImpl implements RssService {
 	@Inject
@@ -16,12 +16,12 @@ public class RssServiceImpl implements RssService {
 	@Inject
 	private ItemDao itemDao;
 
-	public List<Subscription> getSubscriptionList() {
+	public List<SubscriptionEntity> getSubscriptionList() {
 		return this.subscriptionDao.getList();
 	}
 
 	@Override
-	public List<Item> getItemList(int id) {
+	public List<ItemEntity> getItemList(int id) {
 		return this.itemDao.getList(id);
 	}
 }

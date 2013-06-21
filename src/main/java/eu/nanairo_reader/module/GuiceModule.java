@@ -2,11 +2,11 @@ package eu.nanairo_reader.module;
 
 import com.google.inject.AbstractModule;
 
-import eu.nanairo_reader.dao.ItemDao;
-import eu.nanairo_reader.dao.ItemDaoMock;
-import eu.nanairo_reader.dao.SubscriptionDao;
-import eu.nanairo_reader.dao.SubscriptionDaoImpl;
-import eu.nanairo_reader.dao.SubscriptionDaoMock;
+import eu.nanairo_reader.data.dao.ItemDao;
+import eu.nanairo_reader.data.dao.ItemDaoMock;
+import eu.nanairo_reader.data.dao.SubscriptionDao;
+import eu.nanairo_reader.data.dao.SubscriptionDaoImpl;
+import eu.nanairo_reader.data.dao.SubscriptionDaoMock;
 import eu.nanairo_reader.service.RssService;
 import eu.nanairo_reader.service.RssServiceImpl;
 

@@ -15,7 +15,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.TextView;
-import eu.nanairo_reader.bean.Subscription;
+import eu.nanairo_reader.data.entity.SubscriptionEntity;
 import eu.nanairo_reader.service.RssService;
 
 public class SubscriptionListActivity extends RoboListActivity {
@@ -27,19 +27,19 @@ public class SubscriptionListActivity extends RoboListActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.subscription_list);
 
-		List<Subscription> list = this.rssService.getSubscriptionList();
+		List<SubscriptionEntity> list = this.rssService.getSubscriptionList();
 		ListAdapter adapter = new ListAdapter(getApplicationContext(), list);
 
 		setListAdapter(adapter);
 	}
 
-	class ListAdapter extends ArrayAdapter<Subscription> {
+	class ListAdapter extends ArrayAdapter<SubscriptionEntity> {
 
 		private LayoutInflater mInflater;
 		private TextView mTitle;
 		private Button mButton;
 
-		public ListAdapter(Context context, List<Subscription> objects) {
+		public ListAdapter(Context context, List<SubscriptionEntity> objects) {
 			super(context, 0, objects);
 			mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		}
@@ -48,7 +48,7 @@ public class SubscriptionListActivity extends RoboListActivity {
 			if (convertView == null) {
 				convertView = mInflater.inflate(R.layout.subscription_row, null);
 			}
-			final Subscription subscription = this.getItem(position);
+			final SubscriptionEntity subscription = this.getItem(position);
 			if (subscription != null) {
 				mTitle = (TextView) convertView.findViewById(R.id.nameText);
 				mTitle.setText(subscription.getTitle());

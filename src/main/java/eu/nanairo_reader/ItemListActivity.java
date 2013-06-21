@@ -15,8 +15,8 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.TextView;
-import eu.nanairo_reader.bean.Item;
-import eu.nanairo_reader.bean.Subscription;
+import eu.nanairo_reader.data.entity.ItemEntity;
+import eu.nanairo_reader.data.entity.SubscriptionEntity;
 import eu.nanairo_reader.service.RssService;
 
 public class ItemListActivity extends RoboListActivity {
@@ -29,19 +29,19 @@ public class ItemListActivity extends RoboListActivity {
 		setContentView(R.layout.item_list);
 
 		Intent intent = getIntent();
-		Subscription subscription = (Subscription) intent.getSerializableExtra("subscription");
-		List<Item> list = this.rssService.getItemList(subscription.getId());
+		SubscriptionEntity subscription = (SubscriptionEntity) intent.getSerializableExtra("subscription");
+		List<ItemEntity> list = this.rssService.getItemList(subscription.getId());
 		ListAdapter adapter = new ListAdapter(getApplicationContext(), list);
 
 		setListAdapter(adapter);
 	}
 
-	class ListAdapter extends ArrayAdapter<Item> {
+	class ListAdapter extends ArrayAdapter<ItemEntity> {
 		private LayoutInflater mInflater;
 		private TextView mTitle;
 		private Button mButton;
 
-		public ListAdapter(Context context, List<Item> objects) {
+		public ListAdapter(Context context, List<ItemEntity> objects) {
 			super(context, 0, objects);
 			mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		}
@@ -50,7 +50,7 @@ public class ItemListActivity extends RoboListActivity {
 			if (convertView == null) {
 				convertView = mInflater.inflate(R.layout.subscription_row, null);
 			}
-			final Item item = this.getItem(position);
+			final ItemEntity item = this.getItem(position);
 			if (item != null) {
 				mTitle = (TextView) convertView.findViewById(R.id.nameText);
 				mTitle.setText(item.getTitle());
