@@ -37,6 +37,7 @@ public class SubscriptionListActivity extends RoboListActivity {
 
 		private LayoutInflater mInflater;
 		private TextView mTitle;
+		private TextView mCount;
 		private Button mButton;
 
 		public ListAdapter(Context context, List<Subscription> objects) {
@@ -52,6 +53,8 @@ public class SubscriptionListActivity extends RoboListActivity {
 			if (subscription != null) {
 				mTitle = (TextView) convertView.findViewById(R.id.nameText);
 				mTitle.setText(subscription.getTitle());
+				mCount = (TextView) convertView.findViewById(R.id.countText);
+				mCount.setText(Integer.toString(subscription.getCount()));
 				mButton = (Button) convertView.findViewById(R.id.detailButton);
 				mButton.setOnClickListener(new OnClickListener() {
 					public void onClick(View v) {
