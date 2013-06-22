@@ -2,11 +2,11 @@ package eu.nanairo_reader.service;
 
 import java.util.List;
 
-import eu.nanairo_reader.data.entity.ItemEntity;
-import eu.nanairo_reader.data.entity.SubscriptionEntity;
+import eu.nanairo_reader.bean.Item;
+import eu.nanairo_reader.bean.Subscription;
 
 public interface RssService {
-	List<SubscriptionEntity> getSubscriptionList();
+	List<Subscription> getSubscriptionList();
 
-	List<ItemEntity> getItemList(int id);
+	List<Item> getItemList(int id);
 }

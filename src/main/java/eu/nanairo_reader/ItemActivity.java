@@ -5,7 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.webkit.WebView;
 import android.widget.TextView;
-import eu.nanairo_reader.data.entity.ItemEntity;
+import eu.nanairo_reader.bean.Item;
 
 public class ItemActivity extends RoboActivity {
 	@Override
@@ -14,7 +14,7 @@ public class ItemActivity extends RoboActivity {
 		setContentView(R.layout.item);
 
 		Intent intent = getIntent();
-		ItemEntity item = (ItemEntity) intent.getSerializableExtra("item");
+		Item item = (Item) intent.getSerializableExtra("item");
 
 		WebView contentTextView = (WebView) findViewById(R.id.content);
 		contentTextView.loadDataWithBaseURL("about:blank", item.getContent(), "text/html", "utf-8", null);
