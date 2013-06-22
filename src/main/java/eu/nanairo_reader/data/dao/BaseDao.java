@@ -6,7 +6,7 @@ import java.util.List;
 public interface BaseDao<ENTITY extends Serializable, KEY extends Serializable> {
 	ENTITY findByPrimaryKey(KEY key);
 
-	List<ENTITY> findList(ENTITY entity);
+	List<ENTITY> findList(ENTITY parameter);
 
 	int add(ENTITY entity);
 

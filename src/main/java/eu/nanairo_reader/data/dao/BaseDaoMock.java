@@ -11,7 +11,7 @@ public class BaseDaoMock<ENTITY extends Serializable, KEY extends Serializable> 
 	}
 
 	@Override
-	public List<ENTITY> findList(ENTITY entity) {
+	public List<ENTITY> findList(ENTITY parameter) {
 		// TODO 自動生成されたメソッド・スタブ
 		return null;
 	}

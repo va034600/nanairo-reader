@@ -7,6 +7,11 @@ import eu.nanairo_reader.data.entity.ItemEntity;
 
 public class ItemDaoImpl extends BaseDaoImpl<ItemEntity, Integer> implements ItemDao {
 	@Override
+	protected ItemEntity getEntity() {
+		return new ItemEntity();
+	}
+
+	@Override
 	public List<ItemEntity> getList(int id) {
 		List<ItemEntity> list = new ArrayList<ItemEntity>();
 
