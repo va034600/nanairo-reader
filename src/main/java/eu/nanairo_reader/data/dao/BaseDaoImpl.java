@@ -1,11 +1,12 @@
 package eu.nanairo_reader.data.dao;
 
+import java.io.Serializable;
 import java.util.List;
 
 import android.database.sqlite.SQLiteDatabase;
 import eu.nanairo_reader.NanairoApplication;
 
-public class BaseDaoImpl<ENTITY extends java.io.Serializable> implements BaseDao<ENTITY> {
+public class BaseDaoImpl<ENTITY extends Serializable, KEY extends Serializable> implements BaseDao<ENTITY, KEY> {
 	/***/
 	protected SQLiteDatabase db;
 
@@ -15,13 +16,13 @@ public class BaseDaoImpl<ENTITY extends java.io.Serializable> implements BaseDao
 	}
 
 	@Override
-	public ENTITY findByPrimaryKey(ENTITY key) {
+	public ENTITY findByPrimaryKey(KEY key) {
 		// TODO 自動生成されたメソッド・スタブ
 		return null;
 	}
 
 	@Override
-	public List<ENTITY> findList(ENTITY key) {
+	public List<ENTITY> findList(ENTITY entity) {
 		// TODO 自動生成されたメソッド・スタブ
 		return null;
 	}

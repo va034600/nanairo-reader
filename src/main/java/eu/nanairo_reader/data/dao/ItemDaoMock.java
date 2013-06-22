@@ -5,7 +5,7 @@ import java.util.List;
 
 import eu.nanairo_reader.data.entity.ItemEntity;
 
-public class ItemDaoMock extends BaseDaoMock<ItemEntity> implements ItemDao {
+public class ItemDaoMock extends BaseDaoMock<ItemEntity, Integer> implements ItemDao {
 	@Override
 	public List<ItemEntity> getList(int id) {
 		List<ItemEntity> list = new ArrayList<ItemEntity>();
