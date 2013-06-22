@@ -1,14 +1,11 @@
 package eu.nanairo_reader.data.entity;
 
-import java.io.Serializable;
-
 /**
  * 
  * @author eisakuu
  * 
  */
-@SuppressWarnings("serial")
-public class ItemEntity implements Serializable {
+public class ItemEntity {
 	/***/
 	private Integer id;
 

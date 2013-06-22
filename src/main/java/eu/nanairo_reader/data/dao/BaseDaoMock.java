@@ -1,9 +1,8 @@
 package eu.nanairo_reader.data.dao;
 
-import java.io.Serializable;
 import java.util.List;
 
-public class BaseDaoMock<ENTITY extends Serializable, KEY extends Serializable> implements BaseDao<ENTITY, KEY> {
+public class BaseDaoMock<ENTITY, KEY> implements BaseDao<ENTITY, KEY> {
 	@Override
 	public ENTITY findByPrimaryKey(KEY key) {
 		// TODO 自動生成されたメソッド・スタブ

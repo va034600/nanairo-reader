@@ -1,6 +1,5 @@
 package eu.nanairo_reader.data.dao;
 
-import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
@@ -10,7 +9,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import eu.nanairo_reader.NanairoApplication;
 
-public abstract class BaseDaoImpl<ENTITY extends Serializable, KEY extends Serializable> implements BaseDao<ENTITY, KEY> {
+public abstract class BaseDaoImpl<ENTITY, KEY> implements BaseDao<ENTITY, KEY> {
 	/***/
 	protected SQLiteDatabase db;
 
