@@ -13,6 +13,36 @@ public abstract class BaseDaoImpl<ENTITY, KEY> implements BaseDao<ENTITY, KEY> {
 	/***/
 	protected SQLiteDatabase db;
 
+	/***/
+	private Field[] fields;
+
+	/***/
+	private String tableName;
+
+	/***/
+	private String[] columns;
+
+	public BaseDaoImpl() {
+		// TODO
+		this.db = NanairoApplication.db;
+
+		Class<?> clazz = createEntity().getClass();
+
+		// table name
+		this.tableName = clazz.getSimpleName();
+		this.tableName = this.tableName.substring(0, tableName.length() - 6);
+
+		// columns
+		this.fields = clazz.getDeclaredFields();
+		this.columns = new String[this.fields.length];
+		for (int i = 0; i < this.fields.length; i++) {
+			// TODO キャメルケースからスネークケースへ変更
+			this.columns[i] = this.fields[i].getName();
+		}
+	}
+
+	abstract protected ENTITY createEntity();
+
 	private Object getValue(Cursor cursor, Field field) {
 		String propertyName = field.getName().toUpperCase(Locale.ENGLISH);
 		int columnIndex = cursor.getColumnIndex(propertyName);
@@ -33,31 +63,6 @@ public abstract class BaseDaoImpl<ENTITY, KEY> implements BaseDao<ENTITY, KEY> {
 		return cursor.getBlob(columnIndex);
 	}
 
-	private String getTableName() {
-		Class<?> clazz = createEntity().getClass();
-		String tableName = clazz.getSimpleName();
-		tableName = tableName.substring(0, tableName.length() - 6);
-		return tableName;
-	}
-
-	private String[] getColumnNames() {
-		Class<?> clazz = createEntity().getClass();
-		Field[] fields = clazz.getDeclaredFields();
-		String[] columns = new String[fields.length];
-		for (int i = 0; i < fields.length; i++) {
-			// TODO キャメルケースからスネークケースへ変更
-			columns[i] = fields[i].getName();
-		}
-		return columns;
-	}
-
-	abstract protected ENTITY createEntity();
-
-	public BaseDaoImpl() {
-		// TODO
-		this.db = NanairoApplication.db;
-	}
-
 	@Override
 	public ENTITY findByPrimaryKey(KEY key) {
 		// TODO 自動生成されたメソッド・スタブ
@@ -68,16 +73,11 @@ public abstract class BaseDaoImpl<ENTITY, KEY> implements BaseDao<ENTITY, KEY> {
 	public List<ENTITY> findList(ENTITY param) {
 		try {
 			List<ENTITY> list = new ArrayList<ENTITY>();
-			Class<?> clazz = createEntity().getClass();
-			Field[] fields = clazz.getDeclaredFields();
 
-			String tableName = getTableName();
-			String[] columns = getColumnNames();
-			Cursor cursor = db.query(tableName, columns, null, null, null, null, null);
-
+			Cursor cursor = db.query(this.tableName, columns, null, null, null, null, null);
 			while (cursor.moveToNext()) {
 				ENTITY entity = createEntity();
-				for (Field field : fields) {
+				for (Field field : this.fields) {
 					field.setAccessible(true);
 					Object value = getValue(cursor, field);
 					field.set(entity, value);
