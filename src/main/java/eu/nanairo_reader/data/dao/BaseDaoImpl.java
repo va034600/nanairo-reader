@@ -33,6 +33,26 @@ public abstract class BaseDaoImpl<ENTITY, KEY> implements BaseDao<ENTITY, KEY> {
 		return cursor.getBlob(columnIndex);
 	}
 
+	private String getTableName() {
+		Class<?> clazz = createEntity().getClass();
+		String tableName = clazz.getSimpleName();
+		tableName = tableName.substring(0, tableName.length() - 6);
+		return tableName;
+	}
+
+	private String[] getColumnNames() {
+		Class<?> clazz = createEntity().getClass();
+		Field[] fields = clazz.getDeclaredFields();
+		String[] columns = new String[fields.length];
+		for (int i = 0; i < fields.length; i++) {
+			// TODO キャメルケースからスネークケースへ変更
+			columns[i] = fields[i].getName();
+		}
+		return columns;
+	}
+
+	abstract protected ENTITY createEntity();
+
 	public BaseDaoImpl() {
 		// TODO
 		this.db = NanairoApplication.db;
@@ -44,27 +64,20 @@ public abstract class BaseDaoImpl<ENTITY, KEY> implements BaseDao<ENTITY, KEY> {
 		return null;
 	}
 
-	abstract protected ENTITY getEntity();
-
 	@Override
 	public List<ENTITY> findList(ENTITY param) {
 		List<ENTITY> list = new ArrayList<ENTITY>();
 		try {
-			Class<?> clazz = getEntity().getClass();
+			Class<?> clazz = createEntity().getClass();
 			Field[] fields = clazz.getDeclaredFields();
-			String[] columns = new String[fields.length];
-			for (int i = 0; i < fields.length; i++) {
-				columns[i] = fields[i].getName();
-			}
 
-			String tableName = clazz.getSimpleName();
-			tableName = tableName.substring(0, tableName.length() - 6);
+			String tableName = getTableName();
+			String[] columns = getColumnNames();
 			Cursor cursor = db.query(tableName, columns, null, null, null, null, null);
 
 			while (cursor.moveToNext()) {
-				ENTITY entity = getEntity();
-				for (int i = 0; i < columns.length; i++) {
-					Field field = fields[i];
+				ENTITY entity = createEntity();
+				for (Field field : fields) {
 					field.setAccessible(true);
 					Object value = getValue(cursor, field);
 					field.set(entity, value);
@@ -76,7 +89,7 @@ public abstract class BaseDaoImpl<ENTITY, KEY> implements BaseDao<ENTITY, KEY> {
 			cursor.close();
 		} catch (Exception e) {
 			// TODO 自動生成された catch ブロック
-			e.printStackTrace();
+			throw new RuntimeException("error", e);
 		}
 
 		return list;

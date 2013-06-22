@@ -6,7 +6,7 @@ import eu.nanairo_reader.data.entity.SubscriptionEntity;
 
 public class SubscriptionDaoImpl extends BaseDaoImpl<SubscriptionEntity, Integer> implements SubscriptionDao {
 	@Override
-	protected SubscriptionEntity getEntity() {
+	protected SubscriptionEntity createEntity() {
 		return new SubscriptionEntity();
 	}
 
