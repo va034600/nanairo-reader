@@ -66,8 +66,8 @@ public abstract class BaseDaoImpl<ENTITY, KEY> implements BaseDao<ENTITY, KEY> {
 
 	@Override
 	public List<ENTITY> findList(ENTITY param) {
-		List<ENTITY> list = new ArrayList<ENTITY>();
 		try {
+			List<ENTITY> list = new ArrayList<ENTITY>();
 			Class<?> clazz = createEntity().getClass();
 			Field[] fields = clazz.getDeclaredFields();
 
@@ -87,12 +87,11 @@ public abstract class BaseDaoImpl<ENTITY, KEY> implements BaseDao<ENTITY, KEY> {
 			}
 
 			cursor.close();
+			return list;
 		} catch (Exception e) {
 			// TODO 自動生成された catch ブロック
 			throw new RuntimeException("error", e);
 		}
-
-		return list;
 	}
 
 	@Override
