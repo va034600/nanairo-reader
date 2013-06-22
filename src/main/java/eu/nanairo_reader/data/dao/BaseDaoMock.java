@@ -2,18 +2,7 @@ package eu.nanairo_reader.data.dao;
 
 import java.util.List;
 
-import android.database.sqlite.SQLiteDatabase;
-import eu.nanairo_reader.NanairoApplication;
-
-public class BaseDaoImpl<ENTITY extends java.io.Serializable> implements BaseDao<ENTITY> {
-	/***/
-	protected SQLiteDatabase db;
-
-	public BaseDaoImpl() {
-		// TODO
-		this.db = NanairoApplication.db;
-	}
-
+public class BaseDaoMock<ENTITY extends java.io.Serializable> implements BaseDao<ENTITY> {
 	@Override
 	public ENTITY findByPrimaryKey(ENTITY key) {
 		// TODO 自動生成されたメソッド・スタブ

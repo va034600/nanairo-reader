@@ -6,13 +6,13 @@ import java.util.List;
 import android.database.Cursor;
 import eu.nanairo_reader.data.entity.SubscriptionEntity;
 
-public class SubscriptionDaoImpl extends BaseDaoImpl implements SubscriptionDao {
+public class SubscriptionDaoImpl extends BaseDaoImpl<SubscriptionEntity> implements SubscriptionDao {
 	@Override
 	public List<SubscriptionEntity> getList() {
 		List<SubscriptionEntity> list = new ArrayList<SubscriptionEntity>();
 
-		String[] columns = { "ID", "TITLE", "URL" };
-		Cursor cursor = super.db.query("SUBSCRIPTION", columns, null, null, null, null, "ID");
+		final String[] COLUMNS = { "ID", "TITLE", "URL" };
+		Cursor cursor = super.db.query("SUBSCRIPTION", COLUMNS, null, null, null, null, "ID");
 
 		while (cursor.moveToNext()) {
 			SubscriptionEntity subscription = new SubscriptionEntity();

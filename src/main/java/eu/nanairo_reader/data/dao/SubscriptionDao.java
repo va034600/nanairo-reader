@@ -4,6 +4,6 @@ import java.util.List;
 
 import eu.nanairo_reader.data.entity.SubscriptionEntity;
 
-public interface SubscriptionDao {
+public interface SubscriptionDao extends BaseDao<SubscriptionEntity> {
 	List<SubscriptionEntity> getList();
 }

@@ -5,7 +5,7 @@ import java.util.List;
 
 import eu.nanairo_reader.data.entity.SubscriptionEntity;
 
-public class SubscriptionDaoMock implements SubscriptionDao {
+public class SubscriptionDaoMock extends BaseDaoMock<SubscriptionEntity> implements SubscriptionDao {
 	@Override
 	public List<SubscriptionEntity> getList() {
 		List<SubscriptionEntity> list = new ArrayList<SubscriptionEntity>();
