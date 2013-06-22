@@ -10,6 +10,9 @@ import java.io.Serializable;
 @SuppressWarnings("serial")
 public class ItemEntity implements Serializable {
 	/***/
+	private Integer id;
+
+	/***/
 	private String title;
 
 	/***/
@@ -40,5 +43,13 @@ public class ItemEntity implements Serializable {
 
 	public void setLink(String link) {
 		this.link = link;
+	}
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
 	}
 }

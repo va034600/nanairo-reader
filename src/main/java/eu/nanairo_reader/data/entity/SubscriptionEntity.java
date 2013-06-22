@@ -10,7 +10,7 @@ import java.io.Serializable;
 @SuppressWarnings("serial")
 public class SubscriptionEntity implements Serializable {
 	/***/
-	private int id;
+	private Integer id;
 
 	/***/
 	private String title;
@@ -34,11 +34,11 @@ public class SubscriptionEntity implements Serializable {
 		this.url = url;
 	}
 
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 }
