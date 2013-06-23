@@ -36,6 +36,8 @@ public abstract class BaseDaoImpl<ENTITY, KEY> implements BaseDao<ENTITY, KEY> {
 		this.fields = clazz.getDeclaredFields();
 		this.columns = new String[this.fields.length];
 		for (int i = 0; i < this.fields.length; i++) {
+			Field field = this.fields[i];
+			field.setAccessible(true);
 			// TODO キャメルケースからスネークケースへ変更
 			this.columns[i] = this.fields[i].getName();
 		}
@@ -74,11 +76,36 @@ public abstract class BaseDaoImpl<ENTITY, KEY> implements BaseDao<ENTITY, KEY> {
 		try {
 			List<ENTITY> list = new ArrayList<ENTITY>();
 
-			Cursor cursor = db.query(this.tableName, columns, null, null, null, null, null);
+			String where = "";
+			List<String> whereArgList = new ArrayList<String>();
+			if(param != null){
+				for (int i = 0; i < fields.length; i++) {
+					Field field = this.fields[i];
+					Object object = field.get(param);
+					if (object == null) {
+						continue;
+					}
+					
+					//
+					String column = this.columns[i];
+					where += column + " = ? AND";
+					
+					//
+					String value = object.toString();
+					whereArgList.add(value);
+				}
+			}
+
+			if(where.length() != 0){
+				where = where.substring(0, where.length() - 4);
+			}
+
+			String[] whereArgs = whereArgList.toArray(new String[0]);
+
+			Cursor cursor = db.query(this.tableName, columns, where, whereArgs, null, null, null);
 			while (cursor.moveToNext()) {
 				ENTITY entity = createEntity();
 				for (Field field : this.fields) {
-					field.setAccessible(true);
 					Object value = getValue(cursor, field);
 					field.set(entity, value);
 				}
