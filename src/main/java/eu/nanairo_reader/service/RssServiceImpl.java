@@ -27,8 +27,8 @@ public class RssServiceImpl implements RssService {
 			subscription.setId(entity.getId());
 			subscription.setTitle(entity.getTitle());
 			subscription.setUrl(entity.getUrl());
-			//TODO
-			subscription.setCount(3);
+			int midokuCount = this.itemDao.getMidokuCount(entity.getId());
+			subscription.setMidokuCount(midokuCount);
 
 			result.add(subscription);
 		}

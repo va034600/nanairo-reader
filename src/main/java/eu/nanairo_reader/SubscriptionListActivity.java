@@ -53,8 +53,8 @@ public class SubscriptionListActivity extends RoboListActivity {
 			if (subscription != null) {
 				mTitle = (TextView) convertView.findViewById(R.id.nameText);
 				mTitle.setText(subscription.getTitle());
-				mCount = (TextView) convertView.findViewById(R.id.countText);
-				mCount.setText(Integer.toString(subscription.getCount()));
+				mCount = (TextView) convertView.findViewById(R.id.midokuCountText);
+				mCount.setText(Integer.toString(subscription.getMidokuCount()));
 				mButton = (Button) convertView.findViewById(R.id.detailButton);
 				mButton.setOnClickListener(new OnClickListener() {
 					public void onClick(View v) {

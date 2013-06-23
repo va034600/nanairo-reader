@@ -18,6 +18,9 @@ public class ItemEntity {
 	/***/
 	private String link;
 
+	/***/
+	private Integer midoku;
+
 	public String getTitle() {
 		return title;
 	}
@@ -48,5 +51,13 @@ public class ItemEntity {
 
 	public void setId(Integer id) {
 		this.id = id;
+	}
+
+	public Integer getMidoku() {
+		return midoku;
+	}
+
+	public void setMidoku(Integer midoku) {
+		this.midoku = midoku;
 	}
 }

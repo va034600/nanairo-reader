@@ -19,7 +19,7 @@ public class Subscription implements Serializable {
 	private String url;
 
 	/***/
-	private int count;
+	private int midokuCount;
 
 	public String getTitle() {
 		return title;
@@ -45,11 +45,11 @@ public class Subscription implements Serializable {
 		this.id = id;
 	}
 
-	public int getCount() {
-		return count;
+	public int getMidokuCount() {
+		return midokuCount;
 	}
 
-	public void setCount(int count) {
-		this.count = count;
+	public void setMidokuCount(int midokuCount) {
+		this.midokuCount = midokuCount;
 	}
 }
