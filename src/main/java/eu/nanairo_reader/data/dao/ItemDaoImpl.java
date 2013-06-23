@@ -17,7 +17,7 @@ public class ItemDaoImpl extends BaseDaoImpl<ItemEntity, Integer> implements Ite
 
 	@Override
 	public int getMidokuCount(Integer id) {
-		// TODO 自動生成されたメソッド・スタブ
-		return 3;
+		// TODO 直接countできるメソッド用意
+		return getList(id).size();
 	}
 }
