@@ -14,13 +14,13 @@ public abstract class BaseDaoImpl<ENTITY, KEY> implements BaseDao<ENTITY, KEY> {
 	protected SQLiteDatabase db;
 
 	/***/
-	protected Field[] fields;
+	private Field[] fields;
 
 	/***/
-	protected String tableName;
+	private String tableName;
 
 	/***/
-	protected String[] columns;
+	private String[] columns;
 
 	public BaseDaoImpl() {
 		// TODO
@@ -45,7 +45,7 @@ public abstract class BaseDaoImpl<ENTITY, KEY> implements BaseDao<ENTITY, KEY> {
 
 	abstract protected ENTITY createEntity();
 
-	protected Object getValue(Cursor cursor, Field field) {
+	private Object getValue(Cursor cursor, Field field) {
 		String propertyName = field.getName().toUpperCase(Locale.ENGLISH);
 		int columnIndex = cursor.getColumnIndex(propertyName);
 		Class<?> type = field.getType();
@@ -74,51 +74,68 @@ public abstract class BaseDaoImpl<ENTITY, KEY> implements BaseDao<ENTITY, KEY> {
 	@Override
 	public List<ENTITY> findList(ENTITY param) {
 		try {
-			List<ENTITY> list = new ArrayList<ENTITY>();
-
 			String where = "";
 			List<String> whereArgList = new ArrayList<String>();
-			if(param != null){
+			if (param != null) {
 				for (int i = 0; i < this.fields.length; i++) {
 					Field field = this.fields[i];
 					Object object = field.get(param);
 					if (object == null) {
 						continue;
 					}
-					
+
 					//
 					String column = this.columns[i];
 					where += column + " = ? AND";
-					
+
 					//
 					String value = object.toString();
 					whereArgList.add(value);
 				}
 			}
 
-			if(where.length() != 0){
+			if (where.length() != 0) {
 				where = where.substring(0, where.length() - 4);
 			}
 
 			String[] whereArgs = whereArgList.toArray(new String[0]);
+			return queryForList(this.tableName, this.columns, where, whereArgs);
+		} catch (Exception e) {
+			// TODO 自動生成された catch ブロック
+			throw new RuntimeException("error", e);
+		}
+	}
 
-			Cursor cursor = db.query(this.tableName, this.columns, where, whereArgs, null, null, null);
+	private List<ENTITY> cursorToList(Cursor cursor) {
+		try {
+			List<ENTITY> list = new ArrayList<ENTITY>();
 			while (cursor.moveToNext()) {
 				ENTITY entity = createEntity();
 				for (Field field : this.fields) {
 					Object value = getValue(cursor, field);
 					field.set(entity, value);
 				}
-
 				list.add(entity);
 			}
-
-			cursor.close();
 			return list;
 		} catch (Exception e) {
 			// TODO 自動生成された catch ブロック
 			throw new RuntimeException("error", e);
 		}
+	}
+
+	protected List<ENTITY> queryForList(String table, String[] cs, String where, String[] whereArgs) {
+		Cursor cursor = db.query(table, cs, where, whereArgs, null, null, null);
+		List<ENTITY> list = cursorToList(cursor);
+		cursor.close();
+		return list;
+	}
+
+	protected List<ENTITY> queryForList(String sql, String[] selectionArgs) {
+		Cursor cursor = db.rawQuery(sql, selectionArgs);
+		List<ENTITY> list = cursorToList(cursor);
+		cursor.close();
+		return list;
 	}
 
 	@Override
