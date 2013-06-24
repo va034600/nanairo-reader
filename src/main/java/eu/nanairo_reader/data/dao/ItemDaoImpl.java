@@ -25,7 +25,14 @@ public class ItemDaoImpl extends BaseDaoImpl<ItemEntity, Integer> implements Ite
 
 	@Override
 	public int getMidokuCount(Integer id) {
-		// TODO 直接countできるメソッド用意
-		return getList(id).size();
+		String sql = "";
+		sql += "SELECT ITEM.* ";
+		sql += "FROM ITEM INNER JOIN SUBSCRIPTION_ITEM ";
+		sql += "ON ITEM.ID = SUBSCRIPTION_ITEM.ITEM_ID ";
+		sql += "WHERE SUBSCRIPTION_ITEM.SUBSCRIPTION_ID = ? AND ITEM.MIDOKU = 1";
+		String[] selectionArgs = { Integer.toString(id) };
+		//TODO 自動でやりたい
+		List<ItemEntity> list = queryForList(sql, selectionArgs);
+		return list.size();
 	}
 }

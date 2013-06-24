@@ -60,7 +60,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		// TODO 今だけ
 		db.execSQL("INSERT INTO ITEM (TITLE, CONTENT, LINK, MIDOKU) VALUES('6月16日(日)', 'bbb<br>aa<br>aa<br>aa<br>aa<br>aa<br>aa<br>aa<br>aa<br>aa<br>aa<br>aa<br>aa<br>aa<br>aa<br>aa<br>aa<br>aa<br>aaaa<br>aa<br>aa<br>aa<br>aa<br>aa<br>aa<br>aa<br>aa<br>aa<br>aa', 'http://tbn17.com/archives/1764915.html', 1);");
 		db.execSQL("INSERT INTO ITEM (TITLE, CONTENT, LINK, MIDOKU) VALUES('6月17日(月)', 'bbb<br>aa', 'http://tbn17.com/archives/1764915.html', 0);");
-		db.execSQL("INSERT INTO ITEM (TITLE, CONTENT, LINK, MIDOKU) VALUES('3', 'b<br>a', 'http://matome.naver.jp/odai/2137178139495010801', 1);");
+		db.execSQL("INSERT INTO ITEM (TITLE, CONTENT, LINK, MIDOKU) VALUES('3', 'b<br>a', 'http://matome.naver.jp/odai/2137178139495010801', 0);");
 	}
 
 	@Override
