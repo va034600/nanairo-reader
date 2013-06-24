@@ -3,3 +3,4 @@
 !.gitignore
 /bin/
 /gen/
+**/.DS_Store

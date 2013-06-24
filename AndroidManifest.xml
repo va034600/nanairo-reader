@@ -4,6 +4,8 @@
     android:versionCode="1"
     android:versionName="0.0.1-SNAPSHOT" >
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:name="eu.nanairo_reader.NanairoApplication"
         android:icon="@drawable/icon"
