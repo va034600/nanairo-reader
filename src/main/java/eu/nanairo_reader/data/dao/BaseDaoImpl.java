@@ -11,7 +11,7 @@ import eu.nanairo_reader.NanairoApplication;
 
 public abstract class BaseDaoImpl<ENTITY, KEY> implements BaseDao<ENTITY, KEY> {
 	/***/
-	protected SQLiteDatabase db;
+	private SQLiteDatabase db;
 
 	/***/
 	private Field[] fields;
@@ -136,6 +136,18 @@ public abstract class BaseDaoImpl<ENTITY, KEY> implements BaseDao<ENTITY, KEY> {
 		List<ENTITY> list = cursorToList(cursor);
 		cursor.close();
 		return list;
+	}
+
+	protected int queryForInt(String sql, String[] selectionArgs) {
+		Cursor cursor = db.rawQuery(sql, selectionArgs);
+		if(cursor.moveToNext()){
+			//TODO なかったときの扱いはruntime exception?
+			cursor.close();
+			return 0;
+		}
+		int result = cursor.getInt(0);
+		cursor.close();
+		return result;
 	}
 
 	@Override
