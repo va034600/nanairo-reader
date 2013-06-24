@@ -14,13 +14,13 @@ public abstract class BaseDaoImpl<ENTITY, KEY> implements BaseDao<ENTITY, KEY> {
 	protected SQLiteDatabase db;
 
 	/***/
-	private Field[] fields;
+	protected Field[] fields;
 
 	/***/
-	private String tableName;
+	protected String tableName;
 
 	/***/
-	private String[] columns;
+	protected String[] columns;
 
 	public BaseDaoImpl() {
 		// TODO
@@ -45,7 +45,7 @@ public abstract class BaseDaoImpl<ENTITY, KEY> implements BaseDao<ENTITY, KEY> {
 
 	abstract protected ENTITY createEntity();
 
-	private Object getValue(Cursor cursor, Field field) {
+	protected Object getValue(Cursor cursor, Field field) {
 		String propertyName = field.getName().toUpperCase(Locale.ENGLISH);
 		int columnIndex = cursor.getColumnIndex(propertyName);
 		Class<?> type = field.getType();
@@ -79,7 +79,7 @@ public abstract class BaseDaoImpl<ENTITY, KEY> implements BaseDao<ENTITY, KEY> {
 			String where = "";
 			List<String> whereArgList = new ArrayList<String>();
 			if(param != null){
-				for (int i = 0; i < fields.length; i++) {
+				for (int i = 0; i < this.fields.length; i++) {
 					Field field = this.fields[i];
 					Object object = field.get(param);
 					if (object == null) {
@@ -102,7 +102,7 @@ public abstract class BaseDaoImpl<ENTITY, KEY> implements BaseDao<ENTITY, KEY> {
 
 			String[] whereArgs = whereArgList.toArray(new String[0]);
 
-			Cursor cursor = db.query(this.tableName, columns, where, whereArgs, null, null, null);
+			Cursor cursor = db.query(this.tableName, this.columns, where, whereArgs, null, null, null);
 			while (cursor.moveToNext()) {
 				ENTITY entity = createEntity();
 				for (Field field : this.fields) {
