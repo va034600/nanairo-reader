@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="hello">ようこそ、七色リーダー!!</string>
+
     <string name="app_name">nanairo-reader 七色リーダー</string>
-<string name="detail">詳細</string>
+    <string name="detail">詳細</string>
+    <string name="update">更新</string>
+    <string name="all_check">全チェック</string>
+    
 </resources>
