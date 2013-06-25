@@ -140,7 +140,7 @@ public abstract class BaseDaoImpl<ENTITY, KEY> implements BaseDao<ENTITY, KEY> {
 
 	protected int queryForInt(String sql, String[] selectionArgs) {
 		Cursor cursor = db.rawQuery(sql, selectionArgs);
-		if(cursor.moveToNext()){
+		if(!cursor.moveToNext()){
 			//TODO なかったときの扱いはruntime exception?
 			cursor.close();
 			return 0;
