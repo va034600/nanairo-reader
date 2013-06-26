@@ -1,7 +1,10 @@
 package eu.nanairo_reader.module;
 
+import android.database.sqlite.SQLiteDatabase;
+
 import com.google.inject.AbstractModule;
 
+import eu.nanairo_reader.NanairoApplication;
 import eu.nanairo_reader.data.dao.ItemDao;
 import eu.nanairo_reader.data.dao.ItemDaoImpl;
 import eu.nanairo_reader.data.dao.ItemDaoMock;
@@ -21,11 +24,20 @@ public class GuiceModule extends AbstractModule {
 		// TODO
 		boolean flag = true;
 		if (flag) {
-			bind(SubscriptionDao.class).to(SubscriptionDaoImpl.class);
-			bind(ItemDao.class).to(ItemDaoImpl.class);
+			// TODO
+			SQLiteDatabase db = NanairoApplication.db;
+
+			SubscriptionDaoImpl subscriptionDaoImpl = new SubscriptionDaoImpl();
+			subscriptionDaoImpl.setDb(db);
+			bind(SubscriptionDao.class).toInstance(subscriptionDaoImpl);
+
+			ItemDaoImpl itemDaoImpl = new ItemDaoImpl();
+			itemDaoImpl.setDb(db);
+			bind(ItemDao.class).toInstance(itemDaoImpl);
 		} else {
 			bind(SubscriptionDao.class).to(SubscriptionDaoMock.class);
 			bind(ItemDao.class).to(ItemDaoMock.class);
 		}
+
 	}
 }

@@ -7,7 +7,6 @@ import java.util.Locale;
 
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import eu.nanairo_reader.NanairoApplication;
 
 public abstract class BaseDaoImpl<ENTITY, KEY> implements BaseDao<ENTITY, KEY> {
 	/***/
@@ -23,9 +22,6 @@ public abstract class BaseDaoImpl<ENTITY, KEY> implements BaseDao<ENTITY, KEY> {
 	private String[] columns;
 
 	public BaseDaoImpl() {
-		// TODO
-		this.db = NanairoApplication.db;
-
 		Class<?> clazz = createEntity().getClass();
 
 		// table name
@@ -41,6 +37,10 @@ public abstract class BaseDaoImpl<ENTITY, KEY> implements BaseDao<ENTITY, KEY> {
 			// TODO キャメルケースからスネークケースへ変更
 			this.columns[i] = this.fields[i].getName();
 		}
+	}
+
+	public void setDb(SQLiteDatabase db) {
+		this.db = db;
 	}
 
 	abstract protected ENTITY createEntity();
