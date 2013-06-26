@@ -13,29 +13,24 @@ public abstract class BaseDaoImpl<ENTITY, KEY> implements BaseDao<ENTITY, KEY> {
 	private SQLiteDatabase db;
 
 	/***/
-	private Field[] fields;
-
-	/***/
 	private String tableName;
 
 	/***/
 	private String[] columns;
 
 	public BaseDaoImpl() {
-		Class<?> clazz = getEntityClass();
-
-		// table name
-		this.tableName = clazz.getSimpleName();
+		// クラス名からテーブル名を取得
+		// TODO キャメルケースからスネークケースへ変更
+		this.tableName = getEntityClass().getSimpleName();
 		this.tableName = this.tableName.substring(0, tableName.length() - 6);
 
-		// columns
-		this.fields = clazz.getDeclaredFields();
-		this.columns = new String[this.fields.length];
-		for (int i = 0; i < this.fields.length; i++) {
-			Field field = this.fields[i];
-			field.setAccessible(true);
+		// フィールド名から列名を取得
+		Field[] fields = getEntityClass().getDeclaredFields();
+		this.columns = new String[fields.length];
+		for (int i = 0; i < fields.length; i++) {
+			Field field = fields[i];
 			// TODO キャメルケースからスネークケースへ変更
-			this.columns[i] = this.fields[i].getName();
+			this.columns[i] = field.getName();
 		}
 	}
 
@@ -77,8 +72,10 @@ public abstract class BaseDaoImpl<ENTITY, KEY> implements BaseDao<ENTITY, KEY> {
 			String where = "";
 			List<String> whereArgList = new ArrayList<String>();
 			if (param != null) {
-				for (int i = 0; i < this.fields.length; i++) {
-					Field field = this.fields[i];
+				Field[] fields = getEntityClass().getDeclaredFields();
+				for (int i = 0; i < fields.length; i++) {
+					Field field = fields[i];
+					field.setAccessible(true);
 					Object object = field.get(param);
 					if (object == null) {
 						continue;
@@ -142,8 +139,8 @@ public abstract class BaseDaoImpl<ENTITY, KEY> implements BaseDao<ENTITY, KEY> {
 
 	protected int queryForInt(String sql, String[] selectionArgs) {
 		Cursor cursor = db.rawQuery(sql, selectionArgs);
-		if(!cursor.moveToNext()){
-			//TODO なかったときの扱いはruntime exception?
+		if (!cursor.moveToNext()) {
+			// TODO なかったときの扱いはruntime exception?
 			cursor.close();
 			return 0;
 		}
