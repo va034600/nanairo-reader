@@ -4,17 +4,15 @@ import android.app.Application;
 import android.database.sqlite.SQLiteDatabase;
 
 public class NanairoApplication extends Application {
-	private static NanairoApplication instance;
 	// データベースヘルパーの作成
-	private static DatabaseHelper helper;
+	private DatabaseHelper helper;
 	// データベースの宣言
 	public static SQLiteDatabase db;
 
 	@Override
 	public void onCreate() {
 		super.onCreate();
-		instance = this;
-		helper = new DatabaseHelper(instance);
+		helper = new DatabaseHelper(this);
 
 		// データベースをオープン
 		db = helper.getWritableDatabase();
@@ -25,9 +23,4 @@ public class NanairoApplication extends Application {
 		super.onTerminate();
 		helper.close();
 	}
-
-	public static NanairoApplication getInstance() {
-		return instance;
-	}
-
 }
