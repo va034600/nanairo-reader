@@ -22,7 +22,7 @@ public abstract class BaseDaoImpl<ENTITY, KEY> implements BaseDao<ENTITY, KEY> {
 	private String[] columns;
 
 	public BaseDaoImpl() {
-		Class<?> clazz = createEntity().getClass();
+		Class<?> clazz = getEntityClass();
 
 		// table name
 		this.tableName = clazz.getSimpleName();
@@ -43,9 +43,9 @@ public abstract class BaseDaoImpl<ENTITY, KEY> implements BaseDao<ENTITY, KEY> {
 		this.db = db;
 	}
 
-	abstract protected ENTITY createEntity();
+	abstract protected Class<ENTITY> getEntityClass();
 
-	private Object getValue(Cursor cursor, Field field) {
+	private static Object getValue(Cursor cursor, Field field) {
 		String propertyName = field.getName().toUpperCase(Locale.ENGLISH);
 		int columnIndex = cursor.getColumnIndex(propertyName);
 		Class<?> type = field.getType();
@@ -106,12 +106,14 @@ public abstract class BaseDaoImpl<ENTITY, KEY> implements BaseDao<ENTITY, KEY> {
 		}
 	}
 
-	private List<ENTITY> cursorToList(Cursor cursor) {
+	private static <RESULT> List<RESULT> cursorToList(Cursor cursor, Class<RESULT> resultClass) {
 		try {
-			List<ENTITY> list = new ArrayList<ENTITY>();
+			List<RESULT> list = new ArrayList<RESULT>();
 			while (cursor.moveToNext()) {
-				ENTITY entity = createEntity();
-				for (Field field : this.fields) {
+				RESULT entity = resultClass.newInstance();
+				Field[] fields = resultClass.getDeclaredFields();
+				for (Field field : fields) {
+					field.setAccessible(true);
 					Object value = getValue(cursor, field);
 					field.set(entity, value);
 				}
@@ -126,14 +128,14 @@ public abstract class BaseDaoImpl<ENTITY, KEY> implements BaseDao<ENTITY, KEY> {
 
 	protected List<ENTITY> queryForList(String table, String[] cs, String where, String[] whereArgs) {
 		Cursor cursor = db.query(table, cs, where, whereArgs, null, null, null);
-		List<ENTITY> list = cursorToList(cursor);
+		List<ENTITY> list = cursorToList(cursor, getEntityClass());
 		cursor.close();
 		return list;
 	}
 
 	protected List<ENTITY> queryForList(String sql, String[] selectionArgs) {
 		Cursor cursor = db.rawQuery(sql, selectionArgs);
-		List<ENTITY> list = cursorToList(cursor);
+		List<ENTITY> list = cursorToList(cursor, getEntityClass());
 		cursor.close();
 		return list;
 	}
