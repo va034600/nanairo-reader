@@ -19,8 +19,7 @@ public class ItemDaoImpl extends BaseDaoImpl<ItemEntity, Integer> implements Ite
 		sql += "WHERE SUBSCRIPTION_ITEM.SUBSCRIPTION_ID = ?";
 		String[] selectionArgs = { Integer.toString(id) };
 		// TODO 自動でやりたい
-		List<ItemEntity> list = queryForList(sql, selectionArgs);
-		return list;
+		return queryForList(sql, selectionArgs);
 	}
 
 	@Override

@@ -15,23 +15,23 @@ public abstract class BaseDaoImpl<ENTITY, KEY> implements BaseDao<ENTITY, KEY> {
 	/***/
 	private String tableName;
 
-	/***/
-	private String[] columns;
-
 	public BaseDaoImpl() {
 		// クラス名からテーブル名を取得
 		// TODO キャメルケースからスネークケースへ変更
 		this.tableName = getEntityClass().getSimpleName();
 		this.tableName = this.tableName.substring(0, tableName.length() - 6);
+	}
 
-		// フィールド名から列名を取得
-		Field[] fields = getEntityClass().getDeclaredFields();
-		this.columns = new String[fields.length];
+	protected static String[] convertColumns(Class<?> clazz) {
+		// フィールドから列名を取得
+		Field[] fields = clazz.getDeclaredFields();
+		String[] columns = new String[fields.length];
 		for (int i = 0; i < fields.length; i++) {
 			Field field = fields[i];
 			// TODO キャメルケースからスネークケースへ変更
-			this.columns[i] = field.getName();
+			columns[i] = field.getName();
 		}
+		return columns;
 	}
 
 	public void setDb(SQLiteDatabase db) {
@@ -69,6 +69,7 @@ public abstract class BaseDaoImpl<ENTITY, KEY> implements BaseDao<ENTITY, KEY> {
 	@Override
 	public List<ENTITY> findList(ENTITY param) {
 		try {
+			String[] columns = convertColumns(getEntityClass());
 			String where = "";
 			List<String> whereArgList = new ArrayList<String>();
 			if (param != null) {
@@ -82,7 +83,7 @@ public abstract class BaseDaoImpl<ENTITY, KEY> implements BaseDao<ENTITY, KEY> {
 					}
 
 					//
-					String column = this.columns[i];
+					String column = columns[i];
 					where += column + " = ? AND";
 
 					//
@@ -96,14 +97,14 @@ public abstract class BaseDaoImpl<ENTITY, KEY> implements BaseDao<ENTITY, KEY> {
 			}
 
 			String[] whereArgs = whereArgList.toArray(new String[0]);
-			return queryForList(this.tableName, this.columns, where, whereArgs);
+			return queryForList(this.tableName, columns, where, whereArgs);
 		} catch (Exception e) {
 			// TODO 自動生成された catch ブロック
 			throw new RuntimeException("error", e);
 		}
 	}
 
-	private static <RESULT> List<RESULT> cursorToList(Cursor cursor, Class<RESULT> resultClass) {
+	protected static <RESULT> List<RESULT> cursorToList(Cursor cursor, Class<RESULT> resultClass) {
 		try {
 			List<RESULT> list = new ArrayList<RESULT>();
 			while (cursor.moveToNext()) {
