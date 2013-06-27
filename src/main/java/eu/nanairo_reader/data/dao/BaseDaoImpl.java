@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import android.annotation.SuppressLint;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
@@ -17,7 +18,7 @@ public abstract class BaseDaoImpl<ENTITY, KEY> implements BaseDao<ENTITY, KEY> {
 
 	public BaseDaoImpl() {
 		// クラス名からテーブル名を取得
-		// TODO キャメルケースからスネークケースへ変更
+		// TODO スネークケースからキャメルケースへ変更
 		this.tableName = getEntityClass().getSimpleName();
 		this.tableName = this.tableName.substring(0, tableName.length() - 6);
 	}
@@ -28,7 +29,7 @@ public abstract class BaseDaoImpl<ENTITY, KEY> implements BaseDao<ENTITY, KEY> {
 		String[] columns = new String[fields.length];
 		for (int i = 0; i < fields.length; i++) {
 			Field field = fields[i];
-			// TODO キャメルケースからスネークケースへ変更
+			// TODO スネークケースからキャメルケースへ変更
 			columns[i] = field.getName();
 		}
 		return columns;
@@ -104,13 +105,18 @@ public abstract class BaseDaoImpl<ENTITY, KEY> implements BaseDao<ENTITY, KEY> {
 		}
 	}
 
+	@SuppressLint("DefaultLocale")
 	protected static <RESULT> List<RESULT> cursorToList(Cursor cursor, Class<RESULT> resultClass) {
 		try {
 			List<RESULT> list = new ArrayList<RESULT>();
 			while (cursor.moveToNext()) {
 				RESULT entity = resultClass.newInstance();
-				Field[] fields = resultClass.getDeclaredFields();
-				for (Field field : fields) {
+				
+				for(int i = 0; i < cursor.getColumnCount(); i++){
+					String columnName = cursor.getColumnName(i);
+					columnName = columnName.toLowerCase(Locale.ENGLISH);
+					// TODO キャメルケースからスネークケースへ変更
+					Field field = resultClass.getDeclaredField(columnName);
 					field.setAccessible(true);
 					Object value = getValue(cursor, field);
 					field.set(entity, value);
