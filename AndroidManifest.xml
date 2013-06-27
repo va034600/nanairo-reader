@@ -10,7 +10,7 @@
         android:name="eu.nanairo_reader.NanairoApplication"
         android:icon="@drawable/icon"
         android:label="@string/app_name" >
-        <activity android:name=".SubscriptionListActivity" >
+        <activity android:name=".ui.activity.SubscriptionListActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -18,11 +18,11 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ItemListActivity"
+            android:name=".ui.activity.ItemListActivity"
             android:label="@string/app_name" >
         </activity>
         <activity
-            android:name=".ItemActivity"
+            android:name=".ui.activity.ItemActivity"
             android:label="@string/app_name" >
         </activity>
 

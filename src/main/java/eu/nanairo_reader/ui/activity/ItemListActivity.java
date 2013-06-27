@@ -1,4 +1,4 @@
-package eu.nanairo_reader;
+package eu.nanairo_reader.ui.activity;
 
 import java.util.List;
 
@@ -15,6 +15,9 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.TextView;
+import eu.nanairo_reader.R;
+import eu.nanairo_reader.R.id;
+import eu.nanairo_reader.R.layout;
 import eu.nanairo_reader.bean.Item;
 import eu.nanairo_reader.bean.Subscription;
 import eu.nanairo_reader.business.service.RssService;
