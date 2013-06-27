@@ -25,6 +25,8 @@
             android:name=".ItemActivity"
             android:label="@string/app_name" >
         </activity>
+
+        <service android:name=".ui.service.SampleService" />
     </application>
 
 </manifest>

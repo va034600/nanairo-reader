@@ -16,7 +16,8 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.TextView;
 import eu.nanairo_reader.bean.Subscription;
-import eu.nanairo_reader.service.RssService;
+import eu.nanairo_reader.business.service.RssService;
+import eu.nanairo_reader.ui.service.SampleService;
 
 public class SubscriptionListActivity extends RoboListActivity {
 	@Inject
@@ -31,6 +32,16 @@ public class SubscriptionListActivity extends RoboListActivity {
 		ListAdapter adapter = new ListAdapter(getApplicationContext(), list);
 
 		setListAdapter(adapter);
+
+		Button mButton = (Button) findViewById(R.id.android_updateButton);
+		mButton.setOnClickListener(new OnClickListener() {
+			public void onClick(View v) {
+				// サービスクラスを指定したインテントの作成
+				Intent intent = new Intent(SubscriptionListActivity.this, SampleService.class);
+				// サービスの起動
+				startService(intent);
+			}
+		});
 	}
 
 	class ListAdapter extends ArrayAdapter<Subscription> {

@@ -1,4 +1,4 @@
-package eu.nanairo_reader.service;
+package eu.nanairo_reader.business.service;
 
 import java.util.ArrayList;
 import java.util.List;

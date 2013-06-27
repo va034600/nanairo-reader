@@ -5,14 +5,14 @@ import android.database.sqlite.SQLiteDatabase;
 import com.google.inject.AbstractModule;
 
 import eu.nanairo_reader.NanairoApplication;
+import eu.nanairo_reader.business.service.RssService;
+import eu.nanairo_reader.business.service.RssServiceImpl;
 import eu.nanairo_reader.data.dao.ItemDao;
 import eu.nanairo_reader.data.dao.ItemDaoImpl;
 import eu.nanairo_reader.data.dao.ItemDaoMock;
 import eu.nanairo_reader.data.dao.SubscriptionDao;
 import eu.nanairo_reader.data.dao.SubscriptionDaoImpl;
 import eu.nanairo_reader.data.dao.SubscriptionDaoMock;
-import eu.nanairo_reader.service.RssService;
-import eu.nanairo_reader.service.RssServiceImpl;
 
 public class GuiceModule extends AbstractModule {
 	@Override
