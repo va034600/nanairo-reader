@@ -50,18 +50,17 @@ public abstract class BaseDaoImpl<ENTITY, KEY> extends NanairoDaoSupport impleme
 
 			String[] whereArgs = whereArgList.toArray(new String[0]);
 			String tableName = getTableName(getEntityClass());
-			return queryForList(tableName, columns, where, whereArgs);
+
+			String sql = "SELECT * FROM " + tableName;
+			if (where.length() != 0) {
+				sql += " WHERE " + where;
+			}
+
+			return queryForList(sql, whereArgs);
 		} catch (Exception e) {
 			// TODO 自動生成された catch ブロック
 			throw new RuntimeException("error", e);
 		}
-	}
-
-	protected List<ENTITY> queryForList(String table, String[] cs, String where, String[] whereArgs) {
-		Cursor cursor = db.query(table, cs, where, whereArgs, null, null, null);
-		List<ENTITY> list = cursorToList(cursor, getEntityClass());
-		cursor.close();
-		return list;
 	}
 
 	protected List<ENTITY> queryForList(String sql, String[] selectionArgs) {
