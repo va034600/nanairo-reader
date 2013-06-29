@@ -5,9 +5,14 @@
 	<groupId>eu.nanairo-reader</groupId>
 	<artifactId>nanairo-reader</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>apk</packaging>
+	<packaging>pom</packaging>
 	<name>nanairo-reader</name>
 
+   <modules>
+        <module>nanairo-reader-app</module>
+    </modules>
+
+<dependencyManagement>
 	<dependencies>
 		<dependency>
 			<groupId>com.google.android</groupId>
@@ -33,6 +38,7 @@
 			<version>1.0</version>
 		</dependency>
 	</dependencies>
+</dependencyManagement>
 
 	<build>
 		<plugins>

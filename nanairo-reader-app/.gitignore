@@ -1,0 +1,7 @@
+/target/
+/.*
+!.gitignore
+!.travis.yml
+/bin/
+/gen/
+**/.DS_Store
