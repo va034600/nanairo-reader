@@ -3,6 +3,7 @@ package eu.nanairo_reader.data.dao;
 import java.util.ArrayList;
 import java.util.List;
 
+import eu.nanairo.orm.dao.BaseDaoMock;
 import eu.nanairo_reader.data.entity.SubscriptionEntity;
 
 public class SubscriptionDaoMock extends BaseDaoMock<SubscriptionEntity, Integer> implements SubscriptionDao {
