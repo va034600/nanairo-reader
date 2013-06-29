@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-import android.annotation.SuppressLint;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
@@ -105,7 +104,6 @@ public abstract class BaseDaoImpl<ENTITY, KEY> implements BaseDao<ENTITY, KEY> {
 		}
 	}
 
-	@SuppressLint("DefaultLocale")
 	protected static <RESULT> List<RESULT> cursorToList(Cursor cursor, Class<RESULT> resultClass) {
 		try {
 			List<RESULT> list = new ArrayList<RESULT>();
