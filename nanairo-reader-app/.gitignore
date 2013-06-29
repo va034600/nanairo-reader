@@ -1,7 +1,7 @@
-/target/
+target
+bin
+gen
 /.*
 !.gitignore
 !.travis.yml
-/bin/
-/gen/
 **/.DS_Store
