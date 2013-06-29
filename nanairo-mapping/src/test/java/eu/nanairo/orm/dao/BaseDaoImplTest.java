@@ -8,7 +8,7 @@ import org.junit.Test;
 
 public class BaseDaoImplTest {
 	@Test
-	public void testGetMessage_01() throws IOException {
+	public void testConvertColumns_01() throws IOException {
 		String[] columns = BaseDaoImpl.convertColumns(SampleEntity.class);
 		assertEquals("ID", columns[0]);
 		assertEquals("TITLE", columns[1]);
