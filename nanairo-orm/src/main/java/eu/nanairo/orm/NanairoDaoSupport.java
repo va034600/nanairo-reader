@@ -10,7 +10,7 @@ import android.database.sqlite.SQLiteDatabase;
 
 public abstract class NanairoDaoSupport {
 	/***/
-	protected SQLiteDatabase db;
+	private SQLiteDatabase db;
 
 	public NanairoDaoSupport() {
 	}
@@ -21,9 +21,10 @@ public abstract class NanairoDaoSupport {
 
 	/**
 	 * クラス名からテーブル名を取得
+	 * 
 	 * @return テーブル名
 	 */
-	protected static String getTableName(Class<?> entityClass){
+	protected static String getTableName(Class<?> entityClass) {
 		// TODO スネークケースからキャメルケースへ変更
 		String tableName = entityClass.getSimpleName();
 		tableName = tableName.substring(0, tableName.length() - 6);
@@ -70,8 +71,8 @@ public abstract class NanairoDaoSupport {
 
 				for (int i = 0; i < cursor.getColumnCount(); i++) {
 					String columnName = cursor.getColumnName(i);
-					columnName = columnName.toLowerCase(Locale.ENGLISH);
 					// TODO キャメルケースからスネークケースへ変更
+					columnName = columnName.toLowerCase(Locale.ENGLISH);
 					Field field = resultClass.getDeclaredField(columnName);
 					field.setAccessible(true);
 					Object value = getValue(cursor, field);
@@ -85,4 +86,24 @@ public abstract class NanairoDaoSupport {
 			throw new RuntimeException("error", e);
 		}
 	}
+
+	protected <RESULT> List<RESULT> queryForList(Class<RESULT> resultClass, String sql, String[] selectionArgs) {
+		Cursor cursor = db.rawQuery(sql, selectionArgs);
+		List<RESULT> list = cursorToList(cursor, resultClass);
+		cursor.close();
+		return list;
+	}
+
+	protected int queryForInt(String sql, String[] selectionArgs) {
+		Cursor cursor = db.rawQuery(sql, selectionArgs);
+		if (!cursor.moveToNext()) {
+			// TODO なかったときの扱いはruntime exception?
+			cursor.close();
+			return 0;
+		}
+		int result = cursor.getInt(0);
+		cursor.close();
+		return result;
+	}
+
 }

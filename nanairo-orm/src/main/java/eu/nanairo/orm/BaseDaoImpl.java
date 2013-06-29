@@ -4,8 +4,6 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
-import android.database.Cursor;
-
 public abstract class BaseDaoImpl<ENTITY, KEY> extends NanairoDaoSupport implements BaseDao<ENTITY, KEY> {
 	public BaseDaoImpl() {
 	}
@@ -56,30 +54,11 @@ public abstract class BaseDaoImpl<ENTITY, KEY> extends NanairoDaoSupport impleme
 				sql += " WHERE " + where;
 			}
 
-			return queryForList(sql, whereArgs);
+			return queryForList(getEntityClass(), sql, whereArgs);
 		} catch (Exception e) {
 			// TODO 自動生成された catch ブロック
 			throw new RuntimeException("error", e);
 		}
-	}
-
-	protected List<ENTITY> queryForList(String sql, String[] selectionArgs) {
-		Cursor cursor = db.rawQuery(sql, selectionArgs);
-		List<ENTITY> list = cursorToList(cursor, getEntityClass());
-		cursor.close();
-		return list;
-	}
-
-	protected int queryForInt(String sql, String[] selectionArgs) {
-		Cursor cursor = db.rawQuery(sql, selectionArgs);
-		if (!cursor.moveToNext()) {
-			// TODO なかったときの扱いはruntime exception?
-			cursor.close();
-			return 0;
-		}
-		int result = cursor.getInt(0);
-		cursor.close();
-		return result;
 	}
 
 	@Override
