@@ -8,7 +8,7 @@ import org.junit.Test;
 
 import eu.nanairo.orm.BaseDaoImpl;
 
-public class BaseDaoImplTest {
+public class NanairoDaoSupportTest {
 	@Test
 	public void testConvertColumns_01() throws IOException {
 		String[] columns = BaseDaoImpl.convertColumns(SampleEntity.class);
