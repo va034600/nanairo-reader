@@ -10,6 +10,7 @@
 
 	<modules>
 		<module>nanairo-reader-app</module>
+		<module>nanairo-orm</module>
 	</modules>
 
 	<dependencyManagement>

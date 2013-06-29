@@ -13,7 +13,7 @@
 	<dependencies>
 		<dependency>
 			<groupId>eu.nanairo</groupId>
-			<artifactId>nanairo-mapping</artifactId>
+			<artifactId>nanairo-orm</artifactId>
 				<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 
