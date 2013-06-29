@@ -1,6 +1,0 @@
-target
-bin
-gen
-/.*
-!.gitignore
-**/.DS_Store
