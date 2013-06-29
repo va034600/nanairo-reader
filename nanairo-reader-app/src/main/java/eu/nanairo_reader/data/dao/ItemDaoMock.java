@@ -3,7 +3,7 @@ package eu.nanairo_reader.data.dao;
 import java.util.ArrayList;
 import java.util.List;
 
-import eu.nanairo.orm.dao.BaseDaoMock;
+import eu.nanairo.orm.BaseDaoMock;
 import eu.nanairo_reader.data.entity.ItemEntity;
 
 public class ItemDaoMock extends BaseDaoMock<ItemEntity, Integer> implements ItemDao {

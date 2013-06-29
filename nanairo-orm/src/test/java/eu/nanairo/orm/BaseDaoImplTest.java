@@ -1,10 +1,12 @@
-package eu.nanairo.orm.dao;
+package eu.nanairo.orm;
 
 import static org.junit.Assert.assertEquals;
 
 import java.io.IOException;
 
 import org.junit.Test;
+
+import eu.nanairo.orm.BaseDaoImpl;
 
 public class BaseDaoImplTest {
 	@Test

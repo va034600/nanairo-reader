@@ -1,4 +1,4 @@
-package eu.nanairo.orm.dao;
+package eu.nanairo.orm;
 
 import java.util.List;
 
