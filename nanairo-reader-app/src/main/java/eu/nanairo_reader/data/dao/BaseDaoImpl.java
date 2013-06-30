@@ -1,8 +1,15 @@
-package eu.nanairo.orm;
+package eu.nanairo_reader.data.dao;
 
 import java.util.List;
 
-public class BaseDaoMock<ENTITY, KEY> implements BaseDao<ENTITY, KEY> {
+import eu.nanairo.orm.NanairoDaoSupport;
+
+public abstract class BaseDaoImpl<ENTITY, KEY> extends NanairoDaoSupport implements BaseDao<ENTITY, KEY> {
+	public BaseDaoImpl() {
+	}
+
+	abstract protected Class<ENTITY> getEntityClass();
+
 	@Override
 	public ENTITY findByPrimaryKey(KEY key) {
 		// TODO 自動生成されたメソッド・スタブ
@@ -10,9 +17,12 @@ public class BaseDaoMock<ENTITY, KEY> implements BaseDao<ENTITY, KEY> {
 	}
 
 	@Override
-	public List<ENTITY> findList(ENTITY parameter) {
-		// TODO 自動生成されたメソッド・スタブ
-		return null;
+	public List<ENTITY> findList(ENTITY param) {
+		return super.findList(getEntityClass(), param);
+	}
+
+	protected List<ENTITY> queryForList(String sql, String[] selectionArgs) {
+		return super.queryForList(getEntityClass(), sql, selectionArgs);
 	}
 
 	@Override

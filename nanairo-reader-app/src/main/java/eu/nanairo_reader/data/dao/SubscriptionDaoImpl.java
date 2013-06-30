@@ -2,7 +2,6 @@ package eu.nanairo_reader.data.dao;
 
 import java.util.List;
 
-import eu.nanairo.orm.BaseDaoImpl;
 import eu.nanairo_reader.data.entity.SubscriptionEntity;
 
 public class SubscriptionDaoImpl extends BaseDaoImpl<SubscriptionEntity, Integer> implements SubscriptionDao {

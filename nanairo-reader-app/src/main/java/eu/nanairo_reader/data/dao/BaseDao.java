@@ -1,4 +1,4 @@
-package eu.nanairo.orm;
+package eu.nanairo_reader.data.dao;
 
 import java.util.List;
 
