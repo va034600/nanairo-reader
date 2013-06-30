@@ -61,6 +61,10 @@ public abstract class BaseDaoImpl<ENTITY, KEY> extends NanairoDaoSupport impleme
 		}
 	}
 
+	protected List<ENTITY> queryForList(String sql, String[] selectionArgs) {
+		return queryForList(getEntityClass(), sql, selectionArgs);
+	}
+
 	@Override
 	public int add(ENTITY entity) {
 		// TODO 自動生成されたメソッド・スタブ
