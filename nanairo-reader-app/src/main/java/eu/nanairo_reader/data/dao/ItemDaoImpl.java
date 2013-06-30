@@ -31,6 +31,6 @@ public class ItemDaoImpl extends BaseDaoImpl<ItemEntity, Integer> implements Ite
 		sql += "WHERE SUBSCRIPTION_ITEM.SUBSCRIPTION_ID = ? AND ITEM.MIDOKU = 1";
 		String[] selectionArgs = { Integer.toString(id) };
 		// TODO 自動でやりたい
-		return queryForInt(sql, selectionArgs);
+		return getNanairoTemplate().queryForInt(sql, selectionArgs);
 	}
 }

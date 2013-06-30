@@ -18,28 +18,25 @@ public abstract class BaseDaoImpl<ENTITY, KEY> extends NanairoDaoSupport impleme
 
 	@Override
 	public List<ENTITY> findList(ENTITY param) {
-		return super.findList(getEntityClass(), param);
+		return super.getNanairoTemplate().findList(getEntityClass(), param);
 	}
 
 	protected List<ENTITY> queryForList(String sql, String[] selectionArgs) {
-		return super.queryForList(getEntityClass(), sql, selectionArgs);
+		return super.getNanairoTemplate().queryForList(getEntityClass(), sql, selectionArgs);
 	}
 
 	@Override
 	public int add(ENTITY entity) {
-		// TODO 自動生成されたメソッド・スタブ
-		return 0;
+		return super.getNanairoTemplate().add(entity);
 	}
 
 	@Override
 	public int update(ENTITY entity) {
-		// TODO 自動生成されたメソッド・スタブ
-		return 0;
+		return super.getNanairoTemplate().update(entity);
 	}
 
 	@Override
 	public int delete(ENTITY entity) {
-		// TODO 自動生成されたメソッド・スタブ
-		return 0;
+		return super.getNanairoTemplate().delete(entity);
 	}
 }
