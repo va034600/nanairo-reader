@@ -63,7 +63,51 @@ public abstract class NanairoDaoSupport {
 		return cursor.getBlob(columnIndex);
 	}
 
-	protected static <RESULT> List<RESULT> cursorToList(Cursor cursor, Class<RESULT> resultClass) {
+	protected <RESULT> List<RESULT> findList(Class<RESULT> resultClass, RESULT param) {
+		try {
+			String[] columns = convertColumns(resultClass);
+			String where = "";
+			List<String> whereArgList = new ArrayList<String>();
+			if (param != null) {
+				Field[] fields = resultClass.getDeclaredFields();
+				for (int i = 0; i < fields.length; i++) {
+					Field field = fields[i];
+					field.setAccessible(true);
+					Object object = field.get(param);
+					if (object == null) {
+						continue;
+					}
+
+					//
+					String column = columns[i];
+					where += column + " = ? AND";
+
+					//
+					String value = object.toString();
+					whereArgList.add(value);
+				}
+			}
+
+			if (where.length() != 0) {
+				where = where.substring(0, where.length() - 4);
+			}
+
+			String[] whereArgs = whereArgList.toArray(new String[0]);
+			String tableName = getTableName(resultClass);
+
+			String sql = "SELECT * FROM " + tableName;
+			if (where.length() != 0) {
+				sql += " WHERE " + where;
+			}
+
+			return queryForList(resultClass, sql, whereArgs);
+		} catch (Exception e) {
+			// TODO 自動生成された catch ブロック
+			throw new RuntimeException("error", e);
+		}
+	}
+
+	protected static <RESULT> List<RESULT> cursorToList(Class<RESULT> resultClass, Cursor cursor) {
 		try {
 			List<RESULT> list = new ArrayList<RESULT>();
 			while (cursor.moveToNext()) {
@@ -89,7 +133,7 @@ public abstract class NanairoDaoSupport {
 
 	protected <RESULT> List<RESULT> queryForList(Class<RESULT> resultClass, String sql, String[] selectionArgs) {
 		Cursor cursor = db.rawQuery(sql, selectionArgs);
-		List<RESULT> list = cursorToList(cursor, resultClass);
+		List<RESULT> list = cursorToList(resultClass, cursor);
 		cursor.close();
 		return list;
 	}
