@@ -28,23 +28,30 @@ public class RssParsingServiceImpl implements RssParsingService {
 			while (iterator.hasNext()) {
 				FeedItem feedItem = new FeedItem();
 				SyndEntry ent = (SyndEntry) iterator.next();
+
 				feedItem.setTitle(ent.getTitle());
+				feedItem.setAuthor(feed.getAuthor());
+				feedItem.setDescription(feed.getDescription());
+				feedItem.setCopyright(feed.getCopyright());
+				feedItem.setFeedType(feed.getFeedType());
+				feedItem.setUri(feed.getUri());
+				feedItem.setLink(feed.getLink());
 				result.add(feedItem);
 			}
 		} catch (MalformedURLException e) {
-			//TODO
+			// TODO
 			e.printStackTrace();
 			throw new RuntimeException("rss", e);
 		} catch (IllegalArgumentException e) {
-			//TODO
+			// TODO
 			e.printStackTrace();
 			throw new RuntimeException("rss", e);
 		} catch (FeedException e) {
-			//TODO
+			// TODO
 			e.printStackTrace();
 			throw new RuntimeException("rss", e);
 		} catch (IOException e) {
-			//TODO
+			// TODO
 			e.printStackTrace();
 			throw new RuntimeException("rss", e);
 		}

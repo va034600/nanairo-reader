@@ -1,20 +1,17 @@
 package eu.nanairo_reader.ui.service;
 
-import java.util.List;
-
 import javax.inject.Inject;
 
 import roboguice.service.RoboService;
 import android.content.Intent;
 import android.os.IBinder;
 import android.widget.Toast;
-import eu.nanairo_reader.bean.FeedItem;
-import eu.nanairo_reader.business.service.RssParsingService;
+import eu.nanairo_reader.business.service.RssService;
 
 // Serviceクラスを拡張したクラスを作成
 public class SampleService extends RoboService {
 	@Inject
-	private RssParsingService rssParsingService;
+	private RssService rssService;
 
 	@Override
 	public IBinder onBind(Intent intent) {
@@ -30,11 +27,7 @@ public class SampleService extends RoboService {
 		Thread t = new Thread() {
 			public void run() {
 				try {
-					String rss = "http://matome.naver.jp/feed/hot";
-					List<FeedItem> feedItemList = SampleService.this.rssParsingService.getItemList(rss);
-					for (FeedItem feedItem : feedItemList) {
-						//Toast.makeText(SampleService.this, feedItem.getTitle(), Toast.LENGTH_SHORT).show();
-					}
+					SampleService.this.rssService.storeItems();
 
 					// 10秒間スレッドをスリープ
 					Thread.sleep(10 * 1000);

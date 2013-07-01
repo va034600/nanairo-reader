@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import eu.nanairo_reader.bean.FeedItem;
 import eu.nanairo_reader.bean.Item;
 import eu.nanairo_reader.bean.Subscription;
 import eu.nanairo_reader.data.dao.ItemDao;
@@ -18,6 +19,9 @@ public class RssServiceImpl implements RssService {
 
 	@Inject
 	private ItemDao itemDao;
+
+	@Inject
+	private RssParsingService rssParsingService;
 
 	public List<Subscription> getSubscriptionList() {
 		List<Subscription> result = new ArrayList<Subscription>();
@@ -48,5 +52,17 @@ public class RssServiceImpl implements RssService {
 			result.add(item);
 		}
 		return result;
+	}
+
+	@Override
+	public void storeItems() {
+		String rss = "http://matome.naver.jp/feed/hot";
+		List<FeedItem> feedItemList = this.rssParsingService.getItemList(rss);
+		for (FeedItem feedItem : feedItemList) {
+			ItemEntity itemEntity = new ItemEntity();
+			itemEntity.setTitle(feedItem.getTitle());
+			//TODO
+			this.itemDao.add(itemEntity);
+		}
 	}
 }

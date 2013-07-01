@@ -7,7 +7,7 @@ public interface BaseDao<ENTITY, KEY> {
 
 	List<ENTITY> findList(ENTITY parameter);
 
-	int add(ENTITY entity);
+	long add(ENTITY entity);
 
 	int update(ENTITY entity);
 

@@ -9,4 +9,6 @@ public interface RssService {
 	List<Subscription> getSubscriptionList();
 
 	List<Item> getItemList(int id);
+
+	void storeItems();
 }

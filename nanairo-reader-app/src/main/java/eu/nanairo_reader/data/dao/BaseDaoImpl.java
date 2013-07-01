@@ -26,8 +26,8 @@ public abstract class BaseDaoImpl<ENTITY, KEY> extends NanairoDaoSupport impleme
 	}
 
 	@Override
-	public int add(ENTITY entity) {
-		return super.getNanairoTemplate().add(entity);
+	public long add(ENTITY entity) {
+		return super.getNanairoTemplate().add(getEntityClass(), entity);
 	}
 
 	@Override

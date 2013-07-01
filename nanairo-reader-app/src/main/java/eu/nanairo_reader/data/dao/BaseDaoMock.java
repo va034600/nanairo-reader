@@ -16,7 +16,7 @@ public class BaseDaoMock<ENTITY, KEY> implements BaseDao<ENTITY, KEY> {
 	}
 
 	@Override
-	public int add(ENTITY entity) {
+	public long add(ENTITY entity) {
 		// TODO 自動生成されたメソッド・スタブ
 		return 0;
 	}

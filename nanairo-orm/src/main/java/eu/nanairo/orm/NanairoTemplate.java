@@ -7,6 +7,7 @@ import java.util.Locale;
 
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteStatement;
 
 public class NanairoTemplate {
 	/***/
@@ -25,6 +26,7 @@ public class NanairoTemplate {
 		// TODO スネークケースからキャメルケースへ変更
 		String tableName = entityClass.getSimpleName();
 		tableName = tableName.substring(0, tableName.length() - 6);
+		tableName = tableName.toUpperCase(Locale.ENGLISH);
 		return tableName;
 	}
 
@@ -36,6 +38,7 @@ public class NanairoTemplate {
 			Field field = fields[i];
 			// TODO スネークケースからキャメルケースへ変更
 			columns[i] = field.getName();
+			columns[i] = columns[i].toUpperCase(Locale.ENGLISH);
 		}
 		return columns;
 	}
@@ -56,8 +59,9 @@ public class NanairoTemplate {
 			return cursor.getDouble(columnIndex);
 		} else if (type.equals(String.class)) {
 			return cursor.getString(columnIndex);
+		} else {
+			return cursor.getBlob(columnIndex);
 		}
-		return cursor.getBlob(columnIndex);
 	}
 
 	public <RESULT> List<RESULT> findList(Class<RESULT> resultClass, RESULT param) {
@@ -155,9 +159,78 @@ public class NanairoTemplate {
 		this.db.execSQL(sql, bindArgs);
 	}
 
-	public int add(Object entity) {
-		// TODO
-		return 0;
+	public <RESULT> long add(Class<RESULT> resultClass, RESULT entity) {
+		try {
+			String sql = getSqlForInsert(resultClass, entity);
+			SQLiteStatement stmt = db.compileStatement(sql);
+			Field[] fields = resultClass.getDeclaredFields();
+			for (int i = 0; i < fields.length; i++) {
+				Field field = fields[i];
+				field.setAccessible(true);
+				Object parameter = field.get(entity);
+				if (parameter == null) {
+					continue;
+				}
+
+				Class<?> type = field.getType();
+				int no = i + 1;
+				if (type.equals(Integer.class)) {
+					stmt.bindLong(no, (Long) parameter);
+				} else if (type.equals(Long.class)) {
+					stmt.bindLong(no, (Long) parameter);
+				} else if (type.equals(Short.class)) {
+					stmt.bindLong(no, (Long) parameter);
+				} else if (type.equals(Float.class)) {
+					stmt.bindDouble(no, (Double) parameter);
+				} else if (type.equals(Double.class)) {
+					stmt.bindDouble(no, (Double) parameter);
+				} else if (type.equals(String.class)) {
+					stmt.bindString(no, (String) parameter);
+				} else {
+					stmt.bindBlob(no, (byte[]) parameter);
+				}
+			}
+
+			return stmt.executeInsert();
+		} catch (Exception e) {
+			// TODO 自動生成された catch ブロック
+			throw new RuntimeException("error", e);
+		}
+	}
+
+	protected static <RESULT> String getSqlForInsert(Class<RESULT> resultClass, RESULT entity) {
+		try {
+			String tableName = getTableName(resultClass);
+			String sql = "INSERT INTO " + tableName + " (";
+			String[] columns = convertColumns(resultClass);
+			Field[] fields = resultClass.getDeclaredFields();
+			int count = 0;
+			for (int i = 0; i < fields.length; i++) {
+				Field field = fields[i];
+				field.setAccessible(true);
+				Object object = field.get(entity);
+				if (object == null) {
+					continue;
+				}
+
+				String column = columns[i];
+				sql += column + ", ";
+
+				count++;
+			}
+
+			sql = sql.substring(0, sql.length() - 2);
+			sql += ") VALUES (";
+			for (int i = 0; i < count; i++) {
+				sql += "?, ";
+			}
+			sql = sql.substring(0, sql.length() - 2);
+			sql += ")";
+			return sql;
+		} catch (Exception e) {
+			// TODO 自動生成された catch ブロック
+			throw new RuntimeException("error", e);
+		}
 	}
 
 	public int update(Object entity) {
