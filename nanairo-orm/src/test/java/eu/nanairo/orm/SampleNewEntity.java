@@ -13,7 +13,7 @@ public class SampleNewEntity {
 	private String title;
 
 	/***/
-	private String newTitle;
+	private String newOldTitle;
 
 	public Long getId() {
 		return id;
@@ -31,11 +31,11 @@ public class SampleNewEntity {
 		this.title = title;
 	}
 
-	public String getNewTitle() {
-		return newTitle;
+	public String getNewOldTitle() {
+		return newOldTitle;
 	}
 
-	public void setNewTitle(String newTitle) {
-		this.newTitle = newTitle;
+	public void setNewOldTitle(String newOldTitle) {
+		this.newOldTitle = newOldTitle;
 	}
 }
