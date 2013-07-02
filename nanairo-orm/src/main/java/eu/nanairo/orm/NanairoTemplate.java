@@ -4,6 +4,8 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -23,11 +25,28 @@ public class NanairoTemplate {
 	 * @return テーブル名
 	 */
 	protected static String getTableName(Class<?> entityClass) {
-		// TODO スネークケースからキャメルケースへ変更
 		String tableName = entityClass.getSimpleName();
 		tableName = tableName.substring(0, tableName.length() - 6);
+		tableName = camelToSnake(tableName);
 		tableName = tableName.toUpperCase(Locale.ENGLISH);
 		return tableName;
+	}
+
+	protected static String camelToSnake(String targetStr) {
+		String convertedStr = targetStr.replaceAll("([A-Z]+)([A-Z][a-z])", "$1_$2").replaceAll("([a-z])([A-Z])", "$1_$2");
+		return convertedStr.toLowerCase();
+	}
+
+	protected static String snakeToCamel(String targetStr) {
+		Pattern p = Pattern.compile("_([a-z])");
+		Matcher m = p.matcher(targetStr.toLowerCase());
+
+		StringBuffer sb = new StringBuffer(targetStr.length());
+		while (m.find()) {
+			m.appendReplacement(sb, m.group(1).toUpperCase());
+		}
+		m.appendTail(sb);
+		return sb.toString();
 	}
 
 	protected static String[] convertColumns(Class<?> clazz) {
@@ -36,8 +55,8 @@ public class NanairoTemplate {
 		String[] columns = new String[fields.length];
 		for (int i = 0; i < fields.length; i++) {
 			Field field = fields[i];
-			// TODO スネークケースからキャメルケースへ変更
 			columns[i] = field.getName();
+			columns[i] = camelToSnake(columns[i]);
 			columns[i] = columns[i].toUpperCase(Locale.ENGLISH);
 		}
 		return columns;
@@ -164,8 +183,8 @@ public class NanairoTemplate {
 			String sql = getSqlForInsert(resultClass, entity);
 			SQLiteStatement stmt = db.compileStatement(sql);
 			Field[] fields = resultClass.getDeclaredFields();
-			for (int i = 0; i < fields.length; i++) {
-				Field field = fields[i];
+			int no = 1;
+			for (Field field : fields) {
 				field.setAccessible(true);
 				Object parameter = field.get(entity);
 				if (parameter == null) {
@@ -173,7 +192,6 @@ public class NanairoTemplate {
 				}
 
 				Class<?> type = field.getType();
-				int no = i + 1;
 				if (type.equals(Integer.class)) {
 					stmt.bindLong(no, (Long) parameter);
 				} else if (type.equals(Long.class)) {
@@ -189,6 +207,7 @@ public class NanairoTemplate {
 				} else {
 					stmt.bindBlob(no, (byte[]) parameter);
 				}
+				no++;
 			}
 
 			return stmt.executeInsert();
@@ -226,6 +245,9 @@ public class NanairoTemplate {
 			}
 			sql = sql.substring(0, sql.length() - 2);
 			sql += ")";
+
+			// Log.i("sql", sql);
+
 			return sql;
 		} catch (Exception e) {
 			// TODO 自動生成された catch ブロック

@@ -10,7 +10,7 @@ import java.io.Serializable;
 @SuppressWarnings("serial")
 public class Subscription implements Serializable {
 	/***/
-	private int id;
+	private long id;
 
 	/***/
 	private String title;
@@ -37,11 +37,11 @@ public class Subscription implements Serializable {
 		this.url = url;
 	}
 
-	public int getId() {
+	public long getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 

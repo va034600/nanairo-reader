@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import android.util.Log;
+
 import com.google.code.rome.android.repackaged.com.sun.syndication.feed.synd.SyndEntry;
 import com.google.code.rome.android.repackaged.com.sun.syndication.feed.synd.SyndFeed;
 import com.google.code.rome.android.repackaged.com.sun.syndication.io.FeedException;
@@ -18,6 +20,8 @@ import eu.nanairo_reader.bean.FeedItem;
 public class RssParsingServiceImpl implements RssParsingService {
 	@Override
 	public List<FeedItem> getItemList(String rss) {
+		Log.i("rss start", rss);
+
 		List<FeedItem> result = new ArrayList<FeedItem>();
 		try {
 			URL feedUrl = new URL(rss);
@@ -55,6 +59,8 @@ public class RssParsingServiceImpl implements RssParsingService {
 			e.printStackTrace();
 			throw new RuntimeException("rss", e);
 		}
+
+		Log.i("rss end", rss);
 		return result;
 	}
 }

@@ -10,8 +10,10 @@ import eu.nanairo_reader.bean.Item;
 import eu.nanairo_reader.bean.Subscription;
 import eu.nanairo_reader.data.dao.ItemDao;
 import eu.nanairo_reader.data.dao.SubscriptionDao;
+import eu.nanairo_reader.data.dao.SubscriptionItemDao;
 import eu.nanairo_reader.data.entity.ItemEntity;
 import eu.nanairo_reader.data.entity.SubscriptionEntity;
+import eu.nanairo_reader.data.entity.SubscriptionItemEntity;
 
 public class RssServiceImpl implements RssService {
 	@Inject
@@ -19,6 +21,9 @@ public class RssServiceImpl implements RssService {
 
 	@Inject
 	private ItemDao itemDao;
+
+	@Inject
+	private SubscriptionItemDao subscriptionItemDao;
 
 	@Inject
 	private RssParsingService rssParsingService;
@@ -40,7 +45,7 @@ public class RssServiceImpl implements RssService {
 	}
 
 	@Override
-	public List<Item> getItemList(int id) {
+	public List<Item> getItemList(long id) {
 		List<Item> result = new ArrayList<Item>();
 		for (ItemEntity entity : this.itemDao.getList(id)) {
 			Item item = new Item();
@@ -56,13 +61,20 @@ public class RssServiceImpl implements RssService {
 
 	@Override
 	public void storeItems() {
-		String rss = "http://matome.naver.jp/feed/hot";
-		List<FeedItem> feedItemList = this.rssParsingService.getItemList(rss);
-		for (FeedItem feedItem : feedItemList) {
-			ItemEntity itemEntity = new ItemEntity();
-			itemEntity.setTitle(feedItem.getTitle());
-			//TODO
-			this.itemDao.add(itemEntity);
+		for (SubscriptionEntity entity : this.subscriptionDao.getList()) {
+			List<FeedItem> feedItemList = this.rssParsingService.getItemList(entity.getUrl());
+			for (FeedItem feedItem : feedItemList) {
+				ItemEntity itemEntity = new ItemEntity();
+				itemEntity.setTitle(feedItem.getTitle());
+				// TODO
+				long itemId = this.itemDao.add(itemEntity);
+
+				// TODO
+				SubscriptionItemEntity subscriptionItemEntity = new SubscriptionItemEntity();
+				subscriptionItemEntity.setSubscriptionId(entity.getId());
+				subscriptionItemEntity.setItemId(itemId);
+				this.subscriptionItemDao.add(subscriptionItemEntity);
+			}
 		}
 	}
 }

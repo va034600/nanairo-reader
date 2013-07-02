@@ -8,7 +8,7 @@ import eu.nanairo_reader.bean.Subscription;
 public interface RssService {
 	List<Subscription> getSubscriptionList();
 
-	List<Item> getItemList(int id);
+	List<Item> getItemList(long id);
 
 	void storeItems();
 }

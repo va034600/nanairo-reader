@@ -15,6 +15,9 @@ import eu.nanairo_reader.data.dao.ItemDaoMock;
 import eu.nanairo_reader.data.dao.SubscriptionDao;
 import eu.nanairo_reader.data.dao.SubscriptionDaoImpl;
 import eu.nanairo_reader.data.dao.SubscriptionDaoMock;
+import eu.nanairo_reader.data.dao.SubscriptionItemDao;
+import eu.nanairo_reader.data.dao.SubscriptionItemDaoImpl;
+import eu.nanairo_reader.data.dao.SubscriptionItemDaoMock;
 
 public class GuiceModule extends AbstractModule {
 	@Override
@@ -37,10 +40,14 @@ public class GuiceModule extends AbstractModule {
 			ItemDaoImpl itemDaoImpl = new ItemDaoImpl();
 			itemDaoImpl.setDb(db);
 			bind(ItemDao.class).toInstance(itemDaoImpl);
+
+			SubscriptionItemDaoImpl subscriptionItemDaoImpl = new SubscriptionItemDaoImpl();
+			subscriptionItemDaoImpl.setDb(db);
+			bind(SubscriptionItemDao.class).toInstance(subscriptionItemDaoImpl);
 		} else {
 			bind(SubscriptionDao.class).to(SubscriptionDaoMock.class);
 			bind(ItemDao.class).to(ItemDaoMock.class);
+			bind(SubscriptionItemDao.class).to(SubscriptionItemDaoMock.class);
 		}
-
 	}
 }

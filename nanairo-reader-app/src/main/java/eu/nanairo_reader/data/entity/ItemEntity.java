@@ -7,7 +7,7 @@ package eu.nanairo_reader.data.entity;
  */
 public class ItemEntity {
 	/***/
-	private Integer id;
+	private Long id;
 
 	/***/
 	private String title;
@@ -45,11 +45,11 @@ public class ItemEntity {
 		this.link = link;
 	}
 
-	public Integer getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 

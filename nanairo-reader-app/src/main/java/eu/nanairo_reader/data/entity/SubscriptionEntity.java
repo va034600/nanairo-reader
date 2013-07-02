@@ -7,7 +7,7 @@ package eu.nanairo_reader.data.entity;
  */
 public class SubscriptionEntity {
 	/***/
-	private Integer id;
+	private Long id;
 
 	/***/
 	private String title;
@@ -31,11 +31,11 @@ public class SubscriptionEntity {
 		this.url = url;
 	}
 
-	public Integer getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 }

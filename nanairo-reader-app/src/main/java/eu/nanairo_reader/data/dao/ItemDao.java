@@ -4,8 +4,8 @@ import java.util.List;
 
 import eu.nanairo_reader.data.entity.ItemEntity;
 
-public interface ItemDao extends BaseDao<ItemEntity, Integer> {
-	List<ItemEntity> getList(int id);
+public interface ItemDao extends BaseDao<ItemEntity, Long> {
+	List<ItemEntity> getList(long id);
 
-	int getMidokuCount(Integer id);
+	int getMidokuCount(long id);
 }
