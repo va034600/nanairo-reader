@@ -32,20 +32,19 @@ public class NanairoTemplate {
 		return tableName;
 	}
 
-	protected static String camelToSnake(String targetStr) {
-		return targetStr.replaceAll("([A-Z]+)([A-Z][a-z])", "$1_$2").replaceAll("([a-z])([A-Z])", "$1_$2");
+	protected static String camelToSnake(String value) {
+		return value.replaceAll("([A-Z]+)([A-Z][a-z])", "$1_$2").replaceAll("([a-z])([A-Z])", "$1_$2");
 	}
 
 	protected static String snakeToCamel(String targetStr) {
-		Pattern p = Pattern.compile("_([a-z])");
-		Matcher m = p.matcher(targetStr.toLowerCase());
-
-		StringBuffer sb = new StringBuffer(targetStr.length());
-		while (m.find()) {
-			m.appendReplacement(sb, m.group(1).toUpperCase());
+		Pattern pattern = Pattern.compile("_([a-z])");
+		Matcher matcher = pattern.matcher(targetStr.toLowerCase());
+		StringBuffer stringBuffer = new StringBuffer(targetStr.length());
+		while (matcher.find()) {
+			matcher.appendReplacement(stringBuffer, matcher.group(1).toUpperCase());
 		}
-		m.appendTail(sb);
-		return sb.toString();
+		matcher.appendTail(stringBuffer);
+		return stringBuffer.toString();
 	}
 
 	protected static String[] convertColumns(Class<?> clazz) {
