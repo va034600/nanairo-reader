@@ -40,11 +40,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		sql += "ITEM_ID INTEGER, ";
 		sql += "PRIMARY KEY(SUBSCRIPTION_ID, ITEM_ID));";
 		db.execSQL(sql);
-
-		// TODO 今だけ
-		db.execSQL("INSERT INTO SUBSCRIPTION_ITEM (SUBSCRIPTION_ID, ITEM_ID) VALUES(1, 1);");
-		db.execSQL("INSERT INTO SUBSCRIPTION_ITEM (SUBSCRIPTION_ID, ITEM_ID) VALUES(1, 2);");
-		db.execSQL("INSERT INTO SUBSCRIPTION_ITEM (SUBSCRIPTION_ID, ITEM_ID) VALUES(2, 3);");
 	}
 
 	private void createItem(SQLiteDatabase db) {
@@ -56,11 +51,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		sql += "MIDOKU";
 		sql += ");";
 		db.execSQL(sql);
-
-		// TODO 今だけ
-		db.execSQL("INSERT INTO ITEM (TITLE, CONTENT, LINK, MIDOKU) VALUES('6月16日(日)', 'bbb<br>aa<br>aa<br>aa<br>aa<br>aa<br>aa<br>aa<br>aa<br>aa<br>aa<br>aa<br>aa<br>aa<br>aa<br>aa<br>aa<br>aa<br>aaaa<br>aa<br>aa<br>aa<br>aa<br>aa<br>aa<br>aa<br>aa<br>aa<br>aa', 'http://tbn17.com/archives/1764915.html', 1);");
-		db.execSQL("INSERT INTO ITEM (TITLE, CONTENT, LINK, MIDOKU) VALUES('6月17日(月)', 'bbb<br>aa', 'http://tbn17.com/archives/1764915.html', 0);");
-		db.execSQL("INSERT INTO ITEM (TITLE, CONTENT, LINK, MIDOKU) VALUES('3', 'b<br>a', 'http://matome.naver.jp/odai/2137178139495010801', 0);");
 	}
 
 	@Override
