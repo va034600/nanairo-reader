@@ -33,8 +33,7 @@ public class NanairoTemplate {
 	}
 
 	protected static String camelToSnake(String targetStr) {
-		String convertedStr = targetStr.replaceAll("([A-Z]+)([A-Z][a-z])", "$1_$2").replaceAll("([a-z])([A-Z])", "$1_$2");
-		return convertedStr.toLowerCase();
+		return targetStr.replaceAll("([A-Z]+)([A-Z][a-z])", "$1_$2").replaceAll("([a-z])([A-Z])", "$1_$2");
 	}
 
 	protected static String snakeToCamel(String targetStr) {
@@ -55,9 +54,10 @@ public class NanairoTemplate {
 		String[] columns = new String[fields.length];
 		for (int i = 0; i < fields.length; i++) {
 			Field field = fields[i];
-			columns[i] = field.getName();
-			columns[i] = camelToSnake(columns[i]);
-			columns[i] = columns[i].toUpperCase(Locale.ENGLISH);
+			String column = field.getName();
+			column = camelToSnake(column);
+			column = column.toUpperCase(Locale.ENGLISH);
+			columns[i] = column;
 		}
 		return columns;
 	}
@@ -134,10 +134,9 @@ public class NanairoTemplate {
 				RESULT entity = resultClass.newInstance();
 
 				for (int i = 0; i < cursor.getColumnCount(); i++) {
-					String columnName = cursor.getColumnName(i);
-					// TODO キャメルケースからスネークケースへ変更
-					columnName = columnName.toLowerCase(Locale.ENGLISH);
-					Field field = resultClass.getDeclaredField(columnName);
+					String column = cursor.getColumnName(i);
+					column = snakeToCamel(column);
+					Field field = resultClass.getDeclaredField(column);
 					field.setAccessible(true);
 					Object value = getValue(cursor, field);
 					field.set(entity, value);
