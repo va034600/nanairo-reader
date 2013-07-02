@@ -13,7 +13,7 @@ public class FeedItem {
 	private String author;
 
 	/***/
-	private String description;
+	private String content;
 
 	/***/
 	private String copyright;
@@ -41,14 +41,6 @@ public class FeedItem {
 
 	public void setAuthor(String author) {
 		this.author = author;
-	}
-
-	public String getDescription() {
-		return description;
-	}
-
-	public void setDescription(String description) {
-		this.description = description;
 	}
 
 	public String getCopyright() {
@@ -81,5 +73,13 @@ public class FeedItem {
 
 	public void setLink(String link) {
 		this.link = link;
+	}
+
+	public String getContent() {
+		return content;
+	}
+
+	public void setContent(String content) {
+		this.content = content;
 	}
 }

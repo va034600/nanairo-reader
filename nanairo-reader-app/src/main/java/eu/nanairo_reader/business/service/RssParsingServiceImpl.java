@@ -9,6 +9,7 @@ import java.util.List;
 
 import android.util.Log;
 
+import com.google.code.rome.android.repackaged.com.sun.syndication.feed.synd.SyndContent;
 import com.google.code.rome.android.repackaged.com.sun.syndication.feed.synd.SyndEntry;
 import com.google.code.rome.android.repackaged.com.sun.syndication.feed.synd.SyndFeed;
 import com.google.code.rome.android.repackaged.com.sun.syndication.io.FeedException;
@@ -35,13 +36,18 @@ public class RssParsingServiceImpl implements RssParsingService {
 
 				feedItem.setTitle(ent.getTitle());
 				feedItem.setAuthor(feed.getAuthor());
-				feedItem.setDescription(feed.getDescription());
+
+				SyndContent contents = (SyndContent) ent.getContents().get(0);
+				feedItem.setContent(contents.getValue());
+
 				feedItem.setCopyright(feed.getCopyright());
 				feedItem.setFeedType(feed.getFeedType());
 				feedItem.setUri(feed.getUri());
 				feedItem.setLink(feed.getLink());
+
 				result.add(feedItem);
 			}
+
 		} catch (MalformedURLException e) {
 			// TODO
 			e.printStackTrace();

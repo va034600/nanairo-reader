@@ -33,13 +33,5 @@
 			<groupId>jdom</groupId>
 			<artifactId>jdom</artifactId>
 		</dependency>
-			<dependency>
-				<groupId>org.horrabin.horrorss</groupId>
-				<artifactId>horrorss</artifactId>
-			</dependency>
-			<dependency>
-				<groupId>com.hp.hql.sparta</groupId>
-				<artifactId>sparta</artifactId>
-			</dependency>
 	</dependencies>
 </project>

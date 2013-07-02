@@ -65,8 +65,14 @@ public class RssServiceImpl implements RssService {
 			List<FeedItem> feedItemList = this.rssParsingService.getItemList(entity.getUrl());
 			for (FeedItem feedItem : feedItemList) {
 				ItemEntity itemEntity = new ItemEntity();
+
 				itemEntity.setTitle(feedItem.getTitle());
+				itemEntity.setContent(feedItem.getContent());
+				itemEntity.setLink(feedItem.getLink());
+				//TODO マジックNo
+				itemEntity.setMidoku(1);
 				// TODO
+
 				long itemId = this.itemDao.add(itemEntity);
 
 				// TODO

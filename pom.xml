@@ -36,20 +36,6 @@
 			</dependency>
 			<!-- rss2 -->
 			<dependency>
-				<groupId>org.horrabin.horrorss</groupId>
-				<artifactId>horrorss</artifactId>
-				<version>2.2.0</version>
-				<scope>system</scope>
-				<systemPath>${basedir}/libs/horrorss-2.2.0.jar</systemPath>
-			</dependency>
-			<dependency>
-				<groupId>com.hp.hql.sparta</groupId>
-				<artifactId>sparta</artifactId>
-				<version>1.0.0</version>
-				<scope>system</scope>
-				<systemPath>${basedir}/libs/sparta.jar</systemPath>
-			</dependency>
-			<dependency>
 				<groupId>jdom</groupId>
 				<artifactId>jdom</artifactId>
 				<version>1.0</version>
