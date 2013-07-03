@@ -30,8 +30,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		db.execSQL(sql);
 
 		// TODO 今だけ
-		db.execSQL("INSERT INTO SUBSCRIPTION (TITLE, URL) VALUES('okstate','http://www.okstate.com/headline-rss.xml');");
-		//db.execSQL("INSERT INTO SUBSCRIPTION (TITLE, URL) VALUES('TBN','http://tbn17.com/index.rdf');");
+		//db.execSQL("INSERT INTO SUBSCRIPTION (TITLE, URL) VALUES('okstate','http://www.okstate.com/headline-rss.xml');");
+		db.execSQL("INSERT INTO SUBSCRIPTION (TITLE, URL) VALUES('TBN','http://tbn17.com/index.rdf');");
 		//db.execSQL("INSERT INTO SUBSCRIPTION (TITLE, URL) VALUES('注目ま','http://matome.naver.jp/feed/hot');");
 	}
 

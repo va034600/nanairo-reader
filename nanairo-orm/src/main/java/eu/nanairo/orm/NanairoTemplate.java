@@ -191,13 +191,13 @@ public class NanairoTemplate {
 
 				Class<?> type = field.getType();
 				if (type.equals(Integer.class)) {
-					stmt.bindLong(no, (Long) parameter);
+					stmt.bindLong(no, (Integer) parameter);
 				} else if (type.equals(Long.class)) {
 					stmt.bindLong(no, (Long) parameter);
 				} else if (type.equals(Short.class)) {
-					stmt.bindLong(no, (Long) parameter);
+					stmt.bindLong(no, (Short) parameter);
 				} else if (type.equals(Float.class)) {
-					stmt.bindDouble(no, (Double) parameter);
+					stmt.bindDouble(no, (Float) parameter);
 				} else if (type.equals(Double.class)) {
 					stmt.bindDouble(no, (Double) parameter);
 				} else if (type.equals(String.class)) {
