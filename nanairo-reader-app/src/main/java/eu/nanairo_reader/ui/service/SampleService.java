@@ -26,17 +26,9 @@ public class SampleService extends RoboService {
 		Toast.makeText(this, "サービスを開始しました！", Toast.LENGTH_LONG).show();
 		Thread t = new Thread() {
 			public void run() {
-				try {
-					SampleService.this.rssService.storeItems();
-
-					// 10秒間スレッドをスリープ
-					Thread.sleep(10 * 1000);
-					// 自分自身を止めてonDestroy()メソッドへ
-					stopSelf();
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+				SampleService.this.rssService.storeItems();
+				// 自分自身を止めてonDestroy()メソッドへ
+				stopSelf();
 			}
 		};
 		t.start();
