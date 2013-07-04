@@ -45,4 +45,11 @@ public class SampleService extends RoboService {
 		};
 		t.start();
 	}
+
+	// 終了時 onDestroyメソッド
+	@Override
+	public void onDestroy() {
+		super.onDestroy();
+		Toast.makeText(this, "サービスを終了しました！", Toast.LENGTH_SHORT).show();
+	}
 }
