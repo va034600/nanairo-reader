@@ -23,10 +23,11 @@ public class SampleService extends RoboService {
 	public void onStart(Intent intent, int startId) {
 		super.onStart(intent, startId);
 		// 開始時にトーストを表示
-		Toast.makeText(this, "サービスを開始しました！", Toast.LENGTH_LONG).show();
+		Toast.makeText(this, "サービスを開始しました！", Toast.LENGTH_SHORT).show();
 		Thread t = new Thread() {
 			public void run() {
 				SampleService.this.rssService.storeItems();
+
 				// 自分自身を止めてonDestroy()メソッドへ
 				stopSelf();
 			}
@@ -38,6 +39,6 @@ public class SampleService extends RoboService {
 	@Override
 	public void onDestroy() {
 		super.onDestroy();
-		Toast.makeText(this, "サービスを終了しました！", Toast.LENGTH_LONG).show();
+		Toast.makeText(this, "サービスを終了しました！", Toast.LENGTH_SHORT).show();
 	}
 }
