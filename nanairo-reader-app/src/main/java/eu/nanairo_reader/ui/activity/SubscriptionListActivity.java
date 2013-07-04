@@ -50,6 +50,7 @@ public class SubscriptionListActivity extends RoboListActivity {
 				Intent intent = new Intent(SubscriptionListActivity.this, SampleService.class);
 				startService(intent);
 
+				// レシーバー登録
 				IntentFilter filter = new IntentFilter(SampleService.ACTION);
 				registerReceiver(receiver, filter);
 			}
@@ -58,8 +59,8 @@ public class SubscriptionListActivity extends RoboListActivity {
 
 	@Override
 	protected void onDestroy() {
-		// サービス終了
-		unregisterReceiver(receiver); // レシーバー解除
+		// レシーバー解除
+		unregisterReceiver(receiver);
 		super.onDestroy();
 	}
 
@@ -91,7 +92,6 @@ public class SubscriptionListActivity extends RoboListActivity {
 						// インテントのインスタンス生成
 						Intent intent = new Intent(SubscriptionListActivity.this, ItemListActivity.class);
 						intent.putExtra("subscription", subscription);
-						// 次画面のアクティビティ起動
 						startActivity(intent);
 					}
 				});
@@ -105,15 +105,14 @@ public class SubscriptionListActivity extends RoboListActivity {
 		@Override
 		public void onReceive(Context context, Intent intent) {
 			int count = intent.getIntExtra("count", 0);
-
 			Toast.makeText(SubscriptionListActivity.this, "更新件数:" + count, Toast.LENGTH_SHORT).show();
 
-			//TODO 未読数を更新する。要リファクタリング
+			// TODO 未読数を更新する。要リファクタリング
 			List<Subscription> subscriptionList2 = SubscriptionListActivity.this.rssService.getSubscriptionList();
 			subscriptionList.clear();
 			subscriptionList.addAll(subscriptionList2);
 
-			//ListViewを更新する。
+			// ListViewを更新する。
 			listAdapter.notifyDataSetChanged();
 		}
 	}
