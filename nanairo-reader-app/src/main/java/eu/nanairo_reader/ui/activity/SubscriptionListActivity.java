@@ -5,9 +5,14 @@ import java.util.List;
 import javax.inject.Inject;
 
 import roboguice.activity.RoboListActivity;
+import android.content.BroadcastReceiver;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.content.ServiceConnection;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -15,12 +20,16 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 import eu.nanairo_reader.R;
 import eu.nanairo_reader.bean.Subscription;
 import eu.nanairo_reader.business.service.RssService;
 import eu.nanairo_reader.ui.service.SampleService;
 
 public class SubscriptionListActivity extends RoboListActivity {
+	private ServiceConnection serviceConnection = new MyServiceConnection();
+	private MyServiceReceiver receiver = new MyServiceReceiver();
+
 	@Inject
 	private RssService rssService;
 
@@ -31,22 +40,33 @@ public class SubscriptionListActivity extends RoboListActivity {
 
 		List<Subscription> list = this.rssService.getSubscriptionList();
 		ListAdapter adapter = new ListAdapter(getApplicationContext(), list);
-
 		setListAdapter(adapter);
 
 		Button mButton = (Button) findViewById(R.id.android_updateButton);
 		mButton.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
-				// サービスクラスを指定したインテントの作成
-				Intent intent = new Intent(SubscriptionListActivity.this, SampleService.class);
 				// サービスの起動
+				Intent intent = new Intent(SubscriptionListActivity.this, SampleService.class);
 				startService(intent);
+
+				IntentFilter filter = new IntentFilter(SampleService.ACTION);
+				registerReceiver(receiver, filter);
+
+				// サービスにバインド
+				bindService(intent, serviceConnection, Context.BIND_AUTO_CREATE);
 			}
 		});
 	}
 
-	class ListAdapter extends ArrayAdapter<Subscription> {
+	@Override
+	protected void onDestroy() {
+		// サービス終了
+		unbindService(serviceConnection); // バインド解除
+		unregisterReceiver(receiver); // レシーバー解除
+		super.onDestroy();
+	}
 
+	class ListAdapter extends ArrayAdapter<Subscription> {
 		private LayoutInflater mInflater;
 		private TextView mTitle;
 		private TextView mCount;
@@ -61,6 +81,7 @@ public class SubscriptionListActivity extends RoboListActivity {
 			if (convertView == null) {
 				convertView = mInflater.inflate(R.layout.subscription_row, null);
 			}
+
 			final Subscription subscription = this.getItem(position);
 			if (subscription != null) {
 				mTitle = (TextView) convertView.findViewById(R.id.nameText);
@@ -79,6 +100,30 @@ public class SubscriptionListActivity extends RoboListActivity {
 				});
 			}
 			return convertView;
+		}
+	}
+
+	// ServiceConnectionクラス
+	class MyServiceConnection implements ServiceConnection {
+		private SampleService myservice;
+
+		@Override
+		public void onServiceConnected(ComponentName className, IBinder service) {
+			myservice = ((SampleService.MySampleBinder) service).getService();
+		}
+
+		@Override
+		public void onServiceDisconnected(ComponentName className) {
+			myservice = null;
+		}
+	}
+
+	// Receiverクラス
+	class MyServiceReceiver extends BroadcastReceiver {
+		@Override
+		public void onReceive(Context context, Intent intent) {
+			int count = intent.getIntExtra("count", 0);
+			Toast.makeText(SubscriptionListActivity.this, "更新件数:" + count, Toast.LENGTH_SHORT).show();
 		}
 	}
 }
