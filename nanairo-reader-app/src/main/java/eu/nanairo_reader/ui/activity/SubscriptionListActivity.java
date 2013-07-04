@@ -29,13 +29,16 @@ public class SubscriptionListActivity extends RoboListActivity {
 	@Inject
 	private RssService rssService;
 
+	List<Subscription> list;
+	ListAdapter adapter;
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.subscription_list);
 
-		List<Subscription> list = this.rssService.getSubscriptionList();
-		ListAdapter adapter = new ListAdapter(getApplicationContext(), list);
+		list = this.rssService.getSubscriptionList();
+		adapter = new ListAdapter(getApplicationContext(), list);
 		setListAdapter(adapter);
 
 		Button mButton = (Button) findViewById(R.id.android_updateButton);
@@ -101,6 +104,9 @@ public class SubscriptionListActivity extends RoboListActivity {
 		public void onReceive(Context context, Intent intent) {
 			int count = intent.getIntExtra("count", 0);
 			Toast.makeText(SubscriptionListActivity.this, "更新件数:" + count, Toast.LENGTH_SHORT).show();
+			list.get(0).setMidokuCount(count);
+			//ListViewを更新する。
+			adapter.notifyDataSetChanged();
 		}
 	}
 }
