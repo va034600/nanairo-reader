@@ -68,7 +68,7 @@ public class RssServiceImpl implements RssService {
 
 				itemEntity.setTitle(feedItem.getTitle());
 				itemEntity.setContent(feedItem.getContent());
-				itemEntity.setLink(feedItem.getLink());
+				itemEntity.setLink(feedItem.getUri());
 				//TODO マジックNo
 				itemEntity.setMidoku(1);
 				// TODO

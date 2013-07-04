@@ -44,8 +44,7 @@ public class RssParsingServiceImpl implements RssParsingService {
 
 				feedItem.setCopyright(feed.getCopyright());
 				feedItem.setFeedType(feed.getFeedType());
-				feedItem.setUri(feed.getUri());
-				feedItem.setLink(feed.getLink());
+				feedItem.setUri(ent.getUri());
 
 				result.add(feedItem);
 			}
