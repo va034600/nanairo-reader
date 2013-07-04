@@ -6,7 +6,7 @@ import com.google.inject.AbstractModule;
 
 import eu.nanairo_reader.NanairoApplication;
 import eu.nanairo_reader.business.service.RssParsingService;
-import eu.nanairo_reader.business.service.RssParsingServiceImpl;
+import eu.nanairo_reader.business.service.RssParsingServiceMock;
 import eu.nanairo_reader.business.service.RssService;
 import eu.nanairo_reader.business.service.RssServiceImpl;
 import eu.nanairo_reader.data.dao.ItemDao;
@@ -24,7 +24,8 @@ public class GuiceModule extends AbstractModule {
 	protected void configure() {
 		// service
 		bind(RssService.class).to(RssServiceImpl.class);
-		bind(RssParsingService.class).to(RssParsingServiceImpl.class);
+		// bind(RssParsingService.class).to(RssParsingServiceImpl.class);
+		bind(RssParsingService.class).to(RssParsingServiceMock.class);
 
 		// dao
 		// TODO
