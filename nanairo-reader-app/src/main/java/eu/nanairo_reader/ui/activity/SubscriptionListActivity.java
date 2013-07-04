@@ -6,13 +6,10 @@ import javax.inject.Inject;
 
 import roboguice.activity.RoboListActivity;
 import android.content.BroadcastReceiver;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.ServiceConnection;
 import android.os.Bundle;
-import android.os.IBinder;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -27,7 +24,6 @@ import eu.nanairo_reader.business.service.RssService;
 import eu.nanairo_reader.ui.service.SampleService;
 
 public class SubscriptionListActivity extends RoboListActivity {
-	private ServiceConnection serviceConnection = new MyServiceConnection();
 	private MyServiceReceiver receiver = new MyServiceReceiver();
 
 	@Inject
@@ -51,9 +47,6 @@ public class SubscriptionListActivity extends RoboListActivity {
 
 				IntentFilter filter = new IntentFilter(SampleService.ACTION);
 				registerReceiver(receiver, filter);
-
-				// サービスにバインド
-				bindService(intent, serviceConnection, Context.BIND_AUTO_CREATE);
 			}
 		});
 	}
@@ -61,7 +54,6 @@ public class SubscriptionListActivity extends RoboListActivity {
 	@Override
 	protected void onDestroy() {
 		// サービス終了
-		unbindService(serviceConnection); // バインド解除
 		unregisterReceiver(receiver); // レシーバー解除
 		super.onDestroy();
 	}
@@ -100,21 +92,6 @@ public class SubscriptionListActivity extends RoboListActivity {
 				});
 			}
 			return convertView;
-		}
-	}
-
-	// ServiceConnectionクラス
-	class MyServiceConnection implements ServiceConnection {
-		private SampleService myservice;
-
-		@Override
-		public void onServiceConnected(ComponentName className, IBinder service) {
-			myservice = ((SampleService.MySampleBinder) service).getService();
-		}
-
-		@Override
-		public void onServiceDisconnected(ComponentName className) {
-			myservice = null;
 		}
 	}
 

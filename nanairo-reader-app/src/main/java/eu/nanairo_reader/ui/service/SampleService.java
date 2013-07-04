@@ -41,6 +41,9 @@ public class SampleService extends RoboService {
 				Intent intent = new Intent(ACTION);
 				intent.putExtra("count", 55);
 				sendBroadcast(intent);
+
+				// 自分自身を止めてonDestroy()メソッドへ
+				stopSelf();
 			}
 		};
 		t.start();
