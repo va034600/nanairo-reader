@@ -24,22 +24,24 @@ import eu.nanairo_reader.business.service.RssService;
 import eu.nanairo_reader.ui.service.SampleService;
 
 public class SubscriptionListActivity extends RoboListActivity {
-	private MyServiceReceiver receiver = new MyServiceReceiver();
-
 	@Inject
 	private RssService rssService;
 
-	List<Subscription> list;
-	ListAdapter adapter;
+	private MyServiceReceiver receiver = new MyServiceReceiver();
+
+	private List<Subscription> subscriptionList;
+
+	private ListAdapter listAdapter;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.subscription_list);
 
-		list = this.rssService.getSubscriptionList();
-		adapter = new ListAdapter(getApplicationContext(), list);
-		setListAdapter(adapter);
+		// ListAdapterの更新
+		subscriptionList = this.rssService.getSubscriptionList();
+		listAdapter = new ListAdapter(getApplicationContext(), subscriptionList);
+		setListAdapter(listAdapter);
 
 		Button mButton = (Button) findViewById(R.id.android_updateButton);
 		mButton.setOnClickListener(new OnClickListener() {
@@ -103,10 +105,16 @@ public class SubscriptionListActivity extends RoboListActivity {
 		@Override
 		public void onReceive(Context context, Intent intent) {
 			int count = intent.getIntExtra("count", 0);
+
 			Toast.makeText(SubscriptionListActivity.this, "更新件数:" + count, Toast.LENGTH_SHORT).show();
-			list.get(0).setMidokuCount(count);
+
+			//TODO 未読数を更新する。要リファクタリング
+			List<Subscription> subscriptionList2 = SubscriptionListActivity.this.rssService.getSubscriptionList();
+			subscriptionList.clear();
+			subscriptionList.addAll(subscriptionList2);
+
 			//ListViewを更新する。
-			adapter.notifyDataSetChanged();
+			listAdapter.notifyDataSetChanged();
 		}
 	}
 }
