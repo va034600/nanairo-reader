@@ -4,7 +4,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import roboguice.activity.RoboListActivity;
+import android.app.ListActivity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -18,14 +18,15 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+import eu.nanairo_reader.NanairoApplication;
 import eu.nanairo_reader.R;
 import eu.nanairo_reader.bean.Subscription;
 import eu.nanairo_reader.business.service.RssService;
 import eu.nanairo_reader.ui.service.SampleService;
 
-public class SubscriptionListActivity extends RoboListActivity {
+public class SubscriptionListActivity extends ListActivity {
 	@Inject
-	private RssService rssService;
+	RssService rssService;
 
 	private MyServiceReceiver receiver = new MyServiceReceiver();
 
@@ -36,6 +37,10 @@ public class SubscriptionListActivity extends RoboListActivity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+
+		((NanairoApplication) getApplication()).inject(this);
+		((NanairoApplication) getApplication()).inject(this.rssService);
+
 		setContentView(R.layout.subscription_list);
 
 		// ListAdapterの更新

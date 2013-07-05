@@ -2,19 +2,20 @@ package eu.nanairo_reader.ui.service;
 
 import javax.inject.Inject;
 
-import roboguice.service.RoboService;
+import android.app.Service;
 import android.content.Intent;
 import android.os.Binder;
 import android.os.IBinder;
 import android.widget.Toast;
+import eu.nanairo_reader.NanairoApplication;
 import eu.nanairo_reader.business.service.RssService;
 
 // Serviceクラスを拡張したクラスを作成
-public class SampleService extends RoboService {
+public class SampleService extends Service {
 	public static final String ACTION = "SampleService";
 
 	@Inject
-	private RssService rssService;
+	RssService rssService;
 
 	@Override
 	public IBinder onBind(Intent intent) {
@@ -32,6 +33,10 @@ public class SampleService extends RoboService {
 	@Override
 	public void onStart(Intent intent, int startId) {
 		super.onStart(intent, startId);
+
+		((NanairoApplication) getApplication()).inject(this);
+		((NanairoApplication) getApplication()).inject(this.rssService);
+
 		// 開始時にトーストを表示
 		Toast.makeText(this, "サービスを開始しました！", Toast.LENGTH_SHORT).show();
 		Thread t = new Thread() {

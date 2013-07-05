@@ -4,7 +4,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import roboguice.activity.RoboListActivity;
+import android.app.ListActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,18 +15,23 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.TextView;
+import eu.nanairo_reader.NanairoApplication;
 import eu.nanairo_reader.R;
 import eu.nanairo_reader.bean.Article;
 import eu.nanairo_reader.bean.Subscription;
 import eu.nanairo_reader.business.service.RssService;
 
-public class ArticleListActivity extends RoboListActivity {
+public class ArticleListActivity extends ListActivity {
 	@Inject
-	private RssService rssService;
+	RssService rssService;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+
+		((NanairoApplication) getApplication()).inject(this);
+		((NanairoApplication) getApplication()).inject(this.rssService);
+
 		setContentView(R.layout.article_list);
 
 		Intent intent = getIntent();

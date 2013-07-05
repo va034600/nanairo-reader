@@ -5,28 +5,28 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import eu.nanairo_reader.bean.FeedItem;
 import eu.nanairo_reader.bean.Article;
+import eu.nanairo_reader.bean.FeedItem;
 import eu.nanairo_reader.bean.Subscription;
 import eu.nanairo_reader.data.dao.ArticleDao;
-import eu.nanairo_reader.data.dao.SubscriptionDao;
 import eu.nanairo_reader.data.dao.SubscriptionArticleDao;
+import eu.nanairo_reader.data.dao.SubscriptionDao;
 import eu.nanairo_reader.data.entity.ArticleEntity;
-import eu.nanairo_reader.data.entity.SubscriptionEntity;
 import eu.nanairo_reader.data.entity.SubscriptionArticleEntity;
+import eu.nanairo_reader.data.entity.SubscriptionEntity;
 
 public class RssServiceImpl implements RssService {
 	@Inject
-	private SubscriptionDao subscriptionDao;
+	SubscriptionDao subscriptionDao;
 
 	@Inject
-	private ArticleDao articleDao;
+	ArticleDao articleDao;
 
 	@Inject
-	private SubscriptionArticleDao subscriptionArticleDao;
+	SubscriptionArticleDao subscriptionArticleDao;
 
 	@Inject
-	private RssParsingService rssParsingService;
+	RssParsingService rssParsingService;
 
 	public List<Subscription> getSubscriptionList() {
 		List<Subscription> result = new ArrayList<Subscription>();
@@ -69,7 +69,7 @@ public class RssServiceImpl implements RssService {
 				articleEntity.setTitle(feedItem.getTitle());
 				articleEntity.setContent(feedItem.getContent());
 				articleEntity.setLink(feedItem.getUri());
-				//TODO マジックNo
+				// TODO マジックNo
 				articleEntity.setMidoku(1);
 				// TODO
 
