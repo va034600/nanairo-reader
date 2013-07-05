@@ -36,7 +36,7 @@ public class SampleService extends RoboService {
 		Toast.makeText(this, "サービスを開始しました！", Toast.LENGTH_SHORT).show();
 		Thread t = new Thread() {
 			public void run() {
-				SampleService.this.rssService.storeItems();
+				SampleService.this.rssService.storeArticles();
 
 				Intent intent = new Intent(ACTION);
 				intent.putExtra("count", 55);

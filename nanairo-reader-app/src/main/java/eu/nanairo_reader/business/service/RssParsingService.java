@@ -5,5 +5,5 @@ import java.util.List;
 import eu.nanairo_reader.bean.FeedItem;
 
 public interface RssParsingService {
-	List<FeedItem> getItemList(String rss);
+	List<FeedItem> getArticleList(String rss);
 }

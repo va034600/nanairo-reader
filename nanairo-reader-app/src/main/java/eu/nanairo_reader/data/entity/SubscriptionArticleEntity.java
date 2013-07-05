@@ -5,12 +5,12 @@ package eu.nanairo_reader.data.entity;
  * @author eisakuu
  * 
  */
-public class SubscriptionItemEntity {
+public class SubscriptionArticleEntity {
 	/***/
 	private Long subscriptionId;
 
 	/***/
-	private Long itemId;
+	private Long articleId;
 
 	public Long getSubscriptionId() {
 		return subscriptionId;
@@ -20,11 +20,11 @@ public class SubscriptionItemEntity {
 		this.subscriptionId = subscriptionId;
 	}
 
-	public Long getItemId() {
-		return itemId;
+	public Long getArticleId() {
+		return articleId;
 	}
 
-	public void setItemId(Long itemId) {
-		this.itemId = itemId;
+	public void setArticleId(Long articleId) {
+		this.articleId = articleId;
 	}
 }

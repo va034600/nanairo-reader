@@ -9,15 +9,15 @@ import eu.nanairo_reader.business.service.RssParsingService;
 import eu.nanairo_reader.business.service.RssParsingServiceMock;
 import eu.nanairo_reader.business.service.RssService;
 import eu.nanairo_reader.business.service.RssServiceImpl;
-import eu.nanairo_reader.data.dao.ItemDao;
-import eu.nanairo_reader.data.dao.ItemDaoImpl;
-import eu.nanairo_reader.data.dao.ItemDaoMock;
+import eu.nanairo_reader.data.dao.ArticleDao;
+import eu.nanairo_reader.data.dao.ArticleDaoImpl;
+import eu.nanairo_reader.data.dao.ArticleDaoMock;
 import eu.nanairo_reader.data.dao.SubscriptionDao;
 import eu.nanairo_reader.data.dao.SubscriptionDaoImpl;
 import eu.nanairo_reader.data.dao.SubscriptionDaoMock;
-import eu.nanairo_reader.data.dao.SubscriptionItemDao;
-import eu.nanairo_reader.data.dao.SubscriptionItemDaoImpl;
-import eu.nanairo_reader.data.dao.SubscriptionItemDaoMock;
+import eu.nanairo_reader.data.dao.SubscriptionArticleDao;
+import eu.nanairo_reader.data.dao.SubscriptionArticleDaoImpl;
+import eu.nanairo_reader.data.dao.SubscriptionArticleDaoMock;
 
 public class GuiceModule extends AbstractModule {
 	@Override
@@ -38,17 +38,17 @@ public class GuiceModule extends AbstractModule {
 			subscriptionDaoImpl.setDb(db);
 			bind(SubscriptionDao.class).toInstance(subscriptionDaoImpl);
 
-			ItemDaoImpl itemDaoImpl = new ItemDaoImpl();
-			itemDaoImpl.setDb(db);
-			bind(ItemDao.class).toInstance(itemDaoImpl);
+			ArticleDaoImpl articleDaoImpl = new ArticleDaoImpl();
+			articleDaoImpl.setDb(db);
+			bind(ArticleDao.class).toInstance(articleDaoImpl);
 
-			SubscriptionItemDaoImpl subscriptionItemDaoImpl = new SubscriptionItemDaoImpl();
-			subscriptionItemDaoImpl.setDb(db);
-			bind(SubscriptionItemDao.class).toInstance(subscriptionItemDaoImpl);
+			SubscriptionArticleDaoImpl subscriptionArticleDaoImpl = new SubscriptionArticleDaoImpl();
+			subscriptionArticleDaoImpl.setDb(db);
+			bind(SubscriptionArticleDao.class).toInstance(subscriptionArticleDaoImpl);
 		} else {
 			bind(SubscriptionDao.class).to(SubscriptionDaoMock.class);
-			bind(ItemDao.class).to(ItemDaoMock.class);
-			bind(SubscriptionItemDao.class).to(SubscriptionItemDaoMock.class);
+			bind(ArticleDao.class).to(ArticleDaoMock.class);
+			bind(SubscriptionArticleDao.class).to(SubscriptionArticleDaoMock.class);
 		}
 	}
 }

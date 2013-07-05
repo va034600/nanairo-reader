@@ -17,8 +17,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	public void onCreate(SQLiteDatabase db) {
 		// テーブル作成処理
 		createSubscription(db);
-		createSubscriptionItem(db);
-		createItem(db);
+		createSubscriptionArticle(db);
+		createArticle(db);
 	}
 
 	private void createSubscription(SQLiteDatabase db) {
@@ -35,16 +35,16 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		//db.execSQL("INSERT INTO SUBSCRIPTION (TITLE, URL) VALUES('注目ま','http://matome.naver.jp/feed/hot');");
 	}
 
-	private void createSubscriptionItem(SQLiteDatabase db) {
-		String sql = "CREATE TABLE SUBSCRIPTION_ITEM (";
+	private void createSubscriptionArticle(SQLiteDatabase db) {
+		String sql = "CREATE TABLE SUBSCRIPTION_ARTICLE (";
 		sql += "SUBSCRIPTION_ID INTEGER, ";
-		sql += "ITEM_ID INTEGER, ";
-		sql += "PRIMARY KEY(SUBSCRIPTION_ID, ITEM_ID));";
+		sql += "ARTICLE_ID INTEGER, ";
+		sql += "PRIMARY KEY(SUBSCRIPTION_ID, ARTICLE_ID));";
 		db.execSQL(sql);
 	}
 
-	private void createItem(SQLiteDatabase db) {
-		String sql = "CREATE TABLE ITEM (";
+	private void createArticle(SQLiteDatabase db) {
+		String sql = "CREATE TABLE ARTICLE (";
 		sql += "ID INTEGER PRIMARY KEY AUTOINCREMENT, ";
 		sql += "TITLE TEXT, ";
 		sql += "CONTENT TEXT, ";

@@ -20,7 +20,7 @@ import eu.nanairo_reader.bean.FeedItem;
 
 public class RssParsingServiceImpl implements RssParsingService {
 	@Override
-	public List<FeedItem> getItemList(String rss) {
+	public List<FeedItem> getArticleList(String rss) {
 		Log.i("rss start", rss);
 
 		List<FeedItem> result = new ArrayList<FeedItem>();

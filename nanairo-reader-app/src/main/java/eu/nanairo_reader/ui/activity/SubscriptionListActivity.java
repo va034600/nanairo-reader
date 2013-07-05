@@ -90,7 +90,7 @@ public class SubscriptionListActivity extends RoboListActivity {
 				mButton.setOnClickListener(new OnClickListener() {
 					public void onClick(View v) {
 						// インテントのインスタンス生成
-						Intent intent = new Intent(SubscriptionListActivity.this, ItemListActivity.class);
+						Intent intent = new Intent(SubscriptionListActivity.this, ArticleListActivity.class);
 						intent.putExtra("subscription", subscription);
 						startActivity(intent);
 					}

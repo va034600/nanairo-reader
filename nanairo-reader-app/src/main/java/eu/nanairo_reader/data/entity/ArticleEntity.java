@@ -5,7 +5,7 @@ package eu.nanairo_reader.data.entity;
  * @author eisakuu
  * 
  */
-public class ItemEntity {
+public class ArticleEntity {
 	/***/
 	private Long id;
 

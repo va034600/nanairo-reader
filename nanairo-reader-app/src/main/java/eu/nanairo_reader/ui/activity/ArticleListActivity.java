@@ -16,33 +16,33 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.TextView;
 import eu.nanairo_reader.R;
-import eu.nanairo_reader.bean.Item;
+import eu.nanairo_reader.bean.Article;
 import eu.nanairo_reader.bean.Subscription;
 import eu.nanairo_reader.business.service.RssService;
 
-public class ItemListActivity extends RoboListActivity {
+public class ArticleListActivity extends RoboListActivity {
 	@Inject
 	private RssService rssService;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.item_list);
+		setContentView(R.layout.article_list);
 
 		Intent intent = getIntent();
 		Subscription subscription = (Subscription) intent.getSerializableExtra("subscription");
-		List<Item> list = this.rssService.getItemList(subscription.getId());
+		List<Article> list = this.rssService.getArticleList(subscription.getId());
 		ListAdapter adapter = new ListAdapter(getApplicationContext(), list);
 
 		setListAdapter(adapter);
 	}
 
-	class ListAdapter extends ArrayAdapter<Item> {
+	class ListAdapter extends ArrayAdapter<Article> {
 		private LayoutInflater mInflater;
 		private TextView mTitle;
 		private Button mButton;
 
-		public ListAdapter(Context context, List<Item> objects) {
+		public ListAdapter(Context context, List<Article> objects) {
 			super(context, 0, objects);
 			mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		}
@@ -51,15 +51,15 @@ public class ItemListActivity extends RoboListActivity {
 			if (convertView == null) {
 				convertView = mInflater.inflate(R.layout.subscription_row, null);
 			}
-			final Item item = this.getItem(position);
-			if (item != null) {
+			final Article article = this.getItem(position);
+			if (article != null) {
 				mTitle = (TextView) convertView.findViewById(R.id.nameText);
-				mTitle.setText(item.getTitle());
+				mTitle.setText(article.getTitle());
 				mButton = (Button) convertView.findViewById(R.id.detailButton);
 				mButton.setOnClickListener(new OnClickListener() {
 					public void onClick(View v) {
-						Intent intent = new Intent(ItemListActivity.this, ItemActivity.class);
-						intent.putExtra("item", item);
+						Intent intent = new Intent(ArticleListActivity.this, ArticleActivity.class);
+						intent.putExtra("article", article);
 						startActivity(intent);
 					}
 				});

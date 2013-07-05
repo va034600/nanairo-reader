@@ -7,7 +7,7 @@ import eu.nanairo_reader.bean.FeedItem;
 
 public class RssParsingServiceMock implements RssParsingService {
 	@Override
-	public List<FeedItem> getItemList(String rss) {
+	public List<FeedItem> getArticleList(String rss) {
 		List<FeedItem> result = new ArrayList<FeedItem>();
 
 		FeedItem feedItem = new FeedItem();

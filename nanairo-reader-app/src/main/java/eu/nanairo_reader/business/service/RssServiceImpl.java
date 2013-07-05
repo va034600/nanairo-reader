@@ -6,24 +6,24 @@ import java.util.List;
 import javax.inject.Inject;
 
 import eu.nanairo_reader.bean.FeedItem;
-import eu.nanairo_reader.bean.Item;
+import eu.nanairo_reader.bean.Article;
 import eu.nanairo_reader.bean.Subscription;
-import eu.nanairo_reader.data.dao.ItemDao;
+import eu.nanairo_reader.data.dao.ArticleDao;
 import eu.nanairo_reader.data.dao.SubscriptionDao;
-import eu.nanairo_reader.data.dao.SubscriptionItemDao;
-import eu.nanairo_reader.data.entity.ItemEntity;
+import eu.nanairo_reader.data.dao.SubscriptionArticleDao;
+import eu.nanairo_reader.data.entity.ArticleEntity;
 import eu.nanairo_reader.data.entity.SubscriptionEntity;
-import eu.nanairo_reader.data.entity.SubscriptionItemEntity;
+import eu.nanairo_reader.data.entity.SubscriptionArticleEntity;
 
 public class RssServiceImpl implements RssService {
 	@Inject
 	private SubscriptionDao subscriptionDao;
 
 	@Inject
-	private ItemDao itemDao;
+	private ArticleDao articleDao;
 
 	@Inject
-	private SubscriptionItemDao subscriptionItemDao;
+	private SubscriptionArticleDao subscriptionArticleDao;
 
 	@Inject
 	private RssParsingService rssParsingService;
@@ -36,7 +36,7 @@ public class RssServiceImpl implements RssService {
 			subscription.setId(entity.getId());
 			subscription.setTitle(entity.getTitle());
 			subscription.setUrl(entity.getUrl());
-			int midokuCount = this.itemDao.getMidokuCount(entity.getId());
+			int midokuCount = this.articleDao.getMidokuCount(entity.getId());
 			subscription.setMidokuCount(midokuCount);
 
 			result.add(subscription);
@@ -45,41 +45,41 @@ public class RssServiceImpl implements RssService {
 	}
 
 	@Override
-	public List<Item> getItemList(long id) {
-		List<Item> result = new ArrayList<Item>();
-		for (ItemEntity entity : this.itemDao.getList(id)) {
-			Item item = new Item();
+	public List<Article> getArticleList(long id) {
+		List<Article> result = new ArrayList<Article>();
+		for (ArticleEntity entity : this.articleDao.getList(id)) {
+			Article article = new Article();
 
-			item.setTitle(entity.getTitle());
-			item.setContent(entity.getContent());
-			item.setLink(entity.getLink());
+			article.setTitle(entity.getTitle());
+			article.setContent(entity.getContent());
+			article.setLink(entity.getLink());
 
-			result.add(item);
+			result.add(article);
 		}
 		return result;
 	}
 
 	@Override
-	public void storeItems() {
+	public void storeArticles() {
 		for (SubscriptionEntity entity : this.subscriptionDao.getList()) {
-			List<FeedItem> feedItemList = this.rssParsingService.getItemList(entity.getUrl());
+			List<FeedItem> feedItemList = this.rssParsingService.getArticleList(entity.getUrl());
 			for (FeedItem feedItem : feedItemList) {
-				ItemEntity itemEntity = new ItemEntity();
+				ArticleEntity articleEntity = new ArticleEntity();
 
-				itemEntity.setTitle(feedItem.getTitle());
-				itemEntity.setContent(feedItem.getContent());
-				itemEntity.setLink(feedItem.getUri());
+				articleEntity.setTitle(feedItem.getTitle());
+				articleEntity.setContent(feedItem.getContent());
+				articleEntity.setLink(feedItem.getUri());
 				//TODO マジックNo
-				itemEntity.setMidoku(1);
+				articleEntity.setMidoku(1);
 				// TODO
 
-				long itemId = this.itemDao.add(itemEntity);
+				long articleId = this.articleDao.add(articleEntity);
 
 				// TODO
-				SubscriptionItemEntity subscriptionItemEntity = new SubscriptionItemEntity();
-				subscriptionItemEntity.setSubscriptionId(entity.getId());
-				subscriptionItemEntity.setItemId(itemId);
-				this.subscriptionItemDao.add(subscriptionItemEntity);
+				SubscriptionArticleEntity subscriptionArticleEntity = new SubscriptionArticleEntity();
+				subscriptionArticleEntity.setSubscriptionId(entity.getId());
+				subscriptionArticleEntity.setArticleId(articleId);
+				this.subscriptionArticleDao.add(subscriptionArticleEntity);
 			}
 		}
 	}
