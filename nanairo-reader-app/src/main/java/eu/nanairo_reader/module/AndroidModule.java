@@ -25,17 +25,13 @@ import eu.nanairo_reader.ui.service.SampleService;
 
 		SampleService.class, 
 
-		//RssService.class,
+		//TODO
 		RssServiceImpl.class,
-		//RssParsingService.class, 
-		RssParsingServiceMock.class, 
-		
-		//SubscriptionDao.class, 
-		SubscriptionDaoImpl.class, 
-		//SubscriptionArticleDao.class,
-		SubscriptionArticleDaoImpl.class,
-		//ArticleDao.class, 
-		ArticleDaoImpl.class 
+		RssParsingService.class, 
+
+		SubscriptionDao.class, 
+		SubscriptionArticleDao.class,
+		ArticleDao.class 
 		})
 public class AndroidModule {
 	private final NanairoApplication application;
