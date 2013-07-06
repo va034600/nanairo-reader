@@ -14,35 +14,31 @@ public class NanairoApplication extends Application {
 	// データベースの宣言
 	private SQLiteDatabase db;
 
-	private ObjectGraph applicationGraph;
+	private ObjectGraph objectGraph;
 
 	@Override
 	public void onCreate() {
 		super.onCreate();
-		helper = new DatabaseHelper(this);
+		this.helper = new DatabaseHelper(this);
 
 		// データベースをオープン
-		db = helper.getWritableDatabase();
+		db = this.helper.getWritableDatabase();
 
-		applicationGraph = ObjectGraph.create(getModules().toArray());
+		this.objectGraph = ObjectGraph.create(getModules().toArray());
 	}
 
 	protected List<Object> getModules() {
 		return Arrays.<Object> asList(new AndroidModule(this));
 	}
 
-	ObjectGraph getApplicationGraph() {
-		return applicationGraph;
-	}
-
 	@Override
 	public void onTerminate() {
 		super.onTerminate();
-		helper.close();
+		this.helper.close();
 	}
 
 	public void inject(Object object) {
-		applicationGraph.inject(object);
+		this.objectGraph.inject(object);
 	}
 
 	public SQLiteDatabase getDb() {
