@@ -15,18 +15,25 @@
         android:layout_height="wrap_content" >
 
         <Button
-            android:id="@+id/android:updateButton"
+            android:id="@+id/updateButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
             android:text="@string/update" />
 
         <Button
-            android:id="@+id/android:allCheckButton"
+            android:id="@+id/allCheckButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
             android:text="@string/all_check" />
-    </LinearLayout>
+
+        <Button
+            android:id="@+id/entryButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:text="@string/plus" />
+        </LinearLayout>
 
 </LinearLayout>

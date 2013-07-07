@@ -18,6 +18,10 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".ui.activity.SubscriptionEntryActivity"
+            android:label="@string/app_name" >
+        </activity>
+        <activity
             android:name=".ui.activity.ArticleListActivity"
             android:label="@string/app_name" >
         </activity>

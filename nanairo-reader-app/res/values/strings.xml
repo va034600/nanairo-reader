@@ -5,5 +5,7 @@
     <string name="detail">詳細</string>
     <string name="update">更新</string>
     <string name="all_check">全チェック</string>
+    <string name="entry">登録</string>
+    <string name="plus">＋</string>
     
 </resources>

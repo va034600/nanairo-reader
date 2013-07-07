@@ -28,11 +28,11 @@ public class ArticleListActivity extends ListActivity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		
+		setContentView(R.layout.article_list);
 
 		((NanairoApplication) getApplication()).inject(this);
 		((NanairoApplication) getApplication()).inject(this.rssService);
-
-		setContentView(R.layout.article_list);
 
 		Intent intent = getIntent();
 		Subscription subscription = (Subscription) intent.getSerializableExtra("subscription");

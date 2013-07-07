@@ -38,18 +38,18 @@ public class SubscriptionListActivity extends ListActivity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
+		setContentView(R.layout.subscription_list);
+
 		((NanairoApplication) getApplication()).inject(this);
 		((NanairoApplication) getApplication()).inject(this.rssService);
-
-		setContentView(R.layout.subscription_list);
 
 		// ListAdapterの更新
 		subscriptionList = this.rssService.getSubscriptionList();
 		listAdapter = new ListAdapter(getApplicationContext(), subscriptionList);
 		setListAdapter(listAdapter);
 
-		Button mButton = (Button) findViewById(R.id.android_updateButton);
-		mButton.setOnClickListener(new OnClickListener() {
+		Button updateButton = (Button) findViewById(R.id.updateButton);
+		updateButton.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
 				// サービスの起動
 				Intent intent = new Intent(SubscriptionListActivity.this, SampleService.class);
@@ -58,6 +58,14 @@ public class SubscriptionListActivity extends ListActivity {
 				// レシーバー登録
 				IntentFilter filter = new IntentFilter(SampleService.ACTION);
 				registerReceiver(receiver, filter);
+			}
+		});
+
+		Button entryButton = (Button) findViewById(R.id.entryButton);
+		entryButton.setOnClickListener(new OnClickListener() {
+			public void onClick(View v) {
+				Intent intent = new Intent(SubscriptionListActivity.this, SubscriptionEntryActivity.class);
+				startActivity(intent);
 			}
 		});
 	}

@@ -13,10 +13,10 @@ public class ArticleActivity extends Activity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		
+		setContentView(R.layout.article);
 
 		((NanairoApplication) getApplication()).inject(this);
-
-		setContentView(R.layout.article);
 
 		Intent intent = getIntent();
 		Article article = (Article) intent.getSerializableExtra("article");
