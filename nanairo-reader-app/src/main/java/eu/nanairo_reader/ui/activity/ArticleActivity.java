@@ -14,7 +14,7 @@ public class ArticleActivity extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
-		setContentView(R.layout.article);
+		setContentView(R.layout.article_detail);
 
 		((NanairoApplication) getApplication()).inject(this);
 

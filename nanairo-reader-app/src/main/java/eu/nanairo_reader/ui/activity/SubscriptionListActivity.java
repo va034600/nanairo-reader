@@ -90,7 +90,7 @@ public class SubscriptionListActivity extends ListActivity {
 
 		public View getView(final int position, View convertView, ViewGroup parent) {
 			if (convertView == null) {
-				convertView = mInflater.inflate(R.layout.subscription_row, null);
+				convertView = mInflater.inflate(R.layout.subscription_list_row, null);
 			}
 
 			final Subscription subscription = this.getItem(position);
