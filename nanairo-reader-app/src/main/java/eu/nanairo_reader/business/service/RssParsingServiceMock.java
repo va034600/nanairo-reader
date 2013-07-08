@@ -3,14 +3,14 @@ package eu.nanairo_reader.business.service;
 import java.util.ArrayList;
 import java.util.List;
 
-import eu.nanairo_reader.bean.FeedResult;
 import eu.nanairo_reader.bean.FeedItem;
+import eu.nanairo_reader.bean.FeedResult;
 import eu.nanairo_reader.business.exception.RssParsingException;
 
 public class RssParsingServiceMock implements RssParsingService {
 	@Override
 	public FeedResult getFeedResult(String rss) throws RssParsingException {
-		if(!rss.startsWith("h")){
+		if (!rss.startsWith("h")) {
 			throw new RssParsingException();
 		}
 

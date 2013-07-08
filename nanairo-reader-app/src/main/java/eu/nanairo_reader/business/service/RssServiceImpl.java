@@ -76,12 +76,12 @@ public class RssServiceImpl implements RssService {
 				// 登録済みの場合、登録しない。
 				ArticleEntity articleEntityParameter = new ArticleEntity();
 				articleEntityParameter.setLink(feedItem.getUri());
-				
 				List<ArticleEntity> articleEntitieList = this.articleDao.findList(articleEntityParameter);
 				if(articleEntitieList.size() > 0){
 					continue;
 				}
 
+				// 購読記事を登録する。
 				ArticleEntity articleEntity = new ArticleEntity();
 
 				articleEntity.setTitle(feedItem.getTitle());
@@ -92,6 +92,7 @@ public class RssServiceImpl implements RssService {
 
 				long articleId = this.articleDao.add(articleEntity);
 
+				// 記事を登録する。
 				SubscriptionArticleEntity subscriptionArticleEntity = new SubscriptionArticleEntity();
 				subscriptionArticleEntity.setSubscriptionId(subscriptionEntity.getId());
 				subscriptionArticleEntity.setArticleId(articleId);
