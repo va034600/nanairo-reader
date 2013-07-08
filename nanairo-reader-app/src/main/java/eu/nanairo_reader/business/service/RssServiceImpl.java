@@ -73,6 +73,15 @@ public class RssServiceImpl implements RssService {
 			}
 
 			for (FeedItem feedItem : feed.getFeedItemList()) {
+				// 登録済みの場合、登録しない。
+				ArticleEntity articleEntityParameter = new ArticleEntity();
+				articleEntityParameter.setLink(feedItem.getUri());
+				
+				List<ArticleEntity> articleEntitieList = this.articleDao.findList(articleEntityParameter);
+				if(articleEntitieList.size() > 0){
+					continue;
+				}
+
 				ArticleEntity articleEntity = new ArticleEntity();
 
 				articleEntity.setTitle(feedItem.getTitle());

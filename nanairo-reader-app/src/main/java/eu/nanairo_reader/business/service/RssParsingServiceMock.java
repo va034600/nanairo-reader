@@ -29,7 +29,7 @@ public class RssParsingServiceMock implements RssParsingService {
 		FeedItem feedItem2 = new FeedItem();
 		feedItem2.setTitle("title2");
 		feedItem2.setContent("aa<br>bb");
-		feedItem2.setUri("http://tbn17.com/archives/1764915.html");
+		feedItem2.setUri("http://tbn17.com/archives/1764916.html");
 		feedItemList.add(feedItem2);
 
 		result.setFeedItemList(feedItemList);
