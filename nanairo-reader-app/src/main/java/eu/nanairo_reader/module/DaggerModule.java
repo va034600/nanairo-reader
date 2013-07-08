@@ -35,10 +35,10 @@ import eu.nanairo_reader.ui.service.SampleService;
 		SubscriptionArticleDao.class,
 		ArticleDao.class 
 		})
-public class AndroidModule {
+public class DaggerModule {
 	private final NanairoApplication application;
 
-	public AndroidModule(NanairoApplication application) {
+	public DaggerModule(NanairoApplication application) {
 		this.application = application;
 	}
 

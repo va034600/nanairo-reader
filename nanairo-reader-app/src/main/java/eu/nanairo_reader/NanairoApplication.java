@@ -6,7 +6,7 @@ import java.util.List;
 import android.app.Application;
 import android.database.sqlite.SQLiteDatabase;
 import dagger.ObjectGraph;
-import eu.nanairo_reader.module.AndroidModule;
+import eu.nanairo_reader.module.DaggerModule;
 
 public class NanairoApplication extends Application {
 	// データベースヘルパーの作成
@@ -28,7 +28,7 @@ public class NanairoApplication extends Application {
 	}
 
 	protected List<Object> getModules() {
-		return Arrays.<Object> asList(new AndroidModule(this));
+		return Arrays.<Object> asList(new DaggerModule(this));
 	}
 
 	@Override
