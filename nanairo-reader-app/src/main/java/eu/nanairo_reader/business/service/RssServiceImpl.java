@@ -6,8 +6,8 @@ import java.util.List;
 import javax.inject.Inject;
 
 import eu.nanairo_reader.bean.Article;
-import eu.nanairo_reader.bean.FeedResult;
 import eu.nanairo_reader.bean.FeedItem;
+import eu.nanairo_reader.bean.FeedResult;
 import eu.nanairo_reader.bean.Subscription;
 import eu.nanairo_reader.business.exception.RssParsingException;
 import eu.nanairo_reader.data.dao.ArticleDao;
@@ -68,7 +68,7 @@ public class RssServiceImpl implements RssService {
 			try {
 				feed = this.rssParsingService.getFeedResult(subscriptionEntity.getUrl());
 			} catch (RssParsingException e) {
-				//TODO ログ出力
+				// TODO ログ出力
 				return;
 			}
 
@@ -77,7 +77,7 @@ public class RssServiceImpl implements RssService {
 				ArticleEntity articleEntityParameter = new ArticleEntity();
 				articleEntityParameter.setLink(feedItem.getUri());
 				List<ArticleEntity> articleEntitieList = this.articleDao.findList(articleEntityParameter);
-				if(articleEntitieList.size() > 0){
+				if (articleEntitieList.size() > 0) {
 					continue;
 				}
 
@@ -107,7 +107,7 @@ public class RssServiceImpl implements RssService {
 		try {
 			feedResult = this.rssParsingService.getFeedResult(url);
 		} catch (RssParsingException e) {
-			//TODO ログ出力
+			// TODO ログ出力
 			// feedを取得できない場合、登録しない。
 			return false;
 		}
