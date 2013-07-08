@@ -43,6 +43,10 @@ public class SubscriptionListActivity extends ListActivity {
 		((NanairoApplication) getApplication()).inject(this);
 		((NanairoApplication) getApplication()).inject(this.rssService);
 
+		// レシーバー登録
+		IntentFilter filter = new IntentFilter(SampleService.ACTION);
+		registerReceiver(receiver, filter);
+
 		// ListAdapterの更新
 		subscriptionList = this.rssService.getSubscriptionList();
 		listAdapter = new ListAdapter(getApplicationContext(), subscriptionList);
@@ -54,10 +58,6 @@ public class SubscriptionListActivity extends ListActivity {
 				// サービスの起動
 				Intent intent = new Intent(SubscriptionListActivity.this, SampleService.class);
 				startService(intent);
-
-				// レシーバー登録
-				IntentFilter filter = new IntentFilter(SampleService.ACTION);
-				registerReceiver(receiver, filter);
 			}
 		});
 

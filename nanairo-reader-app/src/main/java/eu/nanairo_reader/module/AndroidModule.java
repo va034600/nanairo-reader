@@ -15,6 +15,7 @@ import eu.nanairo_reader.data.dao.SubscriptionDao;
 import eu.nanairo_reader.data.dao.SubscriptionDaoImpl;
 import eu.nanairo_reader.ui.activity.ArticleActivity;
 import eu.nanairo_reader.ui.activity.ArticleListActivity;
+import eu.nanairo_reader.ui.activity.SubscriptionEntryActivity;
 import eu.nanairo_reader.ui.activity.SubscriptionListActivity;
 import eu.nanairo_reader.ui.service.SampleService;
 
@@ -22,6 +23,7 @@ import eu.nanairo_reader.ui.service.SampleService;
 		SubscriptionListActivity.class, 
 		ArticleListActivity.class,
 		ArticleActivity.class,
+		SubscriptionEntryActivity.class,
 
 		SampleService.class, 
 

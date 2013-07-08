@@ -83,4 +83,13 @@ public class RssServiceImpl implements RssService {
 			}
 		}
 	}
+
+	@Override
+	public void addSubscription(String url) {
+		SubscriptionEntity subscriptionEntity = new SubscriptionEntity();
+		subscriptionEntity.setUrl(url);
+		//TODO rssでTITLEを取得
+		subscriptionEntity.setTitle("test title");
+		this.subscriptionDao.add(subscriptionEntity);
+	}
 }

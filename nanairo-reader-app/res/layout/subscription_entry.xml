@@ -6,20 +6,13 @@
 
     <TableRow>
 
-        <TextView android:text="Title:" />
-
-        <EditText android:id="@+id/titleEditText" />
-    </TableRow>
-
-    <TableRow>
-
         <TextView android:text="Url:" />
 
         <EditText android:id="@+id/urlEditText" />
     </TableRow>
 
     <Button
-        android:id="@+id/entry"
+        android:id="@+id/entryButton"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="Entry" />
