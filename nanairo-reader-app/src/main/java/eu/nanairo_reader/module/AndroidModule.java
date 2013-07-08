@@ -27,7 +27,7 @@ import eu.nanairo_reader.ui.service.SampleService;
 
 		SampleService.class, 
 
-		//TODO
+		//TODO implとりたいよね。
 		RssServiceImpl.class,
 		RssParsingService.class, 
 

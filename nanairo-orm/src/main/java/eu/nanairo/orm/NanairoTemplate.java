@@ -254,12 +254,12 @@ public class NanairoTemplate {
 	}
 
 	public int update(Object entity) {
-		// TODO
+		// TODO 更新処理
 		return 0;
 	}
 
 	public int delete(Object entity) {
-		// TODO
+		// TODO 削除処理
 		return 0;
 	}
 }
