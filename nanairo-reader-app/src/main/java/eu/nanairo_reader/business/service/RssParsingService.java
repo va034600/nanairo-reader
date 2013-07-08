@@ -1,9 +1,7 @@
 package eu.nanairo_reader.business.service;
 
-import java.util.List;
-
-import eu.nanairo_reader.bean.FeedItem;
+import eu.nanairo_reader.bean.FeedResult;
 
 public interface RssParsingService {
-	List<FeedItem> getArticleList(String rss);
+	FeedResult getFeedResult(String rss);
 }

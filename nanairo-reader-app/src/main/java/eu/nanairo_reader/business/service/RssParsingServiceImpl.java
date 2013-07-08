@@ -16,18 +16,21 @@ import com.google.code.rome.android.repackaged.com.sun.syndication.io.FeedExcept
 import com.google.code.rome.android.repackaged.com.sun.syndication.io.SyndFeedInput;
 import com.google.code.rome.android.repackaged.com.sun.syndication.io.XmlReader;
 
+import eu.nanairo_reader.bean.FeedResult;
 import eu.nanairo_reader.bean.FeedItem;
 
 public class RssParsingServiceImpl implements RssParsingService {
 	@Override
-	public List<FeedItem> getArticleList(String rss) {
+	public FeedResult getFeedResult(String rss) {
 		Log.i("rss start", rss);
 
-		List<FeedItem> result = new ArrayList<FeedItem>();
+		FeedResult result = new FeedResult();
+		List<FeedItem> feedItemList = new ArrayList<FeedItem>();
 		try {
 			URL feedUrl = new URL(rss);
 			SyndFeedInput input = new SyndFeedInput();
 			SyndFeed feed = input.build(new XmlReader(feedUrl));
+			
 			List<Object> entries = feed.getEntries();
 			Iterator iterator = entries.listIterator();
 			while (iterator.hasNext()) {
@@ -46,8 +49,9 @@ public class RssParsingServiceImpl implements RssParsingService {
 				feedItem.setFeedType(feed.getFeedType());
 				feedItem.setUri(ent.getUri());
 
-				result.add(feedItem);
+				feedItemList.add(feedItem);
 			}
+			result.setFeedItemList(feedItemList);
 
 		} catch (MalformedURLException e) {
 			// TODO

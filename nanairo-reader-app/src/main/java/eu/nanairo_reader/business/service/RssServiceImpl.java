@@ -6,6 +6,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import eu.nanairo_reader.bean.Article;
+import eu.nanairo_reader.bean.FeedResult;
 import eu.nanairo_reader.bean.FeedItem;
 import eu.nanairo_reader.bean.Subscription;
 import eu.nanairo_reader.data.dao.ArticleDao;
@@ -62,8 +63,8 @@ public class RssServiceImpl implements RssService {
 	@Override
 	public void storeArticles() {
 		for (SubscriptionEntity entity : this.subscriptionDao.getList()) {
-			List<FeedItem> feedItemList = this.rssParsingService.getArticleList(entity.getUrl());
-			for (FeedItem feedItem : feedItemList) {
+			FeedResult feed = this.rssParsingService.getFeedResult(entity.getUrl());
+			for (FeedItem feedItem : feed.getFeedItemList()) {
 				ArticleEntity articleEntity = new ArticleEntity();
 
 				articleEntity.setTitle(feedItem.getTitle());
@@ -71,11 +72,9 @@ public class RssServiceImpl implements RssService {
 				articleEntity.setLink(feedItem.getUri());
 				// TODO マジックNo
 				articleEntity.setMidoku(1);
-				// TODO
 
 				long articleId = this.articleDao.add(articleEntity);
 
-				// TODO
 				SubscriptionArticleEntity subscriptionArticleEntity = new SubscriptionArticleEntity();
 				subscriptionArticleEntity.setSubscriptionId(entity.getId());
 				subscriptionArticleEntity.setArticleId(articleId);
@@ -85,11 +84,17 @@ public class RssServiceImpl implements RssService {
 	}
 
 	@Override
-	public void addSubscription(String url) {
+	public boolean addSubscription(String url) {
+		FeedResult feedResult = this.rssParsingService.getFeedResult(url);
+
+		//TODO feedを取得できない場合、登録しない。
+
 		SubscriptionEntity subscriptionEntity = new SubscriptionEntity();
 		subscriptionEntity.setUrl(url);
-		//TODO rssでTITLEを取得
-		subscriptionEntity.setTitle("test title");
+		subscriptionEntity.setTitle(feedResult.getTitle());
+
 		this.subscriptionDao.add(subscriptionEntity);
+
+		return true;
 	}
 }

@@ -34,9 +34,14 @@ public class SubscriptionEntryActivity extends Activity {
 	private View.OnClickListener onSave = new View.OnClickListener() {
 		public void onClick(View v) {
 			EditText urlEditText = (EditText) findViewById(R.id.urlEditText);
-			rssService.addSubscription(urlEditText.getText().toString());
+			boolean flag = rssService.addSubscription(urlEditText.getText().toString());
 
-			Toast.makeText(getApplicationContext(), "登録", 1000).show();
+			if (!flag) {
+				Toast.makeText(getApplicationContext(), "登録できませんでした。", Toast.LENGTH_SHORT).show();
+				return;
+			}
+
+			Toast.makeText(getApplicationContext(), "登録しました。", Toast.LENGTH_SHORT).show();
 
 			// サービスの起動
 			Intent intent = new Intent(SubscriptionEntryActivity.this, SampleService.class);
