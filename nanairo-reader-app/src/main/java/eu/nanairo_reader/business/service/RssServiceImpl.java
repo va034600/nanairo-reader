@@ -74,31 +74,51 @@ public class RssServiceImpl implements RssService {
 
 			for (FeedItem feedItem : feed.getFeedItemList()) {
 				// 登録済みの場合、登録しない。
-				ArticleEntity articleEntityParameter = new ArticleEntity();
-				articleEntityParameter.setLink(feedItem.getUri());
-				List<ArticleEntity> articleEntitieList = this.articleDao.findList(articleEntityParameter);
-				if (articleEntitieList.size() > 0) {
+				boolean flag = isDuplicated(feedItem.getUri());
+				if (flag) {
 					continue;
 				}
 
 				// 購読記事を登録する。
-				ArticleEntity articleEntity = new ArticleEntity();
-
-				articleEntity.setTitle(feedItem.getTitle());
-				articleEntity.setContent(feedItem.getContent());
-				articleEntity.setLink(feedItem.getUri());
-				// TODO マジックNo
-				articleEntity.setMidoku(1);
-
-				long articleId = this.articleDao.add(articleEntity);
+				long articleId = addArticle(feedItem);
 
 				// 記事を登録する。
-				SubscriptionArticleEntity subscriptionArticleEntity = new SubscriptionArticleEntity();
-				subscriptionArticleEntity.setSubscriptionId(subscriptionEntity.getId());
-				subscriptionArticleEntity.setArticleId(articleId);
-				this.subscriptionArticleDao.add(subscriptionArticleEntity);
+				addSubscriptionArticle(subscriptionEntity.getId(), articleId);
 			}
 		}
+	}
+
+	protected boolean isDuplicated(String uri) {
+		ArticleEntity articleEntityParameter = new ArticleEntity();
+		articleEntityParameter.setLink(uri);
+		List<ArticleEntity> articleEntitieList = this.articleDao.findList(articleEntityParameter);
+		if (articleEntitieList.size() == 0) {
+			return false;
+		} else {
+			return true;
+		}
+	}
+
+	protected long addArticle(FeedItem feedItem) {
+		ArticleEntity articleEntity = new ArticleEntity();
+
+		articleEntity.setTitle(feedItem.getTitle());
+		articleEntity.setContent(feedItem.getContent());
+		articleEntity.setLink(feedItem.getUri());
+		// TODO マジックNo
+		articleEntity.setMidoku(1);
+
+		long articleId = this.articleDao.add(articleEntity);
+
+		return articleId;
+	}
+
+	protected SubscriptionArticleEntity addSubscriptionArticle(long subscriptionId, long articleId) {
+		SubscriptionArticleEntity subscriptionArticleEntity = new SubscriptionArticleEntity();
+		subscriptionArticleEntity.setSubscriptionId(subscriptionId);
+		subscriptionArticleEntity.setArticleId(articleId);
+		this.subscriptionArticleDao.add(subscriptionArticleEntity);
+		return subscriptionArticleEntity;
 	}
 
 	@Override
