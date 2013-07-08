@@ -5,14 +5,19 @@ import java.util.List;
 
 import eu.nanairo_reader.bean.FeedResult;
 import eu.nanairo_reader.bean.FeedItem;
+import eu.nanairo_reader.business.exception.RssParsingException;
 
 public class RssParsingServiceMock implements RssParsingService {
 	@Override
-	public FeedResult getFeedResult(String rss) {
+	public FeedResult getFeedResult(String rss) throws RssParsingException {
+		if(!rss.startsWith("h")){
+			throw new RssParsingException();
+		}
+
 		FeedResult result = new FeedResult();
-		
+
 		result.setTitle("Test Title");
-		
+
 		List<FeedItem> feedItemList = new ArrayList<FeedItem>();
 
 		FeedItem feedItem = new FeedItem();
@@ -28,7 +33,7 @@ public class RssParsingServiceMock implements RssParsingService {
 		feedItemList.add(feedItem2);
 
 		result.setFeedItemList(feedItemList);
-		
+
 		return result;
 	}
 }

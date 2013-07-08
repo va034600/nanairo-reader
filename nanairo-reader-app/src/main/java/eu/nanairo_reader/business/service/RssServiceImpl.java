@@ -9,6 +9,7 @@ import eu.nanairo_reader.bean.Article;
 import eu.nanairo_reader.bean.FeedResult;
 import eu.nanairo_reader.bean.FeedItem;
 import eu.nanairo_reader.bean.Subscription;
+import eu.nanairo_reader.business.exception.RssParsingException;
 import eu.nanairo_reader.data.dao.ArticleDao;
 import eu.nanairo_reader.data.dao.SubscriptionArticleDao;
 import eu.nanairo_reader.data.dao.SubscriptionDao;
@@ -62,8 +63,15 @@ public class RssServiceImpl implements RssService {
 
 	@Override
 	public void storeArticles() {
-		for (SubscriptionEntity entity : this.subscriptionDao.getList()) {
-			FeedResult feed = this.rssParsingService.getFeedResult(entity.getUrl());
+		for (SubscriptionEntity subscriptionEntity : this.subscriptionDao.getList()) {
+			FeedResult feed;
+			try {
+				feed = this.rssParsingService.getFeedResult(subscriptionEntity.getUrl());
+			} catch (RssParsingException e) {
+				//TODO ログ出力
+				return;
+			}
+
 			for (FeedItem feedItem : feed.getFeedItemList()) {
 				ArticleEntity articleEntity = new ArticleEntity();
 
@@ -76,7 +84,7 @@ public class RssServiceImpl implements RssService {
 				long articleId = this.articleDao.add(articleEntity);
 
 				SubscriptionArticleEntity subscriptionArticleEntity = new SubscriptionArticleEntity();
-				subscriptionArticleEntity.setSubscriptionId(entity.getId());
+				subscriptionArticleEntity.setSubscriptionId(subscriptionEntity.getId());
 				subscriptionArticleEntity.setArticleId(articleId);
 				this.subscriptionArticleDao.add(subscriptionArticleEntity);
 			}
@@ -85,9 +93,14 @@ public class RssServiceImpl implements RssService {
 
 	@Override
 	public boolean addSubscription(String url) {
-		FeedResult feedResult = this.rssParsingService.getFeedResult(url);
-
-		//TODO feedを取得できない場合、登録しない。
+		FeedResult feedResult;
+		try {
+			feedResult = this.rssParsingService.getFeedResult(url);
+		} catch (RssParsingException e) {
+			//TODO ログ出力
+			// feedを取得できない場合、登録しない。
+			return false;
+		}
 
 		SubscriptionEntity subscriptionEntity = new SubscriptionEntity();
 		subscriptionEntity.setUrl(url);

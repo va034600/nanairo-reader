@@ -18,10 +18,11 @@ import com.google.code.rome.android.repackaged.com.sun.syndication.io.XmlReader;
 
 import eu.nanairo_reader.bean.FeedResult;
 import eu.nanairo_reader.bean.FeedItem;
+import eu.nanairo_reader.business.exception.RssParsingException;
 
 public class RssParsingServiceImpl implements RssParsingService {
 	@Override
-	public FeedResult getFeedResult(String rss) {
+	public FeedResult getFeedResult(String rss) throws RssParsingException{
 		Log.i("rss start", rss);
 
 		FeedResult result = new FeedResult();
