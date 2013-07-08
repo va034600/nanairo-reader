@@ -79,10 +79,10 @@ public class RssServiceImpl implements RssService {
 					continue;
 				}
 
-				// 購読記事を登録する。
+				// 記事を登録する。
 				long articleId = addArticle(feedItem);
 
-				// 記事を登録する。
+				// 購読記事を登録する。
 				addSubscriptionArticle(subscriptionEntity.getId(), articleId);
 			}
 		}
