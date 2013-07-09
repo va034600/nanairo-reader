@@ -4,7 +4,6 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import android.app.ListActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -21,17 +20,16 @@ import eu.nanairo_reader.bean.Article;
 import eu.nanairo_reader.bean.Subscription;
 import eu.nanairo_reader.business.service.RssService;
 
-public class ArticleListActivity extends ListActivity {
+public class ArticleListActivity extends BaseListActivity {
 	@Inject
 	RssService rssService;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		
+
 		setContentView(R.layout.article_list);
 
-		((NanairoApplication) getApplication()).inject(this);
 		((NanairoApplication) getApplication()).inject(this.rssService);
 
 		Intent intent = getIntent();

@@ -4,7 +4,6 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import android.app.ListActivity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -24,7 +23,7 @@ import eu.nanairo_reader.bean.Subscription;
 import eu.nanairo_reader.business.service.RssService;
 import eu.nanairo_reader.ui.service.SampleService;
 
-public class SubscriptionListActivity extends ListActivity {
+public class SubscriptionListActivity extends BaseListActivity {
 	@Inject
 	RssService rssService;
 
@@ -40,7 +39,6 @@ public class SubscriptionListActivity extends ListActivity {
 
 		setContentView(R.layout.subscription_list);
 
-		((NanairoApplication) getApplication()).inject(this);
 		((NanairoApplication) getApplication()).inject(this.rssService);
 
 		// レシーバー登録

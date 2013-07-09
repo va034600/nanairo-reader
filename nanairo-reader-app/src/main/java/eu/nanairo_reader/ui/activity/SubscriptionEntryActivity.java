@@ -2,7 +2,6 @@ package eu.nanairo_reader.ui.activity;
 
 import javax.inject.Inject;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -14,7 +13,7 @@ import eu.nanairo_reader.R;
 import eu.nanairo_reader.business.service.RssService;
 import eu.nanairo_reader.ui.service.SampleService;
 
-public class SubscriptionEntryActivity extends Activity {
+public class SubscriptionEntryActivity extends BaseActivity {
 	@Inject
 	RssService rssService;
 
@@ -24,7 +23,6 @@ public class SubscriptionEntryActivity extends Activity {
 
 		setContentView(R.layout.subscription_entry);
 
-		((NanairoApplication) getApplication()).inject(this);
 		((NanairoApplication) getApplication()).inject(this.rssService);
 
 		Button entryButton = (Button) findViewById(R.id.entryButton);
