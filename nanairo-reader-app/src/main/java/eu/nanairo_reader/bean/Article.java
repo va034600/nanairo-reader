@@ -10,6 +10,9 @@ import java.io.Serializable;
 @SuppressWarnings("serial")
 public class Article implements Serializable {
 	/***/
+	private long id;
+
+	/***/
 	private String title;
 
 	/***/
@@ -40,5 +43,13 @@ public class Article implements Serializable {
 
 	public void setLink(String link) {
 		this.link = link;
+	}
+
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
 	}
 }

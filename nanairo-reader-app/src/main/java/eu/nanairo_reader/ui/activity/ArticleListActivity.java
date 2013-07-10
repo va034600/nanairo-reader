@@ -1,7 +1,7 @@
 package eu.nanairo_reader.ui.activity;
 
-import static eu.nanairo_reader.ui.constant.NanairoConstant.ARTICLE;
-import static eu.nanairo_reader.ui.constant.NanairoConstant.SUBSCRIPTION;
+import static eu.nanairo_reader.ui.constant.NanairoUiConstant.ARTICLE;
+import static eu.nanairo_reader.ui.constant.NanairoUiConstant.SUBSCRIPTION;
 
 import java.util.List;
 

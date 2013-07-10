@@ -1,5 +1,8 @@
 package eu.nanairo_reader.business.service;
 
+import static eu.nanairo_reader.business.constant.NanairoBusinessConstant.MIDOKU_OFF;
+import static eu.nanairo_reader.business.constant.NanairoBusinessConstant.MIDOKU_ON;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -52,6 +55,7 @@ public class RssServiceImpl implements RssService {
 		for (ArticleEntity entity : this.articleDao.getList(id)) {
 			Article article = new Article();
 
+			article.setId(entity.getId());
 			article.setTitle(entity.getTitle());
 			article.setContent(entity.getContent());
 			article.setLink(entity.getLink());
@@ -105,8 +109,7 @@ public class RssServiceImpl implements RssService {
 		articleEntity.setTitle(feedItem.getTitle());
 		articleEntity.setContent(feedItem.getContent());
 		articleEntity.setLink(feedItem.getUri());
-		// TODO マジックNo
-		articleEntity.setMidoku(1);
+		articleEntity.setMidoku(MIDOKU_ON);
 
 		long articleId = this.articleDao.add(articleEntity);
 
@@ -139,5 +142,12 @@ public class RssServiceImpl implements RssService {
 		this.subscriptionDao.add(subscriptionEntity);
 
 		return true;
+	}
+
+	@Override
+	public void kidoku(long id) {
+		ArticleEntity articleEntity = this.articleDao.findByPrimaryKey(id);
+		articleEntity.setMidoku(MIDOKU_OFF);
+		this.articleDao.update(articleEntity);
 	}
 }

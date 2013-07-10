@@ -1,6 +1,6 @@
 package eu.nanairo_reader.ui.activity;
 
-import static eu.nanairo_reader.ui.constant.NanairoConstant.SUBSCRIPTION;
+import static eu.nanairo_reader.ui.constant.NanairoUiConstant.SUBSCRIPTION;
 import static eu.nanairo_reader.ui.service.SampleService.SAMPLE_SERVICE_ACTION;
 import static eu.nanairo_reader.ui.service.SampleService.MIDOKU_COUNT;
 

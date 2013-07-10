@@ -12,8 +12,14 @@ public abstract class BaseDaoImpl<ENTITY, KEY> extends NanairoDaoSupport impleme
 
 	@Override
 	public ENTITY findByPrimaryKey(KEY key) {
-		// TODO 自動生成されたメソッド・スタブ
-		return null;
+		// TODO パラメータどうする？
+		List<ENTITY> entityList = findList(null);
+
+		if (entityList.size() == 0) {
+			return null;
+		}
+
+		return entityList.get(0);
 	}
 
 	@Override
