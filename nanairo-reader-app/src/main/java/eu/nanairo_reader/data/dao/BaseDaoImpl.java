@@ -60,11 +60,11 @@ public abstract class BaseDaoImpl<ENTITY, KEY> extends NanairoDaoSupport impleme
 
 	@Override
 	public int update(ENTITY entity) {
-		return super.getNanairoTemplate().update(entity);
+		return super.getNanairoTemplate().update(getEntityClass(), entity);
 	}
 
 	@Override
 	public int delete(ENTITY entity) {
-		return super.getNanairoTemplate().delete(entity);
+		return super.getNanairoTemplate().delete(getEntityClass(), entity);
 	}
 }

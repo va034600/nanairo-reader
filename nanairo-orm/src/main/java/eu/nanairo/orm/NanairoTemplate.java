@@ -7,6 +7,7 @@ import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteStatement;
@@ -253,12 +254,51 @@ public class NanairoTemplate {
 		}
 	}
 
-	public int update(Object entity) {
-		// TODO 更新処理
-		return 0;
+	public <RESULT> int update(Class<RESULT> resultClass, Object param) {
+		try {
+			ContentValues values = new ContentValues();
+			Field[] fields = resultClass.getDeclaredFields();
+			for (Field field : fields) {
+				field.setAccessible(true);
+				Object parameter = field.get(param);
+				if (parameter == null) {
+					continue;
+				}
+
+				Class<?> type = field.getType();
+				if (type.equals(Integer.class)) {
+					values.put(field.getName(), (Integer) parameter);
+				} else if (type.equals(Long.class)) {
+					values.put(field.getName(), (Long) parameter);
+				} else if (type.equals(Short.class)) {
+					values.put(field.getName(), (Short) parameter);
+				} else if (type.equals(Float.class)) {
+					values.put(field.getName(), (Float) parameter);
+				} else if (type.equals(Double.class)) {
+					values.put(field.getName(), (Double) parameter);
+				} else if (type.equals(String.class)) {
+					values.put(field.getName(), (String) parameter);
+				} else {
+					values.put(field.getName(), (byte[]) parameter);
+				}
+			}
+
+			String tableName = getTableName(resultClass);
+
+			Field field = resultClass.getDeclaredField("id");
+			field.setAccessible(true);
+			Object id = field.get(param);
+			String[] whereArgs = { id.toString() };
+			// TODO pkをどうするか？
+			String where = "id=?";
+			return db.update(tableName, values, where, whereArgs);
+		} catch (Exception e) {
+			// TODO 自動生成された catch ブロック
+			throw new RuntimeException("error", e);
+		}
 	}
 
-	public int delete(Object entity) {
+	public <RESULT> int delete(Class<RESULT> resultClass, Object entity) {
 		// TODO 削除処理
 		return 0;
 	}
