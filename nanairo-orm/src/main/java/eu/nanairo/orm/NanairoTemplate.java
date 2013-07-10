@@ -254,7 +254,7 @@ public class NanairoTemplate {
 		}
 	}
 
-	public <RESULT> int update(Class<RESULT> resultClass, Object param) {
+	public <RESULT> int update(Class<RESULT> resultClass, RESULT param) {
 		try {
 			ContentValues values = new ContentValues();
 			Field[] fields = resultClass.getDeclaredFields();
@@ -298,8 +298,40 @@ public class NanairoTemplate {
 		}
 	}
 
-	public <RESULT> int delete(Class<RESULT> resultClass, Object entity) {
+	public <RESULT> int delete(Class<RESULT> resultClass, RESULT entity) {
 		// TODO 削除処理
 		return 0;
+	}
+
+	public <RESULT> RESULT findByPrimaryKey(Class<RESULT> resultClass, Object key) {
+		// TODO パラメータどうする？難しい。
+		RESULT param;
+		try {
+			param = resultClass.newInstance();
+			Field field = resultClass.getDeclaredField("id");
+			field.setAccessible(true);
+			field.set(param, key);
+			
+		} catch (InstantiationException e) {
+			// TODO 自動生成された catch ブロック
+			throw new RuntimeException("e", e);
+		} catch (IllegalAccessException e) {
+			// TODO 自動生成された catch ブロック
+			throw new RuntimeException("e", e);
+		} catch (SecurityException e) {
+			// TODO 自動生成された catch ブロック
+			throw new RuntimeException("e", e);
+		} catch (NoSuchFieldException e) {
+			// TODO 自動生成された catch ブロック
+			throw new RuntimeException("e", e);
+		}
+		
+		List<RESULT> entityList = findList(resultClass, param);
+
+		if (entityList.size() == 0) {
+			return null;
+		}
+
+		return entityList.get(0);
 	}
 }
