@@ -13,6 +13,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.TextView;
 import eu.nanairo_reader.NanairoApplication;
 import eu.nanairo_reader.R;
@@ -20,7 +21,7 @@ import eu.nanairo_reader.bean.Article;
 import eu.nanairo_reader.bean.Subscription;
 import eu.nanairo_reader.business.service.RssService;
 
-public class ArticleListActivity extends BaseListActivity {
+public class ArticleListActivity extends BaseActivity {
 	@Inject
 	RssService rssService;
 
@@ -35,9 +36,10 @@ public class ArticleListActivity extends BaseListActivity {
 		Intent intent = getIntent();
 		Subscription subscription = (Subscription) intent.getSerializableExtra("subscription");
 		List<Article> list = this.rssService.getArticleList(subscription.getId());
-		ListAdapter adapter = new ListAdapter(getApplicationContext(), list);
+		ListAdapter listAdapter = new ListAdapter(getApplicationContext(), list);
 
-		setListAdapter(adapter);
+		ListView listView = (ListView) findViewById(R.id.listView);
+		listView.setAdapter(listAdapter);
 	}
 
 	class ListAdapter extends ArrayAdapter<Article> {

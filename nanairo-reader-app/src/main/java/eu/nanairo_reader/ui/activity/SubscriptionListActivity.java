@@ -15,6 +15,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 import eu.nanairo_reader.NanairoApplication;
@@ -23,7 +24,7 @@ import eu.nanairo_reader.bean.Subscription;
 import eu.nanairo_reader.business.service.RssService;
 import eu.nanairo_reader.ui.service.SampleService;
 
-public class SubscriptionListActivity extends BaseListActivity {
+public class SubscriptionListActivity extends BaseActivity {
 	@Inject
 	RssService rssService;
 
@@ -48,7 +49,9 @@ public class SubscriptionListActivity extends BaseListActivity {
 		// ListAdapterの更新
 		subscriptionList = this.rssService.getSubscriptionList();
 		listAdapter = new ListAdapter(getApplicationContext(), subscriptionList);
-		setListAdapter(listAdapter);
+
+		ListView listView = (ListView) findViewById(R.id.listView);
+		listView.setAdapter(listAdapter);
 
 		Button updateButton = (Button) findViewById(R.id.updateButton);
 		updateButton.setOnClickListener(new OnClickListener() {
@@ -124,7 +127,8 @@ public class SubscriptionListActivity extends BaseListActivity {
 			subscriptionList.addAll(subscriptionList2);
 
 			// ListViewを更新する。
-			listAdapter.notifyDataSetChanged();
+			ListView listView = (ListView) findViewById(R.id.listView);
+			((ListAdapter)listView.getAdapter()).notifyDataSetChanged();
 		}
 	}
 }
