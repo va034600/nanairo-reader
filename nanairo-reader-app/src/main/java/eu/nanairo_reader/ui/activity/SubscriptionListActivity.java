@@ -4,6 +4,7 @@ import static eu.nanairo_reader.ui.constant.NanairoUiConstant.SUBSCRIPTION;
 import static eu.nanairo_reader.ui.service.SampleService.SAMPLE_SERVICE_ACTION;
 import static eu.nanairo_reader.ui.service.SampleService.MIDOKU_COUNT;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -34,7 +35,7 @@ public class SubscriptionListActivity extends BaseActivity {
 
 	private MyServiceReceiver receiver = new MyServiceReceiver();
 
-	private List<Subscription> subscriptionList;
+	private List<Subscription> subscriptionList = new ArrayList<Subscription>();
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -49,8 +50,7 @@ public class SubscriptionListActivity extends BaseActivity {
 		registerReceiver(receiver, filter);
 
 		// ListView
-		subscriptionList = this.rssService.getSubscriptionList();
-		SubscriptionArrayAdapter listAdapter = new SubscriptionArrayAdapter(getApplicationContext(), subscriptionList);
+		SubscriptionArrayAdapter listAdapter = new SubscriptionArrayAdapter(getApplicationContext(), this.subscriptionList);
 		ListView listView = (ListView) findViewById(R.id.listView);
 		listView.setAdapter(listAdapter);
 
@@ -72,6 +72,11 @@ public class SubscriptionListActivity extends BaseActivity {
 				startActivity(intent);
 			}
 		});
+	}
+
+	@Override
+	protected void onResume() {
+		super.onResume();
 	}
 
 	@Override
@@ -119,6 +124,15 @@ public class SubscriptionListActivity extends BaseActivity {
 		}
 	}
 
+	private void rebuildSubscriptionList() {
+		// TODO 未読数を更新する。要リファクタリング
+		List<Subscription> subscriptionList2 = SubscriptionListActivity.this.rssService.getSubscriptionList();
+		this.subscriptionList.clear();
+		this.subscriptionList.addAll(subscriptionList2);
+		ListView listView = (ListView) findViewById(R.id.listView);
+		((SubscriptionArrayAdapter) listView.getAdapter()).notifyDataSetChanged();
+	}
+
 	// Receiverクラス
 	class MyServiceReceiver extends BroadcastReceiver {
 		@Override
@@ -126,13 +140,8 @@ public class SubscriptionListActivity extends BaseActivity {
 			int count = intent.getIntExtra(MIDOKU_COUNT, 0);
 			Toast.makeText(SubscriptionListActivity.this, "更新件数:" + count, Toast.LENGTH_SHORT).show();
 
-			// ListViewを更新する。
-			// TODO 未読数を更新する。要リファクタリング
-			List<Subscription> subscriptionList2 = SubscriptionListActivity.this.rssService.getSubscriptionList();
-			subscriptionList.clear();
-			subscriptionList.addAll(subscriptionList2);
-			ListView listView = (ListView) findViewById(R.id.listView);
-			((SubscriptionArrayAdapter) listView.getAdapter()).notifyDataSetChanged();
+			//購読一覧を構築
+			rebuildSubscriptionList();
 		}
 	}
 }
