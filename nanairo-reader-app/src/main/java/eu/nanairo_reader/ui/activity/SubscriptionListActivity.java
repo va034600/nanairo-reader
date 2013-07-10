@@ -32,8 +32,6 @@ public class SubscriptionListActivity extends BaseActivity {
 
 	private List<Subscription> subscriptionList;
 
-	private ListAdapter listAdapter;
-
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -48,7 +46,7 @@ public class SubscriptionListActivity extends BaseActivity {
 
 		// ListAdapterの更新
 		subscriptionList = this.rssService.getSubscriptionList();
-		listAdapter = new ListAdapter(getApplicationContext(), subscriptionList);
+		SubscriptionArrayAdapter listAdapter = new SubscriptionArrayAdapter(getApplicationContext(), subscriptionList);
 
 		ListView listView = (ListView) findViewById(R.id.listView);
 		listView.setAdapter(listAdapter);
@@ -78,13 +76,13 @@ public class SubscriptionListActivity extends BaseActivity {
 		super.onDestroy();
 	}
 
-	class ListAdapter extends ArrayAdapter<Subscription> {
+	class SubscriptionArrayAdapter extends ArrayAdapter<Subscription> {
 		private LayoutInflater mInflater;
 		private TextView mTitle;
 		private TextView mCount;
 		private Button mButton;
 
-		public ListAdapter(Context context, List<Subscription> objects) {
+		public SubscriptionArrayAdapter(Context context, List<Subscription> objects) {
 			super(context, 0, objects);
 			mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		}
@@ -128,7 +126,7 @@ public class SubscriptionListActivity extends BaseActivity {
 
 			// ListViewを更新する。
 			ListView listView = (ListView) findViewById(R.id.listView);
-			((ListAdapter)listView.getAdapter()).notifyDataSetChanged();
+			((SubscriptionArrayAdapter) listView.getAdapter()).notifyDataSetChanged();
 		}
 	}
 }
