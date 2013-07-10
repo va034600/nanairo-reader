@@ -54,6 +54,9 @@ public class SubscriptionListActivity extends BaseActivity {
 		ListView listView = (ListView) findViewById(R.id.listView);
 		listView.setAdapter(listAdapter);
 
+		//購読一覧を構築
+		rebuildSubscriptionList();
+
 		// 更新ボタン
 		Button updateButton = (Button) findViewById(R.id.updateButton);
 		updateButton.setOnClickListener(new OnClickListener() {
