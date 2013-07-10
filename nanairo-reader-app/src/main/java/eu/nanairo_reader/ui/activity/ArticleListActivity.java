@@ -1,5 +1,8 @@
 package eu.nanairo_reader.ui.activity;
 
+import static eu.nanairo_reader.ui.constant.NanairoConstant.ARTICLE;
+import static eu.nanairo_reader.ui.constant.NanairoConstant.SUBSCRIPTION;
+
 import java.util.List;
 
 import javax.inject.Inject;
@@ -33,19 +36,19 @@ public class ArticleListActivity extends BaseActivity {
 
 		((NanairoApplication) getApplication()).inject(this.rssService);
 
+		// パラメータ取得
 		Intent intent = getIntent();
-		Subscription subscription = (Subscription) intent.getSerializableExtra("subscription");
+		Subscription subscription = (Subscription) intent.getSerializableExtra(SUBSCRIPTION);
+
+		// ListView
 		List<Article> list = this.rssService.getArticleList(subscription.getId());
 		ListAdapter listAdapter = new ListAdapter(getApplicationContext(), list);
-
 		ListView listView = (ListView) findViewById(R.id.listView);
 		listView.setAdapter(listAdapter);
 	}
 
 	class ListAdapter extends ArrayAdapter<Article> {
 		private LayoutInflater mInflater;
-		private TextView mTitle;
-		private Button mButton;
 
 		public ListAdapter(Context context, List<Article> objects) {
 			super(context, 0, objects);
@@ -58,13 +61,16 @@ public class ArticleListActivity extends BaseActivity {
 			}
 			final Article article = this.getItem(position);
 			if (article != null) {
-				mTitle = (TextView) convertView.findViewById(R.id.nameText);
+				// タイトル
+				TextView mTitle = (TextView) convertView.findViewById(R.id.nameText);
 				mTitle.setText(article.getTitle());
-				mButton = (Button) convertView.findViewById(R.id.detailButton);
+
+				// 詳細ボタン
+				Button mButton = (Button) convertView.findViewById(R.id.detailButton);
 				mButton.setOnClickListener(new OnClickListener() {
 					public void onClick(View v) {
 						Intent intent = new Intent(ArticleListActivity.this, ArticleActivity.class);
-						intent.putExtra("article", article);
+						intent.putExtra(ARTICLE, article);
 						startActivity(intent);
 					}
 				});

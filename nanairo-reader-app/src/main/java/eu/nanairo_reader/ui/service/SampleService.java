@@ -12,7 +12,11 @@ import eu.nanairo_reader.business.service.RssService;
 
 // Serviceクラスを拡張したクラスを作成
 public class SampleService extends Service {
-	public static final String ACTION = "SampleService";
+	/** アクション名 */
+	public static final String SAMPLE_SERVICE_ACTION = "SampleServiceAction";
+
+	/** 未読数 */
+	public static final String MIDOKU_COUNT = "MIDOKU_COUNT";
 
 	@Inject
 	RssService rssService;
@@ -43,8 +47,9 @@ public class SampleService extends Service {
 			public void run() {
 				SampleService.this.rssService.storeArticles();
 
-				Intent intent = new Intent(ACTION);
-				intent.putExtra("count", 55);
+				Intent intent = new Intent(SAMPLE_SERVICE_ACTION);
+				// TODO テスト
+				intent.putExtra(MIDOKU_COUNT, 55);
 				sendBroadcast(intent);
 
 				// 自分自身を止めてonDestroy()メソッドへ

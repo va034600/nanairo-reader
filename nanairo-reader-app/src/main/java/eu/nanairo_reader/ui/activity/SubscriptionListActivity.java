@@ -1,5 +1,9 @@
 package eu.nanairo_reader.ui.activity;
 
+import static eu.nanairo_reader.ui.constant.NanairoConstant.SUBSCRIPTION;
+import static eu.nanairo_reader.ui.service.SampleService.SAMPLE_SERVICE_ACTION;
+import static eu.nanairo_reader.ui.service.SampleService.MIDOKU_COUNT;
+
 import java.util.List;
 
 import javax.inject.Inject;
@@ -41,16 +45,16 @@ public class SubscriptionListActivity extends BaseActivity {
 		((NanairoApplication) getApplication()).inject(this.rssService);
 
 		// レシーバー登録
-		IntentFilter filter = new IntentFilter(SampleService.ACTION);
+		IntentFilter filter = new IntentFilter(SAMPLE_SERVICE_ACTION);
 		registerReceiver(receiver, filter);
 
-		// ListAdapterの更新
+		// ListView
 		subscriptionList = this.rssService.getSubscriptionList();
 		SubscriptionArrayAdapter listAdapter = new SubscriptionArrayAdapter(getApplicationContext(), subscriptionList);
-
 		ListView listView = (ListView) findViewById(R.id.listView);
 		listView.setAdapter(listAdapter);
 
+		// 更新ボタン
 		Button updateButton = (Button) findViewById(R.id.updateButton);
 		updateButton.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
@@ -60,6 +64,7 @@ public class SubscriptionListActivity extends BaseActivity {
 			}
 		});
 
+		// 登録ボタン
 		Button entryButton = (Button) findViewById(R.id.entryButton);
 		entryButton.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
@@ -78,9 +83,6 @@ public class SubscriptionListActivity extends BaseActivity {
 
 	class SubscriptionArrayAdapter extends ArrayAdapter<Subscription> {
 		private LayoutInflater mInflater;
-		private TextView mTitle;
-		private TextView mCount;
-		private Button mButton;
 
 		public SubscriptionArrayAdapter(Context context, List<Subscription> objects) {
 			super(context, 0, objects);
@@ -94,16 +96,21 @@ public class SubscriptionListActivity extends BaseActivity {
 
 			final Subscription subscription = this.getItem(position);
 			if (subscription != null) {
-				mTitle = (TextView) convertView.findViewById(R.id.nameText);
+				// タイトル
+				TextView mTitle = (TextView) convertView.findViewById(R.id.nameText);
 				mTitle.setText(subscription.getTitle());
-				mCount = (TextView) convertView.findViewById(R.id.midokuCountText);
+
+				// 未読数
+				TextView mCount = (TextView) convertView.findViewById(R.id.midokuCountText);
 				mCount.setText(Integer.toString(subscription.getMidokuCount()));
-				mButton = (Button) convertView.findViewById(R.id.detailButton);
+
+				// 詳細ボタン
+				Button mButton = (Button) convertView.findViewById(R.id.detailButton);
 				mButton.setOnClickListener(new OnClickListener() {
 					public void onClick(View v) {
 						// インテントのインスタンス生成
 						Intent intent = new Intent(SubscriptionListActivity.this, ArticleListActivity.class);
-						intent.putExtra("subscription", subscription);
+						intent.putExtra(SUBSCRIPTION, subscription);
 						startActivity(intent);
 					}
 				});
@@ -116,15 +123,14 @@ public class SubscriptionListActivity extends BaseActivity {
 	class MyServiceReceiver extends BroadcastReceiver {
 		@Override
 		public void onReceive(Context context, Intent intent) {
-			int count = intent.getIntExtra("count", 0);
+			int count = intent.getIntExtra(MIDOKU_COUNT, 0);
 			Toast.makeText(SubscriptionListActivity.this, "更新件数:" + count, Toast.LENGTH_SHORT).show();
 
+			// ListViewを更新する。
 			// TODO 未読数を更新する。要リファクタリング
 			List<Subscription> subscriptionList2 = SubscriptionListActivity.this.rssService.getSubscriptionList();
 			subscriptionList.clear();
 			subscriptionList.addAll(subscriptionList2);
-
-			// ListViewを更新する。
 			ListView listView = (ListView) findViewById(R.id.listView);
 			((SubscriptionArrayAdapter) listView.getAdapter()).notifyDataSetChanged();
 		}

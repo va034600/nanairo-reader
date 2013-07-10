@@ -39,11 +39,11 @@ public class SubscriptionEntryActivity extends BaseActivity {
 				return;
 			}
 
-			Toast.makeText(getApplicationContext(), "登録しました。", Toast.LENGTH_SHORT).show();
-
 			// サービスの起動
 			Intent intent = new Intent(SubscriptionEntryActivity.this, SampleService.class);
 			startService(intent);
+
+			Toast.makeText(getApplicationContext(), "登録しました。", Toast.LENGTH_SHORT).show();
 
 			finish();
 		}
