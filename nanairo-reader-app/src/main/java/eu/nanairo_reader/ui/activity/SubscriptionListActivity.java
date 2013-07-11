@@ -1,8 +1,8 @@
 package eu.nanairo_reader.ui.activity;
 
 import static eu.nanairo_reader.ui.constant.NanairoUiConstant.SUBSCRIPTION;
-import static eu.nanairo_reader.ui.service.SampleService.SAMPLE_SERVICE_ACTION;
 import static eu.nanairo_reader.ui.service.SampleService.MIDOKU_COUNT;
+import static eu.nanairo_reader.ui.service.SampleService.SAMPLE_SERVICE_ACTION;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,6 +18,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
@@ -51,10 +52,33 @@ public class SubscriptionListActivity extends BaseActivity {
 
 		// ListView
 		SubscriptionArrayAdapter listAdapter = new SubscriptionArrayAdapter(getApplicationContext(), this.subscriptionList);
-		ListView listView = (ListView) findViewById(R.id.listView);
+		final ListView listView = (ListView) findViewById(R.id.listView);
 		listView.setAdapter(listAdapter);
 
-		//購読一覧を構築
+		// ListViewクリック
+		listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+				Subscription subscription = (Subscription) listView.getItemAtPosition(position);
+				// インテントのインスタンス生成
+				Intent intent = new Intent(SubscriptionListActivity.this, ArticleListActivity.class);
+				intent.putExtra(SUBSCRIPTION, subscription);
+				startActivity(intent);
+			}
+		});
+
+		// ListViewロングクリック
+		listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+			@Override
+			public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+				String msg = "ItemLongClick : Item" + (position + 1);
+				Toast.makeText(SubscriptionListActivity.this, msg, Toast.LENGTH_SHORT).show();
+				//TODO メニュー
+				return true;
+			}
+		});
+
+		// 購読一覧を構築
 		rebuildSubscriptionList();
 
 		// 更新ボタン
@@ -80,7 +104,7 @@ public class SubscriptionListActivity extends BaseActivity {
 	@Override
 	protected void onResume() {
 		super.onResume();
-		//購読一覧を構築
+		// 購読一覧を構築
 		rebuildSubscriptionList();
 	}
 
@@ -104,7 +128,7 @@ public class SubscriptionListActivity extends BaseActivity {
 				convertView = mInflater.inflate(R.layout.subscription_list_row, null);
 			}
 
-			final Subscription subscription = this.getItem(position);
+			Subscription subscription = this.getItem(position);
 			if (subscription != null) {
 				// タイトル
 				TextView mTitle = (TextView) convertView.findViewById(R.id.nameText);
@@ -113,24 +137,13 @@ public class SubscriptionListActivity extends BaseActivity {
 				// 未読数
 				TextView mCount = (TextView) convertView.findViewById(R.id.midokuCountText);
 				mCount.setText(Integer.toString(subscription.getMidokuCount()));
-
-				// 詳細ボタン
-				Button mButton = (Button) convertView.findViewById(R.id.detailButton);
-				mButton.setOnClickListener(new OnClickListener() {
-					public void onClick(View v) {
-						// インテントのインスタンス生成
-						Intent intent = new Intent(SubscriptionListActivity.this, ArticleListActivity.class);
-						intent.putExtra(SUBSCRIPTION, subscription);
-						startActivity(intent);
-					}
-				});
 			}
 			return convertView;
 		}
 	}
 
 	private void rebuildSubscriptionList() {
-		// TODO 未読数を更新する。要リファクタリング
+		// TODO 未読数を更新する。clearしないように。要リファクタリング
 		List<Subscription> subscriptionList2 = SubscriptionListActivity.this.rssService.getSubscriptionList();
 		this.subscriptionList.clear();
 		this.subscriptionList.addAll(subscriptionList2);
@@ -145,7 +158,7 @@ public class SubscriptionListActivity extends BaseActivity {
 			int count = intent.getIntExtra(MIDOKU_COUNT, 0);
 			Toast.makeText(SubscriptionListActivity.this, "更新件数:" + count, Toast.LENGTH_SHORT).show();
 
-			//購読一覧を構築
+			// 購読一覧を構築
 			rebuildSubscriptionList();
 		}
 	}

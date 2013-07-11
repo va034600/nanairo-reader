@@ -57,7 +57,7 @@ public class ArticleListActivity extends BaseActivity {
 
 		public View getView(final int position, View convertView, ViewGroup parent) {
 			if (convertView == null) {
-				convertView = mInflater.inflate(R.layout.subscription_list_row, null);
+				convertView = mInflater.inflate(R.layout.article_list_row, null);
 			}
 			final Article article = this.getItem(position);
 			if (article != null) {
