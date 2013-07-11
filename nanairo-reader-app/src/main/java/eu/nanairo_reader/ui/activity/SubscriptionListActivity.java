@@ -80,6 +80,8 @@ public class SubscriptionListActivity extends BaseActivity {
 	@Override
 	protected void onResume() {
 		super.onResume();
+		//購読一覧を構築
+		rebuildSubscriptionList();
 	}
 
 	@Override
