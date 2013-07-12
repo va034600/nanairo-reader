@@ -310,29 +310,8 @@ public class NanairoTemplate {
 					continue;
 				}
 
-				Class<?> type = field.getType();
-				if (type.equals(Integer.class)) {
-					where += field.getName() + " = ? AND";
-					argList.add(parameter.toString());
-				} else if (type.equals(Long.class)) {
-					where += field.getName() + " = ? AND";
-					argList.add(parameter.toString());
-				} else if (type.equals(Short.class)) {
-					where += field.getName() + " = ? AND";
-					argList.add(parameter.toString());
-				} else if (type.equals(Float.class)) {
-					where += field.getName() + " = ? AND";
-					argList.add(parameter.toString());
-				} else if (type.equals(Double.class)) {
-					where += field.getName() + " = ? AND";
-					argList.add(parameter.toString());
-				} else if (type.equals(String.class)) {
-					where += field.getName() + " = ? AND";
-					argList.add(parameter.toString());
-				} else {
-					where += field.getName() + " = ? AND";
-					argList.add(parameter.toString());
-				}
+				where += field.getName() + " = ? AND";
+				argList.add(parameter.toString());
 			}
 
 			if (where.length() != 0) {
