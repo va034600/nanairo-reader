@@ -16,22 +16,19 @@ import android.content.IntentFilter;
 import android.os.Bundle;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
-import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.AdapterContextMenuInfo;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 import eu.nanairo_reader.NanairoApplication;
 import eu.nanairo_reader.R;
 import eu.nanairo_reader.bean.Subscription;
 import eu.nanairo_reader.business.service.RssService;
+import eu.nanairo_reader.ui.component.SubscriptionArrayAdapter;
 import eu.nanairo_reader.ui.service.SampleService;
 
 public class SubscriptionListActivity extends BaseActivity {
@@ -58,10 +55,10 @@ public class SubscriptionListActivity extends BaseActivity {
 
 		// レシーバー登録
 		IntentFilter filter = new IntentFilter(SAMPLE_SERVICE_ACTION);
-		registerReceiver(receiver, filter);
+		registerReceiver(this.receiver, filter);
 
 		// ListView
-		final ListView listView = (ListView) findViewById(R.id.listView);
+		ListView listView = (ListView) findViewById(R.id.listView);
 
 		// Adapterの設定
 		SubscriptionArrayAdapter listAdapter = new SubscriptionArrayAdapter(getApplicationContext(), this.subscriptionList);
@@ -74,6 +71,7 @@ public class SubscriptionListActivity extends BaseActivity {
 		listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+				ListView listView = (ListView) findViewById(R.id.listView);
 				Subscription subscription = (Subscription) listView.getItemAtPosition(position);
 				// インテントのインスタンス生成
 				Intent intent = new Intent(SubscriptionListActivity.this, ArticleListActivity.class);
@@ -121,10 +119,10 @@ public class SubscriptionListActivity extends BaseActivity {
 	public boolean onContextItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case CONTEXT_ITEM_ALL_KIDOKU:
-			//TODO 全既読処理
+			// TODO 全既読処理
 			break;
 		case CONTEXT_ITEM_SUBSCRIPTION_DELETE:
-			//TODO 購読削除
+			// TODO 購読削除
 			break;
 		}
 
@@ -146,33 +144,6 @@ public class SubscriptionListActivity extends BaseActivity {
 		// レシーバー解除
 		unregisterReceiver(receiver);
 		super.onDestroy();
-	}
-
-	class SubscriptionArrayAdapter extends ArrayAdapter<Subscription> {
-		private LayoutInflater mInflater;
-
-		public SubscriptionArrayAdapter(Context context, List<Subscription> objects) {
-			super(context, 0, objects);
-			mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		}
-
-		public View getView(final int position, View convertView, ViewGroup parent) {
-			if (convertView == null) {
-				convertView = mInflater.inflate(R.layout.subscription_list_row, null);
-			}
-
-			Subscription subscription = this.getItem(position);
-			if (subscription != null) {
-				// タイトル
-				TextView mTitle = (TextView) convertView.findViewById(R.id.nameText);
-				mTitle.setText(subscription.getTitle());
-
-				// 未読数
-				TextView mCount = (TextView) convertView.findViewById(R.id.midokuCountText);
-				mCount.setText(Integer.toString(subscription.getMidokuCount()));
-			}
-			return convertView;
-		}
 	}
 
 	private void rebuildSubscriptionList() {
