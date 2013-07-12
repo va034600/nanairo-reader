@@ -14,11 +14,15 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.view.ContextMenu;
+import android.view.ContextMenu.ContextMenuInfo;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
@@ -31,6 +35,12 @@ import eu.nanairo_reader.business.service.RssService;
 import eu.nanairo_reader.ui.service.SampleService;
 
 public class SubscriptionListActivity extends BaseActivity {
+	/***/
+	private final static int CONTEXT_ITEM_SUBSCRIPTION_DELETE = 1000;
+
+	/***/
+	private final static int CONTEXT_ITEM_ALL_KIDOKU = 1001;
+
 	@Inject
 	RssService rssService;
 
@@ -51,9 +61,14 @@ public class SubscriptionListActivity extends BaseActivity {
 		registerReceiver(receiver, filter);
 
 		// ListView
-		SubscriptionArrayAdapter listAdapter = new SubscriptionArrayAdapter(getApplicationContext(), this.subscriptionList);
 		final ListView listView = (ListView) findViewById(R.id.listView);
+
+		// Adapterの設定
+		SubscriptionArrayAdapter listAdapter = new SubscriptionArrayAdapter(getApplicationContext(), this.subscriptionList);
 		listView.setAdapter(listAdapter);
+
+		// コンテキストメニュー登録
+		registerForContextMenu(listView);
 
 		// ListViewクリック
 		listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -67,25 +82,10 @@ public class SubscriptionListActivity extends BaseActivity {
 			}
 		});
 
-		// ListViewロングクリック
-		listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-			@Override
-			public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-				String msg = "ItemLongClick : Item" + (position + 1);
-				Toast.makeText(SubscriptionListActivity.this, msg, Toast.LENGTH_SHORT).show();
-				//TODO メニュー
-				return true;
-			}
-		});
-
-		// 購読一覧を構築
-		rebuildSubscriptionList();
-
 		// 更新ボタン
 		Button updateButton = (Button) findViewById(R.id.updateButton);
 		updateButton.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
-				// サービスの起動
 				Intent intent = new Intent(SubscriptionListActivity.this, SampleService.class);
 				startService(intent);
 			}
@@ -99,11 +99,44 @@ public class SubscriptionListActivity extends BaseActivity {
 				startActivity(intent);
 			}
 		});
+
+		// 購読一覧を構築
+		rebuildSubscriptionList();
+	}
+
+	@Override
+	public void onCreateContextMenu(ContextMenu menu, View view, ContextMenuInfo info) {
+		super.onCreateContextMenu(menu, view, info);
+		AdapterContextMenuInfo adapterContextMenuInfo = (AdapterContextMenuInfo) info;
+		ListView listView = (ListView) view;
+		Subscription subscription = (Subscription) listView.getItemAtPosition(adapterContextMenuInfo.position);
+
+		// コンテキストメニューの作成
+		menu.setHeaderTitle("メニュー:" + subscription.getTitle());
+		menu.add(0, CONTEXT_ITEM_ALL_KIDOKU, 0, "全て既読にする");
+		menu.add(0, CONTEXT_ITEM_SUBSCRIPTION_DELETE, 0, "購読を削除");
+	}
+
+	@Override
+	public boolean onContextItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case CONTEXT_ITEM_ALL_KIDOKU:
+			//TODO 全既読処理
+			break;
+		case CONTEXT_ITEM_SUBSCRIPTION_DELETE:
+			//TODO 購読削除
+			break;
+		}
+
+		Toast.makeText(SubscriptionListActivity.this, "id:" + item.getItemId(), Toast.LENGTH_SHORT).show();
+
+		return true;
 	}
 
 	@Override
 	protected void onResume() {
 		super.onResume();
+		// TODO パフォーマンスが悪いからやめたい
 		// 購読一覧を構築
 		rebuildSubscriptionList();
 	}
