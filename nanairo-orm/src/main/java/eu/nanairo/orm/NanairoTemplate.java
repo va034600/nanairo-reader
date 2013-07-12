@@ -62,7 +62,43 @@ public class NanairoTemplate {
 		return columns;
 	}
 
-	protected static Object getValue(Cursor cursor, Field field) {
+	protected static Object setValue(Field field, Object param, Object value) {
+		try {
+			field.setAccessible(true);
+			field.set(param, value);
+			Object parameter = field.get(param);
+			return parameter;
+		} catch (Exception e) {
+			throw new RuntimeException("error", e);
+		}
+	}
+
+	protected static <RESULT> RESULT createInstance(Class<RESULT> resultClass) {
+		try {
+			return resultClass.newInstance();
+		} catch (Exception e) {
+			throw new RuntimeException("error", e);
+		}
+	}
+
+	protected static <RESULT> Field getDeclaredField(Class<RESULT> resultClass, String name) {
+		try {
+			return resultClass.getDeclaredField(name);
+		} catch (Exception e) {
+			throw new RuntimeException("error", e);
+		}
+	}
+
+	protected static Object getValue(Field field, Object param) {
+		try {
+			field.setAccessible(true);
+			return field.get(param);
+		} catch (Exception e) {
+			throw new RuntimeException("error", e);
+		}
+	}
+
+	protected static Object getValue(Field field, Cursor cursor) {
 		String propertyName = field.getName().toUpperCase(Locale.ENGLISH);
 		int columnIndex = cursor.getColumnIndex(propertyName);
 		Class<?> type = field.getType();
@@ -84,70 +120,57 @@ public class NanairoTemplate {
 	}
 
 	public <RESULT> List<RESULT> findList(Class<RESULT> resultClass, RESULT param) {
-		try {
-			String[] columns = convertColumns(resultClass);
-			String where = "";
-			List<String> whereArgList = new ArrayList<String>();
-			if (param != null) {
-				Field[] fields = resultClass.getDeclaredFields();
-				for (int i = 0; i < fields.length; i++) {
-					Field field = fields[i];
-					field.setAccessible(true);
-					Object object = field.get(param);
-					if (object == null) {
-						continue;
-					}
-
-					//
-					String column = columns[i];
-					where += column + " = ? AND";
-
-					//
-					String value = object.toString();
-					whereArgList.add(value);
+		String[] columns = convertColumns(resultClass);
+		String where = "";
+		List<String> whereArgList = new ArrayList<String>();
+		if (param != null) {
+			Field[] fields = resultClass.getDeclaredFields();
+			for (int i = 0; i < fields.length; i++) {
+				Field field = fields[i];
+				Object object = getValue(field, param);
+				if (object == null) {
+					continue;
 				}
+
+				//
+				String column = columns[i];
+				where += column + " = ? AND";
+
+				//
+				String value = object.toString();
+				whereArgList.add(value);
 			}
-
-			if (where.length() != 0) {
-				where = where.substring(0, where.length() - 4);
-			}
-
-			String[] whereArgs = whereArgList.toArray(new String[0]);
-			String tableName = getTableName(resultClass);
-
-			String sql = "SELECT * FROM " + tableName;
-			if (where.length() != 0) {
-				sql += " WHERE " + where;
-			}
-
-			return queryForList(resultClass, sql, whereArgs);
-		} catch (Exception e) {
-			// TODO 自動生成された catch ブロック
-			throw new RuntimeException("error", e);
 		}
+
+		if (where.length() != 0) {
+			where = where.substring(0, where.length() - 4);
+		}
+
+		String[] whereArgs = whereArgList.toArray(new String[0]);
+		String tableName = getTableName(resultClass);
+
+		String sql = "SELECT * FROM " + tableName;
+		if (where.length() != 0) {
+			sql += " WHERE " + where;
+		}
+
+		return queryForList(resultClass, sql, whereArgs);
 	}
 
 	protected static <RESULT> List<RESULT> cursorToList(Class<RESULT> resultClass, Cursor cursor) {
-		try {
-			List<RESULT> list = new ArrayList<RESULT>();
-			while (cursor.moveToNext()) {
-				RESULT entity = resultClass.newInstance();
-
-				for (int i = 0; i < cursor.getColumnCount(); i++) {
-					String column = cursor.getColumnName(i);
-					column = snakeToCamel(column);
-					Field field = resultClass.getDeclaredField(column);
-					field.setAccessible(true);
-					Object value = getValue(cursor, field);
-					field.set(entity, value);
-				}
-				list.add(entity);
+		List<RESULT> list = new ArrayList<RESULT>();
+		while (cursor.moveToNext()) {
+			RESULT entity = createInstance(resultClass);
+			for (int i = 0; i < cursor.getColumnCount(); i++) {
+				String column = cursor.getColumnName(i);
+				column = snakeToCamel(column);
+				Field field = getDeclaredField(resultClass, column);
+				Object value = getValue(field, cursor);
+				setValue(field, entity, value);
 			}
-			return list;
-		} catch (Exception e) {
-			// TODO 自動生成された catch ブロック
-			throw new RuntimeException("error", e);
+			list.add(entity);
 		}
+		return list;
 	}
 
 	public <RESULT> List<RESULT> queryForList(Class<RESULT> resultClass, String sql, String[] selectionArgs) {
@@ -178,177 +201,134 @@ public class NanairoTemplate {
 	}
 
 	public <RESULT> long add(Class<RESULT> resultClass, RESULT entity) {
-		try {
-			String sql = getSqlForInsert(resultClass, entity);
-			SQLiteStatement stmt = db.compileStatement(sql);
-			Field[] fields = resultClass.getDeclaredFields();
-			int no = 1;
-			for (Field field : fields) {
-				field.setAccessible(true);
-				Object parameter = field.get(entity);
-				if (parameter == null) {
-					continue;
-				}
-
-				Class<?> type = field.getType();
-				if (type.equals(Integer.class)) {
-					stmt.bindLong(no, (Integer) parameter);
-				} else if (type.equals(Long.class)) {
-					stmt.bindLong(no, (Long) parameter);
-				} else if (type.equals(Short.class)) {
-					stmt.bindLong(no, (Short) parameter);
-				} else if (type.equals(Float.class)) {
-					stmt.bindDouble(no, (Float) parameter);
-				} else if (type.equals(Double.class)) {
-					stmt.bindDouble(no, (Double) parameter);
-				} else if (type.equals(String.class)) {
-					stmt.bindString(no, (String) parameter);
-				} else {
-					stmt.bindBlob(no, (byte[]) parameter);
-				}
-				no++;
+		String sql = getSqlForInsert(resultClass, entity);
+		SQLiteStatement stmt = db.compileStatement(sql);
+		Field[] fields = resultClass.getDeclaredFields();
+		int no = 1;
+		for (Field field : fields) {
+			Object parameter = getValue(field, entity);
+			if (parameter == null) {
+				continue;
 			}
 
-			return stmt.executeInsert();
-		} catch (Exception e) {
-			// TODO 自動生成された catch ブロック
-			throw new RuntimeException("error", e);
+			Class<?> type = field.getType();
+			if (type.equals(Integer.class)) {
+				stmt.bindLong(no, (Integer) parameter);
+			} else if (type.equals(Long.class)) {
+				stmt.bindLong(no, (Long) parameter);
+			} else if (type.equals(Short.class)) {
+				stmt.bindLong(no, (Short) parameter);
+			} else if (type.equals(Float.class)) {
+				stmt.bindDouble(no, (Float) parameter);
+			} else if (type.equals(Double.class)) {
+				stmt.bindDouble(no, (Double) parameter);
+			} else if (type.equals(String.class)) {
+				stmt.bindString(no, (String) parameter);
+			} else {
+				stmt.bindBlob(no, (byte[]) parameter);
+			}
+			no++;
 		}
+
+		return stmt.executeInsert();
+
 	}
 
 	protected static <RESULT> String getSqlForInsert(Class<RESULT> resultClass, RESULT entity) {
-		try {
-			String tableName = getTableName(resultClass);
-			String sql = "INSERT INTO " + tableName + " (";
-			String[] columns = convertColumns(resultClass);
-			Field[] fields = resultClass.getDeclaredFields();
-			int count = 0;
-			for (int i = 0; i < fields.length; i++) {
-				Field field = fields[i];
-				field.setAccessible(true);
-				Object object = field.get(entity);
-				if (object == null) {
-					continue;
-				}
-
-				String column = columns[i];
-				sql += column + ", ";
-
-				count++;
+		String tableName = getTableName(resultClass);
+		String sql = "INSERT INTO " + tableName + " (";
+		String[] columns = convertColumns(resultClass);
+		Field[] fields = resultClass.getDeclaredFields();
+		int count = 0;
+		for (int i = 0; i < fields.length; i++) {
+			Field field = fields[i];
+			Object object = getValue(field, entity);
+			if (object == null) {
+				continue;
 			}
 
-			sql = sql.substring(0, sql.length() - 2);
-			sql += ") VALUES (";
-			for (int i = 0; i < count; i++) {
-				sql += "?, ";
-			}
-			sql = sql.substring(0, sql.length() - 2);
-			sql += ")";
+			String column = columns[i];
+			sql += column + ", ";
 
-			// Log.i("sql", sql);
-
-			return sql;
-		} catch (Exception e) {
-			// TODO 自動生成された catch ブロック
-			throw new RuntimeException("error", e);
+			count++;
 		}
+
+		sql = sql.substring(0, sql.length() - 2);
+		sql += ") VALUES (";
+		for (int i = 0; i < count; i++) {
+			sql += "?, ";
+		}
+		sql = sql.substring(0, sql.length() - 2);
+		sql += ")";
+
+		return sql;
 	}
 
 	public <RESULT> int update(Class<RESULT> resultClass, RESULT param) {
-		try {
-			ContentValues values = new ContentValues();
-			Field[] fields = resultClass.getDeclaredFields();
-			for (Field field : fields) {
-				field.setAccessible(true);
-				Object parameter = field.get(param);
-				if (parameter == null) {
-					continue;
-				}
-
-				Class<?> type = field.getType();
-				if (type.equals(Integer.class)) {
-					values.put(field.getName(), (Integer) parameter);
-				} else if (type.equals(Long.class)) {
-					values.put(field.getName(), (Long) parameter);
-				} else if (type.equals(Short.class)) {
-					values.put(field.getName(), (Short) parameter);
-				} else if (type.equals(Float.class)) {
-					values.put(field.getName(), (Float) parameter);
-				} else if (type.equals(Double.class)) {
-					values.put(field.getName(), (Double) parameter);
-				} else if (type.equals(String.class)) {
-					values.put(field.getName(), (String) parameter);
-				} else {
-					values.put(field.getName(), (byte[]) parameter);
-				}
+		ContentValues values = new ContentValues();
+		Field[] fields = resultClass.getDeclaredFields();
+		for (Field field : fields) {
+			Object parameter = getValue(field, param);
+			if (parameter == null) {
+				continue;
 			}
 
-			String tableName = getTableName(resultClass);
-
-			Field field = resultClass.getDeclaredField("id");
-			field.setAccessible(true);
-			Object id = field.get(param);
-			String[] whereArgs = { id.toString() };
-			// TODO pkをどうするか？
-			String where = "id=?";
-			return db.update(tableName, values, where, whereArgs);
-		} catch (Exception e) {
-			// TODO 自動生成された catch ブロック
-			throw new RuntimeException("error", e);
+			Class<?> type = field.getType();
+			if (type.equals(Integer.class)) {
+				values.put(field.getName(), (Integer) parameter);
+			} else if (type.equals(Long.class)) {
+				values.put(field.getName(), (Long) parameter);
+			} else if (type.equals(Short.class)) {
+				values.put(field.getName(), (Short) parameter);
+			} else if (type.equals(Float.class)) {
+				values.put(field.getName(), (Float) parameter);
+			} else if (type.equals(Double.class)) {
+				values.put(field.getName(), (Double) parameter);
+			} else if (type.equals(String.class)) {
+				values.put(field.getName(), (String) parameter);
+			} else {
+				values.put(field.getName(), (byte[]) parameter);
+			}
 		}
+
+		String tableName = getTableName(resultClass);
+
+		Field field = getDeclaredField(resultClass, "id");
+		Object id = getValue(field, param);
+		String[] whereArgs = { id.toString() };
+		// TODO pkをどうするか？
+		String where = "id=?";
+		return db.update(tableName, values, where, whereArgs);
 	}
 
 	public <RESULT> int delete(Class<RESULT> resultClass, RESULT param) {
-		try {
-			String where = "";
-			ArrayList<String> argList = new ArrayList<String>();
-			Field[] fields = resultClass.getDeclaredFields();
-			for (Field field : fields) {
-				field.setAccessible(true);
-				Object parameter = field.get(param);
-				if (parameter == null) {
-					continue;
-				}
-
-				where += field.getName() + " = ? AND";
-				argList.add(parameter.toString());
+		String where = "";
+		ArrayList<String> argList = new ArrayList<String>();
+		Field[] fields = resultClass.getDeclaredFields();
+		for (Field field : fields) {
+			Object parameter = getValue(field, param);
+			if (parameter == null) {
+				continue;
 			}
 
-			if (where.length() != 0) {
-				where = where.substring(0, where.length() - 4);
-			}
-
-			String tableName = getTableName(resultClass);
-			String[] whereArgs = (String[]) argList.toArray(new String[0]);
-			return db.delete(tableName, where, whereArgs);
-		} catch (Exception e) {
-			// TODO 自動生成された catch ブロック
-			throw new RuntimeException("error", e);
+			where += field.getName() + " = ? AND";
+			argList.add(parameter.toString());
 		}
+
+		if (where.length() != 0) {
+			where = where.substring(0, where.length() - 4);
+		}
+
+		String tableName = getTableName(resultClass);
+		String[] whereArgs = (String[]) argList.toArray(new String[0]);
+		return db.delete(tableName, where, whereArgs);
 	}
 
 	public <RESULT> RESULT findByPrimaryKey(Class<RESULT> resultClass, Object key) {
-		// TODO パラメータどうする？難しい。
-		RESULT param;
-		try {
-			param = resultClass.newInstance();
-			Field field = resultClass.getDeclaredField("id");
-			field.setAccessible(true);
-			field.set(param, key);
-
-		} catch (InstantiationException e) {
-			// TODO 自動生成された catch ブロック
-			throw new RuntimeException("e", e);
-		} catch (IllegalAccessException e) {
-			// TODO 自動生成された catch ブロック
-			throw new RuntimeException("e", e);
-		} catch (SecurityException e) {
-			// TODO 自動生成された catch ブロック
-			throw new RuntimeException("e", e);
-		} catch (NoSuchFieldException e) {
-			// TODO 自動生成された catch ブロック
-			throw new RuntimeException("e", e);
-		}
+		// TODO Keyパラメータどうする？難しい。
+		RESULT param = createInstance(resultClass);
+		Field field = getDeclaredField(resultClass, "id");
+		setValue(field, param, key);
 
 		List<RESULT> entityList = findList(resultClass, param);
 
