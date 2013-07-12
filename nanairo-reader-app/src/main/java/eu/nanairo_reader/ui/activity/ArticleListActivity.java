@@ -7,22 +7,18 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
-import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
+import android.widget.AdapterView;
+import android.widget.ListAdapter;
 import android.widget.ListView;
-import android.widget.TextView;
 import eu.nanairo_reader.NanairoApplication;
 import eu.nanairo_reader.R;
 import eu.nanairo_reader.bean.Article;
 import eu.nanairo_reader.bean.Subscription;
 import eu.nanairo_reader.business.service.RssService;
+import eu.nanairo_reader.ui.component.ArticleArrayAdapter;
 
 public class ArticleListActivity extends BaseActivity {
 	@Inject
@@ -41,41 +37,25 @@ public class ArticleListActivity extends BaseActivity {
 		Subscription subscription = (Subscription) intent.getSerializableExtra(SUBSCRIPTION);
 
 		// ListView
-		List<Article> list = this.rssService.getArticleList(subscription.getId());
-		ListAdapter listAdapter = new ListAdapter(getApplicationContext(), list);
 		ListView listView = (ListView) findViewById(R.id.listView);
+
+		// Adapterの設定
+		List<Article> list = this.rssService.getArticleList(subscription.getId());
+		ListAdapter listAdapter = new ArticleArrayAdapter(getApplicationContext(), list);
 		listView.setAdapter(listAdapter);
-	}
 
-	class ListAdapter extends ArrayAdapter<Article> {
-		private LayoutInflater mInflater;
+		// ListViewクリック
+		listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+				ListView listView = (ListView) findViewById(R.id.listView);
+				Article article = (Article) listView.getItemAtPosition(position);
 
-		public ListAdapter(Context context, List<Article> objects) {
-			super(context, 0, objects);
-			mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		}
-
-		public View getView(final int position, View convertView, ViewGroup parent) {
-			if (convertView == null) {
-				convertView = mInflater.inflate(R.layout.article_list_row, null);
+				// インテントのインスタンス生成
+				Intent intent = new Intent(ArticleListActivity.this, ArticleActivity.class);
+				intent.putExtra(ARTICLE, article);
+				startActivity(intent);
 			}
-			final Article article = this.getItem(position);
-			if (article != null) {
-				// タイトル
-				TextView mTitle = (TextView) convertView.findViewById(R.id.nameText);
-				mTitle.setText(article.getTitle());
-
-				// 詳細ボタン
-				Button mButton = (Button) convertView.findViewById(R.id.detailButton);
-				mButton.setOnClickListener(new OnClickListener() {
-					public void onClick(View v) {
-						Intent intent = new Intent(ArticleListActivity.this, ArticleActivity.class);
-						intent.putExtra(ARTICLE, article);
-						startActivity(intent);
-					}
-				});
-			}
-			return convertView;
-		}
+		});
 	}
 }

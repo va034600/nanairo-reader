@@ -73,6 +73,7 @@ public class SubscriptionListActivity extends BaseActivity {
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 				ListView listView = (ListView) findViewById(R.id.listView);
 				Subscription subscription = (Subscription) listView.getItemAtPosition(position);
+
 				// インテントのインスタンス生成
 				Intent intent = new Intent(SubscriptionListActivity.this, ArticleListActivity.class);
 				intent.putExtra(SUBSCRIPTION, subscription);
