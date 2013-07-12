@@ -127,12 +127,12 @@ public class SubscriptionListActivity extends BaseActivity {
 			// TODO 全既読処理
 			break;
 		case CONTEXT_ITEM_SUBSCRIPTION_DELETE:
-			// TODO 購読削除
+			// 購読削除
 			this.rssService.delete(subscription.getId());
+			this.subscriptionList.remove(subscription);
+			((SubscriptionArrayAdapter) listView.getAdapter()).notifyDataSetChanged();
 			break;
 		}
-
-		Toast.makeText(SubscriptionListActivity.this, "context item id:" + item.getItemId() + " subscription id:" + subscription.getId(), Toast.LENGTH_SHORT).show();
 
 		return true;
 	}
