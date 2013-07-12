@@ -1,4 +1,4 @@
-package eu.nanairo_reader.bean;
+package eu.nanairo_reader.business.bean;
 
 import java.io.Serializable;
 

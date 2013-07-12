@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import eu.nanairo_reader.R;
-import eu.nanairo_reader.bean.Subscription;
+import eu.nanairo_reader.business.bean.Subscription;
 
 public 	class SubscriptionArrayAdapter extends ArrayAdapter<Subscription> {
 	private LayoutInflater mInflater;

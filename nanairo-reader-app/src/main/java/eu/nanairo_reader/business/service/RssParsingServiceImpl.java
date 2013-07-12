@@ -16,9 +16,9 @@ import com.google.code.rome.android.repackaged.com.sun.syndication.io.FeedExcept
 import com.google.code.rome.android.repackaged.com.sun.syndication.io.SyndFeedInput;
 import com.google.code.rome.android.repackaged.com.sun.syndication.io.XmlReader;
 
-import eu.nanairo_reader.bean.FeedResult;
-import eu.nanairo_reader.bean.FeedItem;
 import eu.nanairo_reader.business.exception.RssParsingException;
+import eu.nanairo_reader.business.vo.FeedItem;
+import eu.nanairo_reader.business.vo.FeedResult;
 
 public class RssParsingServiceImpl implements RssParsingService {
 	@Override

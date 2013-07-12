@@ -10,7 +10,7 @@ import android.webkit.WebView;
 import android.widget.TextView;
 import eu.nanairo_reader.NanairoApplication;
 import eu.nanairo_reader.R;
-import eu.nanairo_reader.bean.Article;
+import eu.nanairo_reader.business.bean.Article;
 import eu.nanairo_reader.business.service.RssService;
 
 public class ArticleActivity extends BaseActivity {

@@ -8,11 +8,11 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import eu.nanairo_reader.bean.Article;
-import eu.nanairo_reader.bean.FeedItem;
-import eu.nanairo_reader.bean.FeedResult;
-import eu.nanairo_reader.bean.Subscription;
+import eu.nanairo_reader.business.bean.Article;
+import eu.nanairo_reader.business.bean.Subscription;
 import eu.nanairo_reader.business.exception.RssParsingException;
+import eu.nanairo_reader.business.vo.FeedItem;
+import eu.nanairo_reader.business.vo.FeedResult;
 import eu.nanairo_reader.data.dao.ArticleDao;
 import eu.nanairo_reader.data.dao.SubscriptionArticleDao;
 import eu.nanairo_reader.data.dao.SubscriptionDao;

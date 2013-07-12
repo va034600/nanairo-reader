@@ -3,9 +3,9 @@ package eu.nanairo_reader.business.service;
 import java.util.ArrayList;
 import java.util.List;
 
-import eu.nanairo_reader.bean.FeedItem;
-import eu.nanairo_reader.bean.FeedResult;
 import eu.nanairo_reader.business.exception.RssParsingException;
+import eu.nanairo_reader.business.vo.FeedItem;
+import eu.nanairo_reader.business.vo.FeedResult;
 
 public class RssParsingServiceMock implements RssParsingService {
 	@Override

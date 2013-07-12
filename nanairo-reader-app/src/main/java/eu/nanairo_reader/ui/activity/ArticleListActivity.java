@@ -15,8 +15,8 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import eu.nanairo_reader.NanairoApplication;
 import eu.nanairo_reader.R;
-import eu.nanairo_reader.bean.Article;
-import eu.nanairo_reader.bean.Subscription;
+import eu.nanairo_reader.business.bean.Article;
+import eu.nanairo_reader.business.bean.Subscription;
 import eu.nanairo_reader.business.service.RssService;
 import eu.nanairo_reader.ui.component.ArticleArrayAdapter;
 
