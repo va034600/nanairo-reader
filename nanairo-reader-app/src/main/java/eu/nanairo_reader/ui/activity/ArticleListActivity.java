@@ -11,8 +11,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 import eu.nanairo_reader.NanairoApplication;
 import eu.nanairo_reader.R;
 import eu.nanairo_reader.business.bean.Article;
@@ -57,5 +59,22 @@ public class ArticleListActivity extends BaseActivity {
 				startActivity(intent);
 			}
 		});
+
+		// 全既読ボタン
+		Button updateButton = (Button) findViewById(R.id.allCheckButton);
+		updateButton.setOnClickListener(new UpdateButtonOnClickListener(subscription.getId()));
 	}
+
+	class UpdateButtonOnClickListener implements View.OnClickListener {
+		long subscriptionId;
+
+		UpdateButtonOnClickListener(long subscriptionId) {
+			this.subscriptionId = subscriptionId;
+		}
+
+		public void onClick(View v) {
+			Toast.makeText(ArticleListActivity.this, "subscriptionId:" + this.subscriptionId, Toast.LENGTH_SHORT).show();
+			//TODO 全既読処理
+		}
+	};
 }
