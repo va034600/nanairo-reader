@@ -118,16 +118,21 @@ public class SubscriptionListActivity extends BaseActivity {
 
 	@Override
 	public boolean onContextItemSelected(MenuItem item) {
+		AdapterContextMenuInfo adapterInfo = (AdapterContextMenuInfo) item.getMenuInfo();
+		ListView listView = (ListView) findViewById(R.id.listView);
+		Subscription subscription = (Subscription) listView.getItemAtPosition(adapterInfo.position);
+
 		switch (item.getItemId()) {
 		case CONTEXT_ITEM_ALL_KIDOKU:
 			// TODO 全既読処理
 			break;
 		case CONTEXT_ITEM_SUBSCRIPTION_DELETE:
 			// TODO 購読削除
+			this.rssService.delete(subscription.getId());
 			break;
 		}
 
-		Toast.makeText(SubscriptionListActivity.this, "id:" + item.getItemId(), Toast.LENGTH_SHORT).show();
+		Toast.makeText(SubscriptionListActivity.this, "context item id:" + item.getItemId() + " subscription id:" + subscription.getId(), Toast.LENGTH_SHORT).show();
 
 		return true;
 	}

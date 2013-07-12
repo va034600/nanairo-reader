@@ -50,9 +50,9 @@ public class RssServiceImpl implements RssService {
 	}
 
 	@Override
-	public List<Article> getArticleList(long id) {
+	public List<Article> getArticleList(long articleId) {
 		List<Article> result = new ArrayList<Article>();
-		for (ArticleEntity entity : this.articleDao.getList(id)) {
+		for (ArticleEntity entity : this.articleDao.getList(articleId)) {
 			Article article = new Article();
 
 			article.setId(entity.getId());
@@ -145,9 +145,15 @@ public class RssServiceImpl implements RssService {
 	}
 
 	@Override
-	public void kidoku(long id) {
-		ArticleEntity articleEntity = this.articleDao.findByPrimaryKey(id);
+	public void kidoku(long articleId) {
+		ArticleEntity articleEntity = this.articleDao.findByPrimaryKey(articleId);
 		articleEntity.setMidoku(MIDOKU_OFF);
 		this.articleDao.update(articleEntity);
+	}
+
+	@Override
+	public void delete(long subscriptionId) {
+		// TODO 自動生成されたメソッド・スタブ
+		
 	}
 }

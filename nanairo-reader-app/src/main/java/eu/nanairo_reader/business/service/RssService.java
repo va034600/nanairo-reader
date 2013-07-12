@@ -8,11 +8,13 @@ import eu.nanairo_reader.business.bean.Subscription;
 public interface RssService {
 	List<Subscription> getSubscriptionList();
 
-	List<Article> getArticleList(long id);
+	List<Article> getArticleList(long subscriptionId);
 
 	void storeArticles();
 
 	boolean addSubscription(String url);
 
-	void kidoku(long id);
+	void kidoku(long articleId);
+
+	void delete(long subscriptionId);
 }
