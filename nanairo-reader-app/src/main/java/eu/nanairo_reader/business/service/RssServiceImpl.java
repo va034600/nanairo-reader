@@ -153,7 +153,8 @@ public class RssServiceImpl implements RssService {
 
 	@Override
 	public void delete(long subscriptionId) {
-		// TODO 自動生成されたメソッド・スタブ
-		
+		SubscriptionEntity subscriptionEntity = new SubscriptionEntity();
+		subscriptionEntity.setId(subscriptionId);
+		this.subscriptionDao.delete(subscriptionEntity);
 	}
 }
