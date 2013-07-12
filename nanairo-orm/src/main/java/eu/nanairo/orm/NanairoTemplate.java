@@ -298,9 +298,54 @@ public class NanairoTemplate {
 		}
 	}
 
-	public <RESULT> int delete(Class<RESULT> resultClass, RESULT entity) {
-		// TODO 削除処理
-		return 0;
+	public <RESULT> int delete(Class<RESULT> resultClass, RESULT param) {
+		try {
+			String where = "";
+			ArrayList<String> argList = new ArrayList<String>();
+			Field[] fields = resultClass.getDeclaredFields();
+			for (Field field : fields) {
+				field.setAccessible(true);
+				Object parameter = field.get(param);
+				if (parameter == null) {
+					continue;
+				}
+
+				Class<?> type = field.getType();
+				if (type.equals(Integer.class)) {
+					where += field.getName() + " = ? AND";
+					argList.add(parameter.toString());
+				} else if (type.equals(Long.class)) {
+					where += field.getName() + " = ? AND";
+					argList.add(parameter.toString());
+				} else if (type.equals(Short.class)) {
+					where += field.getName() + " = ? AND";
+					argList.add(parameter.toString());
+				} else if (type.equals(Float.class)) {
+					where += field.getName() + " = ? AND";
+					argList.add(parameter.toString());
+				} else if (type.equals(Double.class)) {
+					where += field.getName() + " = ? AND";
+					argList.add(parameter.toString());
+				} else if (type.equals(String.class)) {
+					where += field.getName() + " = ? AND";
+					argList.add(parameter.toString());
+				} else {
+					where += field.getName() + " = ? AND";
+					argList.add(parameter.toString());
+				}
+			}
+
+			if (where.length() != 0) {
+				where = where.substring(0, where.length() - 4);
+			}
+
+			String tableName = getTableName(resultClass);
+			String[] whereArgs = (String[]) argList.toArray(new String[0]);
+			return db.delete(tableName, where, whereArgs);
+		} catch (Exception e) {
+			// TODO 自動生成された catch ブロック
+			throw new RuntimeException("error", e);
+		}
 	}
 
 	public <RESULT> RESULT findByPrimaryKey(Class<RESULT> resultClass, Object key) {
@@ -311,7 +356,7 @@ public class NanairoTemplate {
 			Field field = resultClass.getDeclaredField("id");
 			field.setAccessible(true);
 			field.set(param, key);
-			
+
 		} catch (InstantiationException e) {
 			// TODO 自動生成された catch ブロック
 			throw new RuntimeException("e", e);
@@ -325,7 +370,7 @@ public class NanairoTemplate {
 			// TODO 自動生成された catch ブロック
 			throw new RuntimeException("e", e);
 		}
-		
+
 		List<RESULT> entityList = findList(resultClass, param);
 
 		if (entityList.size() == 0) {
