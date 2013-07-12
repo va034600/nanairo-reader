@@ -2,7 +2,7 @@ package eu.nanairo_reader.ui.activity;
 
 import android.app.Activity;
 import android.os.Bundle;
-import eu.nanairo_reader.NanairoApplication;
+import eu.nanairo_reader.ui.NanairoApplication;
 
 public abstract class BaseActivity extends Activity {
 	@Override

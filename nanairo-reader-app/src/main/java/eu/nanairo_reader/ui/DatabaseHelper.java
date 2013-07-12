@@ -1,4 +1,4 @@
-package eu.nanairo_reader;
+package eu.nanairo_reader.ui;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;

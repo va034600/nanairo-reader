@@ -1,4 +1,4 @@
-package eu.nanairo_reader;
+package eu.nanairo_reader.ui;
 
 import java.util.Arrays;
 import java.util.List;
@@ -6,7 +6,7 @@ import java.util.List;
 import android.app.Application;
 import android.database.sqlite.SQLiteDatabase;
 import dagger.ObjectGraph;
-import eu.nanairo_reader.module.DaggerModule;
+import eu.nanairo_reader.ui.module.DaggerModule;
 
 public class NanairoApplication extends Application {
 	// データベースヘルパーの作成

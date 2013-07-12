@@ -1,8 +1,7 @@
-package eu.nanairo_reader.module;
+package eu.nanairo_reader.ui.module;
 
 import dagger.Module;
 import dagger.Provides;
-import eu.nanairo_reader.NanairoApplication;
 import eu.nanairo_reader.business.service.RssParsingService;
 import eu.nanairo_reader.business.service.RssParsingServiceMock;
 import eu.nanairo_reader.business.service.RssService;
@@ -13,6 +12,7 @@ import eu.nanairo_reader.data.dao.SubscriptionArticleDao;
 import eu.nanairo_reader.data.dao.SubscriptionArticleDaoImpl;
 import eu.nanairo_reader.data.dao.SubscriptionDao;
 import eu.nanairo_reader.data.dao.SubscriptionDaoImpl;
+import eu.nanairo_reader.ui.NanairoApplication;
 import eu.nanairo_reader.ui.activity.ArticleActivity;
 import eu.nanairo_reader.ui.activity.ArticleListActivity;
 import eu.nanairo_reader.ui.activity.SubscriptionEntryActivity;

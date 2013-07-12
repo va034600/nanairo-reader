@@ -8,10 +8,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.webkit.WebView;
 import android.widget.TextView;
-import eu.nanairo_reader.NanairoApplication;
 import eu.nanairo_reader.R;
 import eu.nanairo_reader.business.bean.Article;
 import eu.nanairo_reader.business.service.RssService;
+import eu.nanairo_reader.ui.NanairoApplication;
 
 public class ArticleActivity extends BaseActivity {
 	@Inject

@@ -8,9 +8,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-import eu.nanairo_reader.NanairoApplication;
 import eu.nanairo_reader.R;
 import eu.nanairo_reader.business.service.RssService;
+import eu.nanairo_reader.ui.NanairoApplication;
 import eu.nanairo_reader.ui.service.SampleService;
 
 public class SubscriptionEntryActivity extends BaseActivity {

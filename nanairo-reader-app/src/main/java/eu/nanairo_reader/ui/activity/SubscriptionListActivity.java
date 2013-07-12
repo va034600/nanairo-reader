@@ -24,10 +24,10 @@ import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
-import eu.nanairo_reader.NanairoApplication;
 import eu.nanairo_reader.R;
 import eu.nanairo_reader.business.bean.Subscription;
 import eu.nanairo_reader.business.service.RssService;
+import eu.nanairo_reader.ui.NanairoApplication;
 import eu.nanairo_reader.ui.component.SubscriptionArrayAdapter;
 import eu.nanairo_reader.ui.service.SampleService;
 

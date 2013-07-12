@@ -15,11 +15,11 @@ import android.widget.Button;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
-import eu.nanairo_reader.NanairoApplication;
 import eu.nanairo_reader.R;
 import eu.nanairo_reader.business.bean.Article;
 import eu.nanairo_reader.business.bean.Subscription;
 import eu.nanairo_reader.business.service.RssService;
+import eu.nanairo_reader.ui.NanairoApplication;
 import eu.nanairo_reader.ui.component.ArticleArrayAdapter;
 
 public class ArticleListActivity extends BaseActivity {
