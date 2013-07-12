@@ -156,5 +156,7 @@ public class RssServiceImpl implements RssService {
 		SubscriptionEntity subscriptionEntity = new SubscriptionEntity();
 		subscriptionEntity.setId(subscriptionId);
 		this.subscriptionDao.delete(subscriptionEntity);
+
+		//TODO subscriptionArticleも
 	}
 }
