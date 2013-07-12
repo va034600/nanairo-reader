@@ -25,14 +25,18 @@ public class ArticleActivity extends BaseActivity {
 
 		((NanairoApplication) getApplication()).inject(this.rssService);
 
+		// パラメータ取得
 		Intent intent = getIntent();
 		Article article = (Article) intent.getSerializableExtra(ARTICLE);
 
+		// 既読処理
 		this.rssService.kidoku(article.getId());
 
+		// コンテンツ
 		WebView contentTextView = (WebView) findViewById(R.id.content);
 		contentTextView.loadDataWithBaseURL("about:blank", article.getContent(), "text/html", "utf-8", null);
 
+		// リンク
 		TextView linkTextView = (TextView) findViewById(R.id.link);
 		linkTextView.setText(article.getLink());
 	}
