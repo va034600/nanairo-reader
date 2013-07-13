@@ -7,4 +7,20 @@ public class SubscriptionArticleDaoImpl extends BaseDaoImpl<SubscriptionArticleE
 	protected Class<SubscriptionArticleEntity> getEntityClass() {
 		return SubscriptionArticleEntity.class;
 	}
+
+	@Override
+	public void deleteTheOld(Long id, int count) {
+		// TODO INよりEXISTS使いたいけど、うまくいかない。 
+		// TODO execSQLは実施件数がわからないので、rawQueryを使いたい。
+		String sql = "";
+		sql += "DELETE FROM SUBSCRIPTION_ARTICLE ";
+		sql += "WHERE ARTICLE_ID NOT IN (";
+		sql += "SELECT ARTICLE_ID FROM SUBSCRIPTION_ARTICLE ";
+		sql += "WHERE SUBSCRIPTION_ID = ? ";
+		sql += "ORDER BY ARTICLE_ID DESC ";
+		sql += "LIMIT ? OFFSET 0";
+		sql += ")";
+		Object[] bindArgs = new Object[] { id, count };
+		getNanairoTemplate().execSQL(sql, bindArgs);
+	}
 }

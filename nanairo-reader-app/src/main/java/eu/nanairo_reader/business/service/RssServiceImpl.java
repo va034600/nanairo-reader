@@ -93,6 +93,11 @@ public class RssServiceImpl implements RssService {
 				// 購読記事を登録する。
 				addSubscriptionArticle(subscriptionEntity.getId(), articleId);
 			}
+
+			// TODO 古いのを削除する。
+			final int MAX_ARTICLE = 10;
+			this.articleDao.deleteTheOld(subscriptionEntity.getId(), MAX_ARTICLE);
+			this.subscriptionArticleDao.deleteTheOld(subscriptionEntity.getId(), MAX_ARTICLE);
 		}
 	}
 
@@ -183,7 +188,7 @@ public class RssServiceImpl implements RssService {
 			subscriptionArticleEntity.setSubscriptionId(subscriptionId);
 			List<SubscriptionArticleEntity> subscriptionArticleEntityList = this.subscriptionArticleDao.findList(subscriptionArticleEntity);
 
-			//TODO 一括で削除できるように。要リファクタリング
+			// TODO 一括で削除できるように。要リファクタリング
 			for (SubscriptionArticleEntity subscriptionArticleEntity2 : subscriptionArticleEntityList) {
 				ArticleEntity articleEntity = new ArticleEntity();
 				articleEntity.setId(subscriptionArticleEntity2.getArticleId());
@@ -193,7 +198,7 @@ public class RssServiceImpl implements RssService {
 			// subscriptionArticle
 			this.subscriptionArticleDao.delete(subscriptionArticleEntity);
 
-			//TODO できれば、トランザクションは明示的ではなく、暗黙的にaopで管理したい。
+			// TODO できれば、トランザクションは明示的ではなく、暗黙的にaopで管理したい。
 			this.nanairoApplication.getDb().setTransactionSuccessful();
 		} finally {
 			this.nanairoApplication.getDb().endTransaction();

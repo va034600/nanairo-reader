@@ -17,11 +17,14 @@ public class RssParsingServiceMock implements RssParsingService {
 		if (rss.startsWith("ha")) {
 			result.setTitle("Test Title");
 
-			FeedItem feedItem3 = new FeedItem();
-			feedItem3.setTitle("titlee");
-			feedItem3.setContent("aa<br>bb");
-			feedItem3.setUri("http://aaaa");
-			feedItemList.add(feedItem3);
+			final int FEED_COUNT = 30;
+			for(int i = 0; i < FEED_COUNT; i++){
+				FeedItem feedItem = new FeedItem();
+				feedItem.setTitle("title" + i);
+				feedItem.setContent("aa<br>bb" + i);
+				feedItem.setUri("http://test?" + i);
+				feedItemList.add(feedItem);
+			}
 		} else {
 			result.setTitle("tbn");
 

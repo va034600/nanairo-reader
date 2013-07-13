@@ -8,4 +8,6 @@ public interface ArticleDao extends BaseDao<ArticleEntity, Long> {
 	List<ArticleEntity> getList(long id);
 
 	int getMidokuCount(long id);
+
+	void deleteTheOld(Long id, int count);
 }

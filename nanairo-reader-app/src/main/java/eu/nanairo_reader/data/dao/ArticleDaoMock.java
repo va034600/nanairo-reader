@@ -47,4 +47,10 @@ public class ArticleDaoMock extends BaseDaoMock<ArticleEntity, Long> implements 
 	public int getMidokuCount(long id) {
 		return 3;
 	}
+
+	@Override
+	public void deleteTheOld(Long id, int count) {
+		// TODO 自動生成されたメソッド・スタブ
+		
+	}
 }
