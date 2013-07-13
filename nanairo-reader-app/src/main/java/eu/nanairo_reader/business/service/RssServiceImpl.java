@@ -19,8 +19,12 @@ import eu.nanairo_reader.data.dao.SubscriptionDao;
 import eu.nanairo_reader.data.entity.ArticleEntity;
 import eu.nanairo_reader.data.entity.SubscriptionArticleEntity;
 import eu.nanairo_reader.data.entity.SubscriptionEntity;
+import eu.nanairo_reader.ui.NanairoApplication;
 
 public class RssServiceImpl implements RssService {
+	@Inject
+	NanairoApplication nanairoApplication;
+
 	@Inject
 	SubscriptionDao subscriptionDao;
 
@@ -153,23 +157,32 @@ public class RssServiceImpl implements RssService {
 
 	@Override
 	public void delete(long subscriptionId) {
-		// subscription
-		SubscriptionEntity subscriptionEntity = new SubscriptionEntity();
-		subscriptionEntity.setId(subscriptionId);
-		this.subscriptionDao.delete(subscriptionEntity);
+		try {
 
-		// article
-		SubscriptionArticleEntity subscriptionArticleEntity = new SubscriptionArticleEntity();
-		subscriptionArticleEntity.setSubscriptionId(subscriptionId);
-		List<SubscriptionArticleEntity> subscriptionArticleEntityList = this.subscriptionArticleDao.findList(subscriptionArticleEntity);
+			this.nanairoApplication.getDb().beginTransaction();
 
-		for(SubscriptionArticleEntity subscriptionArticleEntity2 : subscriptionArticleEntityList){
-			ArticleEntity articleEntity = new ArticleEntity();
-			articleEntity.setId(subscriptionArticleEntity2.getArticleId());
-			this.articleDao.delete(articleEntity);
+			// subscription
+			SubscriptionEntity subscriptionEntity = new SubscriptionEntity();
+			subscriptionEntity.setId(subscriptionId);
+			this.subscriptionDao.delete(subscriptionEntity);
+
+			// article
+			SubscriptionArticleEntity subscriptionArticleEntity = new SubscriptionArticleEntity();
+			subscriptionArticleEntity.setSubscriptionId(subscriptionId);
+			List<SubscriptionArticleEntity> subscriptionArticleEntityList = this.subscriptionArticleDao.findList(subscriptionArticleEntity);
+
+			for (SubscriptionArticleEntity subscriptionArticleEntity2 : subscriptionArticleEntityList) {
+				ArticleEntity articleEntity = new ArticleEntity();
+				articleEntity.setId(subscriptionArticleEntity2.getArticleId());
+				this.articleDao.delete(articleEntity);
+			}
+
+			// subscriptionArticle
+			this.subscriptionArticleDao.delete(subscriptionArticleEntity);
+
+			this.nanairoApplication.getDb().setTransactionSuccessful();
+		} finally {
+			this.nanairoApplication.getDb().endTransaction();
 		}
-
-		// subscriptionArticle
-		this.subscriptionArticleDao.delete(subscriptionArticleEntity);
 	}
 }

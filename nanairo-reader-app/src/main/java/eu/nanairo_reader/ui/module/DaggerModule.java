@@ -43,12 +43,18 @@ public class DaggerModule {
 	}
 
 	@Provides
+	NanairoApplication provideNanairoApplication() {
+		return this.application;
+	}
+
+	@Provides
 	RssService provideRssService() {
 		return new RssServiceImpl();
 	}
 
 	@Provides
 	RssParsingService provideRssParsingService() {
+		//TODO 今だけMock
 		//return new RssParsingServiceImpl();
 		return new RssParsingServiceMock();
 	}
