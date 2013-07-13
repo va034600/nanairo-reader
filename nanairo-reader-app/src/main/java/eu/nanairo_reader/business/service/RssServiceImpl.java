@@ -180,6 +180,7 @@ public class RssServiceImpl implements RssService {
 			// subscriptionArticle
 			this.subscriptionArticleDao.delete(subscriptionArticleEntity);
 
+			//TODO できれば、トランザクションは明示的ではなく、暗黙的にaopで管理したい。
 			this.nanairoApplication.getDb().setTransactionSuccessful();
 		} finally {
 			this.nanairoApplication.getDb().endTransaction();
