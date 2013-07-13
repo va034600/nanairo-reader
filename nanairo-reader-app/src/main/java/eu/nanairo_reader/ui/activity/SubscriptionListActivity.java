@@ -131,6 +131,7 @@ public class SubscriptionListActivity extends BaseActivity {
 			this.rssService.delete(subscription.getId());
 			this.subscriptionList.remove(subscription);
 			((SubscriptionArrayAdapter) listView.getAdapter()).notifyDataSetChanged();
+			Toast.makeText(SubscriptionListActivity.this, "削除しました。", Toast.LENGTH_SHORT).show();
 			break;
 		}
 
