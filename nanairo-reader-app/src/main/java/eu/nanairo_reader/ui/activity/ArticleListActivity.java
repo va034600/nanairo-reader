@@ -73,8 +73,9 @@ public class ArticleListActivity extends BaseActivity {
 		}
 
 		public void onClick(View v) {
-			Toast.makeText(ArticleListActivity.this, "subscriptionId:" + this.subscriptionId, Toast.LENGTH_SHORT).show();
-			//TODO 全既読処理
+			rssService.kidokuAll(this.subscriptionId);
+			Toast.makeText(ArticleListActivity.this, "全て既読にしました。", Toast.LENGTH_SHORT).show();
+			//TODO 次のsubscriptionIdを呼び出したい。
 		}
 	};
 }

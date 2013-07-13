@@ -156,9 +156,21 @@ public class RssServiceImpl implements RssService {
 	}
 
 	@Override
+	public void kidokuAll(long subscriptionId) {
+		SubscriptionEntity subscriptionEntity = new SubscriptionEntity();
+		subscriptionEntity.setId(subscriptionId);
+		List<ArticleEntity> articleEntityList = this.articleDao.getList(subscriptionId);
+
+		// TODO 一括で更新できるように。要リファクタリング
+		for (ArticleEntity articleEntity : articleEntityList) {
+			articleEntity.setMidoku(MIDOKU_OFF);
+			this.articleDao.update(articleEntity);
+		}
+	}
+
+	@Override
 	public void delete(long subscriptionId) {
 		try {
-
 			this.nanairoApplication.getDb().beginTransaction();
 
 			// subscription
@@ -171,6 +183,7 @@ public class RssServiceImpl implements RssService {
 			subscriptionArticleEntity.setSubscriptionId(subscriptionId);
 			List<SubscriptionArticleEntity> subscriptionArticleEntityList = this.subscriptionArticleDao.findList(subscriptionArticleEntity);
 
+			//TODO 一括で削除できるように。要リファクタリング
 			for (SubscriptionArticleEntity subscriptionArticleEntity2 : subscriptionArticleEntityList) {
 				ArticleEntity articleEntity = new ArticleEntity();
 				articleEntity.setId(subscriptionArticleEntity2.getArticleId());

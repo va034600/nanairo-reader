@@ -16,5 +16,7 @@ public interface RssService {
 
 	void kidoku(long articleId);
 
+	void kidokuAll(long subscriptionId);
+
 	void delete(long subscriptionId);
 }
