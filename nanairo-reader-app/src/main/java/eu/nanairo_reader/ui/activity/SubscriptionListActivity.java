@@ -112,7 +112,8 @@ public class SubscriptionListActivity extends BaseActivity {
 
 		// コンテキストメニューの作成
 		menu.setHeaderTitle("メニュー:" + subscription.getTitle());
-		menu.add(0, CONTEXT_ITEM_ALL_KIDOKU, 0, "全て既読にする");
+		//TODO M2で。
+		//menu.add(0, CONTEXT_ITEM_ALL_KIDOKU, 0, "全て既読にする");
 		menu.add(0, CONTEXT_ITEM_SUBSCRIPTION_DELETE, 0, "購読を削除");
 	}
 
