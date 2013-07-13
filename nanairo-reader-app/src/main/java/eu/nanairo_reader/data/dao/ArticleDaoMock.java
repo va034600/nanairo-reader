@@ -50,7 +50,5 @@ public class ArticleDaoMock extends BaseDaoMock<ArticleEntity, Long> implements 
 
 	@Override
 	public void deleteTheOld(Long id, int count) {
-		// TODO 自動生成されたメソッド・スタブ
-		
 	}
 }
