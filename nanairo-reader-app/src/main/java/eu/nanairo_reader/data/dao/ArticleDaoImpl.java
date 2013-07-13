@@ -40,11 +40,11 @@ public class ArticleDaoImpl extends BaseDaoImpl<ArticleEntity, Long> implements 
 		// TODO execSQLは実施件数がわからないので、rawQueryを使いたい。
 		String sql = "";
 		sql += "DELETE FROM ARTICLE ";
-		sql += "WHERE ID NOT IN (";
+		sql += "WHERE ID IN (";
 		sql += "SELECT ARTICLE_ID FROM SUBSCRIPTION_ARTICLE ";
 		sql += "WHERE SUBSCRIPTION_ID = ? ";
-		sql += "ORDER BY ARTICLE_ID DESC ";
-		sql += "LIMIT ? OFFSET 0";
+		sql += "ORDER BY ARTICLE_ID ";
+		sql += "LIMIT -1 OFFSET ?";
 		sql += ")";
 		Object[] bindArgs = new Object[] { id, count };
 		getNanairoTemplate().execSQL(sql, bindArgs);
