@@ -99,7 +99,9 @@ public class NanairoTemplate {
 	}
 
 	protected static Object getValue(Field field, Cursor cursor) {
-		String propertyName = field.getName().toUpperCase(Locale.ENGLISH);
+		String propertyName = field.getName();
+		propertyName = camelToSnake(propertyName);
+		propertyName = propertyName.toUpperCase(Locale.ENGLISH);
 		int columnIndex = cursor.getColumnIndex(propertyName);
 		Class<?> type = field.getType();
 		if (type.equals(Integer.class)) {
@@ -298,7 +300,8 @@ public class NanairoTemplate {
 		String[] whereArgs = { id.toString() };
 		// TODO pkをどうするか？
 		String where = "id=?";
-		return db.update(tableName, values, where, whereArgs);
+		int count = db.update(tableName, values, where, whereArgs);
+		return count;
 	}
 
 	public <RESULT> int delete(Class<RESULT> resultClass, RESULT param) {
@@ -311,7 +314,9 @@ public class NanairoTemplate {
 				continue;
 			}
 
-			where += field.getName() + " = ? AND";
+			String fieldName = field.getName();
+			fieldName = camelToSnake(fieldName);
+			where += fieldName + " = ? AND";
 			argList.add(parameter.toString());
 		}
 
@@ -321,7 +326,8 @@ public class NanairoTemplate {
 
 		String tableName = getTableName(resultClass);
 		String[] whereArgs = (String[]) argList.toArray(new String[0]);
-		return db.delete(tableName, where, whereArgs);
+		int count = db.delete(tableName, where, whereArgs);
+		return count;
 	}
 
 	public <RESULT> RESULT findByPrimaryKey(Class<RESULT> resultClass, Object key) {

@@ -153,10 +153,23 @@ public class RssServiceImpl implements RssService {
 
 	@Override
 	public void delete(long subscriptionId) {
+		// subscription
 		SubscriptionEntity subscriptionEntity = new SubscriptionEntity();
 		subscriptionEntity.setId(subscriptionId);
 		this.subscriptionDao.delete(subscriptionEntity);
 
-		//TODO subscriptionArticleも
+		// article
+		SubscriptionArticleEntity subscriptionArticleEntity = new SubscriptionArticleEntity();
+		subscriptionArticleEntity.setSubscriptionId(subscriptionId);
+		List<SubscriptionArticleEntity> subscriptionArticleEntityList = this.subscriptionArticleDao.findList(subscriptionArticleEntity);
+
+		for(SubscriptionArticleEntity subscriptionArticleEntity2 : subscriptionArticleEntityList){
+			ArticleEntity articleEntity = new ArticleEntity();
+			articleEntity.setId(subscriptionArticleEntity2.getArticleId());
+			this.articleDao.delete(articleEntity);
+		}
+
+		// subscriptionArticle
+		this.subscriptionArticleDao.delete(subscriptionArticleEntity);
 	}
 }
