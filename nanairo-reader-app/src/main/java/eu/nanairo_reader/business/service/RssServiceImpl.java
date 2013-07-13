@@ -72,13 +72,21 @@ public class RssServiceImpl implements RssService {
 	@Override
 	public void storeArticles() {
 		for (SubscriptionEntity subscriptionEntity : this.subscriptionDao.getList()) {
-			FeedResult feed;
-			try {
-				feed = this.rssParsingService.getFeedResult(subscriptionEntity.getUrl());
-			} catch (RssParsingException e) {
-				// TODO ログ出力
-				return;
-			}
+			storeArticle(subscriptionEntity);
+		}
+	}
+
+	protected void storeArticle(SubscriptionEntity subscriptionEntity) {
+		FeedResult feed;
+		try {
+			feed = this.rssParsingService.getFeedResult(subscriptionEntity.getUrl());
+		} catch (RssParsingException e) {
+			// TODO ログ出力
+			return;
+		}
+		try {
+			// TODO できれば、トランザクションは明示的ではなく、暗黙的にaopで管理したい。
+			this.nanairoApplication.getDb().beginTransaction();
 
 			for (FeedItem feedItem : feed.getFeedItemList()) {
 				// 登録済みの場合、登録しない。
@@ -94,10 +102,15 @@ public class RssServiceImpl implements RssService {
 				addSubscriptionArticle(subscriptionEntity.getId(), articleId);
 			}
 
-			// TODO 古いのを削除する。
-			final int MAX_ARTICLE = 10;
+			// TODO 件数確認
+			// 古いのを削除する。
+			final int MAX_ARTICLE = 20;
 			this.articleDao.deleteTheOld(subscriptionEntity.getId(), MAX_ARTICLE);
 			this.subscriptionArticleDao.deleteTheOld(subscriptionEntity.getId(), MAX_ARTICLE);
+
+			this.nanairoApplication.getDb().setTransactionSuccessful();
+		} finally {
+			this.nanairoApplication.getDb().endTransaction();
 		}
 	}
 
@@ -176,6 +189,7 @@ public class RssServiceImpl implements RssService {
 	@Override
 	public void delete(long subscriptionId) {
 		try {
+			// TODO できれば、トランザクションは明示的ではなく、暗黙的にaopで管理したい。
 			this.nanairoApplication.getDb().beginTransaction();
 
 			// subscription
@@ -198,7 +212,6 @@ public class RssServiceImpl implements RssService {
 			// subscriptionArticle
 			this.subscriptionArticleDao.delete(subscriptionArticleEntity);
 
-			// TODO できれば、トランザクションは明示的ではなく、暗黙的にaopで管理したい。
 			this.nanairoApplication.getDb().setTransactionSuccessful();
 		} finally {
 			this.nanairoApplication.getDb().endTransaction();
