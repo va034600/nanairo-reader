@@ -29,12 +29,13 @@ public class NanairoTemplate {
 		String tableName = entityClass.getSimpleName();
 		tableName = tableName.substring(0, tableName.length() - 6);
 		tableName = camelToSnake(tableName);
-		tableName = tableName.toUpperCase(Locale.ENGLISH);
 		return tableName;
 	}
 
 	protected static String camelToSnake(String value) {
-		return value.replaceAll("([A-Z]+)([A-Z][a-z])", "$1_$2").replaceAll("([a-z])([A-Z])", "$1_$2");
+		String result = value.replaceAll("([A-Z]+)([A-Z][a-z])", "$1_$2").replaceAll("([a-z])([A-Z])", "$1_$2");
+		result = result.toUpperCase(Locale.ENGLISH);
+		return result;
 	}
 
 	protected static String snakeToCamel(String targetStr) {
@@ -56,7 +57,6 @@ public class NanairoTemplate {
 			Field field = fields[i];
 			String column = field.getName();
 			column = camelToSnake(column);
-			column = column.toUpperCase(Locale.ENGLISH);
 			columns[i] = column;
 		}
 		return columns;
@@ -101,7 +101,6 @@ public class NanairoTemplate {
 	protected static Object getValue(Field field, Cursor cursor) {
 		String propertyName = field.getName();
 		propertyName = camelToSnake(propertyName);
-		propertyName = propertyName.toUpperCase(Locale.ENGLISH);
 		int columnIndex = cursor.getColumnIndex(propertyName);
 		Class<?> type = field.getType();
 		if (type.equals(Integer.class)) {
