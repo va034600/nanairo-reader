@@ -9,6 +9,7 @@ import android.os.IBinder;
 import android.widget.Toast;
 import eu.nanairo_reader.business.service.RssService;
 import eu.nanairo_reader.ui.NanairoApplication;
+import eu.nanairo_reader.ui.activity.SubscriptionListActivity;
 
 // Serviceクラスを拡張したクラスを作成
 public class SampleService extends Service {
@@ -46,6 +47,7 @@ public class SampleService extends Service {
 		Thread t = new Thread() {
 			public void run() {
 				SampleService.this.rssService.storeArticles();
+				SampleService.this.rssService.loadSubscription();
 
 				Intent intent = new Intent(SAMPLE_SERVICE_ACTION);
 				// TODO テスト
