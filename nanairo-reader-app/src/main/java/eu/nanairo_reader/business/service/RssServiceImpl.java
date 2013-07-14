@@ -37,14 +37,15 @@ public class RssServiceImpl implements RssService {
 	@Inject
 	RssParsingService rssParsingService;
 
-	private List<Subscription> subscriptionList = new ArrayList<Subscription>();
-
+	@Inject
+	SubscriptionListManager subscriptionListManager;
+	
 	@Override
 	public List<Subscription> loadSubscription() {
 		List<Subscription> s = getSubscriptionList();
-		this.subscriptionList.clear();
-		this.subscriptionList.addAll(s);
-		return subscriptionList;
+		this.subscriptionListManager.getSubscriptionList().clear();
+		this.subscriptionListManager.getSubscriptionList().addAll(s);
+		return this.subscriptionListManager.getSubscriptionList();
 	}
 
 	protected List<Subscription> getSubscriptionList() {
@@ -179,8 +180,24 @@ public class RssServiceImpl implements RssService {
 	@Override
 	public void kidoku(long articleId) {
 		ArticleEntity articleEntity = this.articleDao.findByPrimaryKey(articleId);
+		if(articleEntity.getMidoku() == MIDOKU_OFF){
+			return;
+		}
+		
 		articleEntity.setMidoku(MIDOKU_OFF);
 		this.articleDao.update(articleEntity);
+
+		SubscriptionArticleEntity parameter = new SubscriptionArticleEntity();
+		parameter.setArticleId(articleId);
+		List<SubscriptionArticleEntity> subscriptionArticleEntitieList = this.subscriptionArticleDao.findList(parameter);
+
+		long subscriptionId = subscriptionArticleEntitieList.get(0).getSubscriptionId();
+		for(Subscription subscription: this.subscriptionListManager.getSubscriptionList()){
+			if(subscription.getId() == subscriptionId){
+				subscription.setMidokuCount(subscription.getMidokuCount() - 1);
+				break;
+			}
+		}
 	}
 
 	@Override
@@ -224,7 +241,7 @@ public class RssServiceImpl implements RssService {
 			// subscriptionArticle
 			this.subscriptionArticleDao.delete(subscriptionArticleEntity);
 
-			this.subscriptionList.remove(subscription);
+			this.subscriptionListManager.getSubscriptionList().remove(subscription);
 
 			this.nanairoApplication.getDb().setTransactionSuccessful();
 		} finally {

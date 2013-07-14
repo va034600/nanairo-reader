@@ -137,9 +137,10 @@ public class SubscriptionListActivity extends BaseActivity {
 	@Override
 	protected void onResume() {
 		super.onResume();
-		// TODO パフォーマンスが悪いからやめたい
-		// 購読一覧を構築
-		rebuildSubscriptionList();
+
+		// 購読の再表示
+		ListView listView = (ListView) findViewById(R.id.listView);
+		((SubscriptionArrayAdapter) listView.getAdapter()).notifyDataSetChanged();
 	}
 
 	@Override
