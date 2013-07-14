@@ -60,6 +60,8 @@ public class SubscriptionListActivity extends BaseActivity {
 		// ListView
 		ListView listView = (ListView) findViewById(R.id.listView);
 
+		this.subscriptionList = SubscriptionListActivity.this.rssService.getSubscriptionList();
+
 		// Adapterの設定
 		SubscriptionArrayAdapter listAdapter = new SubscriptionArrayAdapter(getApplicationContext(), this.subscriptionList);
 		listView.setAdapter(listAdapter);
@@ -98,9 +100,6 @@ public class SubscriptionListActivity extends BaseActivity {
 				startActivity(intent);
 			}
 		});
-
-		// 購読一覧を構築
-		rebuildSubscriptionList();
 	}
 
 	@Override
