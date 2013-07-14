@@ -150,13 +150,6 @@ public class SubscriptionListActivity extends BaseActivity {
 		super.onDestroy();
 	}
 
-	private void rebuildSubscriptionList() {
-		// TODO 未読数を更新する。clearしないように。要リファクタリング
-		this.rssService.loadSubscription();
-		ListView listView = (ListView) findViewById(R.id.listView);
-		((SubscriptionArrayAdapter) listView.getAdapter()).notifyDataSetChanged();
-	}
-
 	// Receiverクラス
 	class MyServiceReceiver extends BroadcastReceiver {
 		@Override
@@ -164,8 +157,10 @@ public class SubscriptionListActivity extends BaseActivity {
 			int count = intent.getIntExtra(MIDOKU_COUNT, 0);
 			Toast.makeText(SubscriptionListActivity.this, "更新件数:" + count, Toast.LENGTH_SHORT).show();
 
-			// 購読一覧を構築
-			rebuildSubscriptionList();
+			// TODO 未読数を更新する。clearしないように。要リファクタリング
+			SubscriptionListActivity.this.rssService.loadSubscription();
+			ListView listView = (ListView) findViewById(R.id.listView);
+			((SubscriptionArrayAdapter) listView.getAdapter()).notifyDataSetChanged();
 		}
 	}
 }
