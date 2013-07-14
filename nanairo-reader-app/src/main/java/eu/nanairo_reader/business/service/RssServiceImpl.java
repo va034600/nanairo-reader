@@ -37,7 +37,17 @@ public class RssServiceImpl implements RssService {
 	@Inject
 	RssParsingService rssParsingService;
 
-	public List<Subscription> getSubscriptionList() {
+	private List<Subscription> subscriptionList = new ArrayList<Subscription>();
+
+	@Override
+	public List<Subscription> loadSubscription() {
+		List<Subscription> s = getSubscriptionList();
+		this.subscriptionList.clear();
+		this.subscriptionList.addAll(s);
+		return subscriptionList;
+	}
+
+	protected List<Subscription> getSubscriptionList() {
 		List<Subscription> result = new ArrayList<Subscription>();
 		for (SubscriptionEntity entity : this.subscriptionDao.getList()) {
 			Subscription subscription = new Subscription();
@@ -187,11 +197,13 @@ public class RssServiceImpl implements RssService {
 	}
 
 	@Override
-	public void delete(long subscriptionId) {
+	public void delete(Subscription subscription) {
 		try {
 			// TODO できれば、トランザクションは明示的ではなく、暗黙的にaopで管理したい。
 			this.nanairoApplication.getDb().beginTransaction();
 
+			long subscriptionId = subscription.getId();
+			
 			// subscription
 			SubscriptionEntity subscriptionEntity = new SubscriptionEntity();
 			subscriptionEntity.setId(subscriptionId);
@@ -211,6 +223,8 @@ public class RssServiceImpl implements RssService {
 
 			// subscriptionArticle
 			this.subscriptionArticleDao.delete(subscriptionArticleEntity);
+
+			this.subscriptionList.remove(subscription);
 
 			this.nanairoApplication.getDb().setTransactionSuccessful();
 		} finally {

@@ -4,7 +4,6 @@ import static eu.nanairo_reader.ui.constant.NanairoUiConstant.SUBSCRIPTION;
 import static eu.nanairo_reader.ui.service.SampleService.MIDOKU_COUNT;
 import static eu.nanairo_reader.ui.service.SampleService.SAMPLE_SERVICE_ACTION;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -43,8 +42,6 @@ public class SubscriptionListActivity extends BaseActivity {
 
 	private MyServiceReceiver receiver = new MyServiceReceiver();
 
-	private List<Subscription> subscriptionList = new ArrayList<Subscription>();
-
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -60,10 +57,10 @@ public class SubscriptionListActivity extends BaseActivity {
 		// ListView
 		ListView listView = (ListView) findViewById(R.id.listView);
 
-		this.subscriptionList.addAll(rssService.getSubscriptionList());
+		List<Subscription> subscriptionList = rssService.loadSubscription();
 
 		// Adapterの設定
-		SubscriptionArrayAdapter listAdapter = new SubscriptionArrayAdapter(getApplicationContext(), this.subscriptionList);
+		SubscriptionArrayAdapter listAdapter = new SubscriptionArrayAdapter(getApplicationContext(), subscriptionList);
 		listView.setAdapter(listAdapter);
 
 		// コンテキストメニュー登録
@@ -128,8 +125,7 @@ public class SubscriptionListActivity extends BaseActivity {
 			break;
 		case CONTEXT_ITEM_SUBSCRIPTION_DELETE:
 			// 購読削除
-			this.rssService.delete(subscription.getId());
-			this.subscriptionList.remove(subscription);
+			this.rssService.delete(subscription);
 			((SubscriptionArrayAdapter) listView.getAdapter()).notifyDataSetChanged();
 			Toast.makeText(SubscriptionListActivity.this, "削除しました。", Toast.LENGTH_SHORT).show();
 			break;
@@ -155,9 +151,7 @@ public class SubscriptionListActivity extends BaseActivity {
 
 	private void rebuildSubscriptionList() {
 		// TODO 未読数を更新する。clearしないように。要リファクタリング
-		List<Subscription> subscriptionList2 = SubscriptionListActivity.this.rssService.getSubscriptionList();
-		this.subscriptionList.clear();
-		this.subscriptionList.addAll(subscriptionList2);
+		this.rssService.loadSubscription();
 		ListView listView = (ListView) findViewById(R.id.listView);
 		((SubscriptionArrayAdapter) listView.getAdapter()).notifyDataSetChanged();
 	}
