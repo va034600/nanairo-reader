@@ -60,7 +60,7 @@ public class SubscriptionListActivity extends BaseActivity {
 		// ListView
 		ListView listView = (ListView) findViewById(R.id.listView);
 
-		this.subscriptionList = SubscriptionListActivity.this.rssService.getSubscriptionList();
+		this.subscriptionList.addAll(rssService.getSubscriptionList());
 
 		// Adapterの設定
 		SubscriptionArrayAdapter listAdapter = new SubscriptionArrayAdapter(getApplicationContext(), this.subscriptionList);
@@ -111,8 +111,8 @@ public class SubscriptionListActivity extends BaseActivity {
 
 		// コンテキストメニューの作成
 		menu.setHeaderTitle("メニュー:" + subscription.getTitle());
-		//TODO M2で。
-		//menu.add(0, CONTEXT_ITEM_ALL_KIDOKU, 0, "全て既読にする");
+		// TODO M2で。
+		// menu.add(0, CONTEXT_ITEM_ALL_KIDOKU, 0, "全て既読にする");
 		menu.add(0, CONTEXT_ITEM_SUBSCRIPTION_DELETE, 0, "購読を削除");
 	}
 
