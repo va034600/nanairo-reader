@@ -5,7 +5,7 @@ import javax.inject.Singleton;
 import dagger.Module;
 import dagger.Provides;
 import eu.nanairo_reader.business.service.RssParsingService;
-import eu.nanairo_reader.business.service.RssParsingServiceMock;
+import eu.nanairo_reader.business.service.RssParsingService2Impl;
 import eu.nanairo_reader.business.service.RssService;
 import eu.nanairo_reader.business.service.RssServiceImpl;
 import eu.nanairo_reader.business.service.SubscriptionListManager;
@@ -67,7 +67,8 @@ public class DaggerModule {
 	RssParsingService provideRssParsingService() {
 		// TODO 今だけMock
 		// return new RssParsingServiceImpl();
-		return new RssParsingServiceMock();
+		//return new RssParsingServiceMock();
+		return new RssParsingService2Impl();
 	}
 
 	@Provides
