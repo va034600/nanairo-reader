@@ -9,7 +9,6 @@ import android.os.IBinder;
 import android.widget.Toast;
 import eu.nanairo_reader.business.service.RssService;
 import eu.nanairo_reader.ui.NanairoApplication;
-import eu.nanairo_reader.ui.activity.SubscriptionListActivity;
 
 // Serviceクラスを拡張したクラスを作成
 public class SampleService extends Service {
