@@ -1,5 +1,7 @@
 package eu.nanairo_reader.business.vo;
 
+import java.util.Date;
+
 /**
  * 
  * @author eisakuu
@@ -14,6 +16,9 @@ public class FeedItem {
 
 	/***/
 	private String link;
+
+	/***/
+	private Date publishedDate;
 
 	public String getTitle() {
 		return title;
@@ -37,5 +42,13 @@ public class FeedItem {
 
 	public void setLink(String link) {
 		this.link = link;
+	}
+
+	public Date getPublishedDate() {
+		return publishedDate;
+	}
+
+	public void setPublishedDate(Date publishedDate) {
+		this.publishedDate = publishedDate;
 	}
 }

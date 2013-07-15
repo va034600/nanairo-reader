@@ -3,7 +3,9 @@ package eu.nanairo_reader.business.service;
 import static eu.nanairo_reader.business.constant.NanairoBusinessConstant.MIDOKU_OFF;
 import static eu.nanairo_reader.business.constant.NanairoBusinessConstant.MIDOKU_ON;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -74,6 +76,7 @@ public class RssServiceImpl implements RssService {
 			article.setTitle(entity.getTitle());
 			article.setContent(entity.getContent());
 			article.setLink(entity.getLink());
+			article.setPublishedDate(entity.getPublishedDate());
 
 			result.add(article);
 		}
@@ -142,6 +145,7 @@ public class RssServiceImpl implements RssService {
 		articleEntity.setTitle(feedItem.getTitle());
 		articleEntity.setContent(feedItem.getContent());
 		articleEntity.setLink(feedItem.getLink());
+		articleEntity.setPublishedDate(convertDateToString(feedItem.getPublishedDate()));
 		articleEntity.setMidoku(MIDOKU_ON);
 
 		long articleId = this.articleDao.add(articleEntity);
@@ -149,6 +153,10 @@ public class RssServiceImpl implements RssService {
 		return articleId;
 	}
 
+	//TODO 移動
+	public static String convertDateToString(Date date) {
+		return (new SimpleDateFormat("yyyy/MM/dd HH:mm:ss")).format(date);
+	}
 	protected SubscriptionArticleEntity addSubscriptionArticle(long subscriptionId, long articleId) {
 		SubscriptionArticleEntity subscriptionArticleEntity = new SubscriptionArticleEntity();
 		subscriptionArticleEntity.setSubscriptionId(subscriptionId);

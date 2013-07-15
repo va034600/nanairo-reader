@@ -21,6 +21,9 @@ public class Article implements Serializable {
 	/***/
 	private String link;
 
+	/***/
+	private String publishedDate;
+
 	public String getTitle() {
 		return title;
 	}
@@ -51,5 +54,13 @@ public class Article implements Serializable {
 
 	public void setId(long id) {
 		this.id = id;
+	}
+
+	public String getPublishedDate() {
+		return publishedDate;
+	}
+
+	public void setPublishedDate(String publishedDate) {
+		this.publishedDate = publishedDate;
 	}
 }

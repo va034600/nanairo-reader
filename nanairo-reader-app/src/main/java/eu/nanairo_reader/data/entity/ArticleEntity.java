@@ -19,6 +19,9 @@ public class ArticleEntity {
 	private String link;
 
 	/***/
+	private String publishedDate;
+
+	/***/
 	private Integer midoku;
 
 	public String getTitle() {
@@ -59,5 +62,13 @@ public class ArticleEntity {
 
 	public void setMidoku(Integer midoku) {
 		this.midoku = midoku;
+	}
+
+	public String getPublishedDate() {
+		return publishedDate;
+	}
+
+	public void setPublishedDate(String publishedDate) {
+		this.publishedDate = publishedDate;
 	}
 }

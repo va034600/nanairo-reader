@@ -48,8 +48,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		sql += "ID INTEGER PRIMARY KEY AUTOINCREMENT, ";
 		sql += "TITLE TEXT, ";
 		sql += "CONTENT TEXT, ";
-		sql += "LINK, ";
-		sql += "MIDOKU";
+		sql += "LINK TEXT, ";
+		sql += "PUBLISHED_DATE TEXT, ";
+		sql += "MIDOKU INTEGER";
 		sql += ");";
 		db.execSQL(sql);
 	}

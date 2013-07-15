@@ -29,6 +29,10 @@ public class ArticleArrayAdapter extends ArrayAdapter<Article> {
 			// タイトル
 			TextView mTitle = (TextView) convertView.findViewById(R.id.nameText);
 			mTitle.setText(article.getTitle());
+
+			// 公開日時
+			TextView mPublishedDate = (TextView) convertView.findViewById(R.id.publishedDateText);
+			mPublishedDate.setText(article.getPublishedDate());
 		}
 		return convertView;
 	}
