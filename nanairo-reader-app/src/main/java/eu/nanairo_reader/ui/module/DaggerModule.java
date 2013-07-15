@@ -22,16 +22,30 @@ import eu.nanairo_reader.ui.activity.SubscriptionEntryActivity;
 import eu.nanairo_reader.ui.activity.SubscriptionListActivity;
 import eu.nanairo_reader.ui.service.SampleService;
 
-@Module(library = true, injects = { SubscriptionListActivity.class, ArticleListActivity.class, ArticleActivity.class, SubscriptionEntryActivity.class,
-
-SampleService.class,
-
-// TODO implとりたいよね。
-		RssServiceImpl.class, RssParsingService.class,
-
+@Module(library = true, injects = {
+//
+		//
+		SubscriptionListActivity.class,
+		//
+		ArticleListActivity.class,
+		//
+		ArticleActivity.class,
+		//
+		SubscriptionEntryActivity.class,
+		//
+		SampleService.class,
+		// TODO implとりたいよね。
+		RssServiceImpl.class,
+		//
+		RssParsingService.class,
+		//
 		SubscriptionListManager.class,
-
-		SubscriptionDao.class, SubscriptionArticleDao.class, ArticleDao.class })
+		//
+		SubscriptionDao.class,
+		//
+		SubscriptionArticleDao.class,
+		//
+		ArticleDao.class })
 public class DaggerModule {
 	private final NanairoApplication application;
 
