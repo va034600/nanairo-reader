@@ -42,6 +42,7 @@ public class NanairoApplication extends Application {
 	}
 
 	public SQLiteDatabase getDb() {
+		//TODO ThreadLocalにするか、同期処理いれる？
 		return db;
 	}
 }
