@@ -24,6 +24,9 @@ public class Article implements Serializable {
 	/***/
 	private String publishedDate;
 
+	/***/
+	private Integer midoku;
+
 	public String getTitle() {
 		return title;
 	}
@@ -62,5 +65,13 @@ public class Article implements Serializable {
 
 	public void setPublishedDate(String publishedDate) {
 		this.publishedDate = publishedDate;
+	}
+
+	public Integer getMidoku() {
+		return midoku;
+	}
+
+	public void setMidoku(Integer midoku) {
+		this.midoku = midoku;
 	}
 }

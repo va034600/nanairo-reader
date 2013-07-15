@@ -10,6 +10,7 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import eu.nanairo_reader.R;
 import eu.nanairo_reader.business.bean.Article;
+import eu.nanairo_reader.business.constant.NanairoBusinessConstant;
 
 public class ArticleArrayAdapter extends ArrayAdapter<Article> {
 	private LayoutInflater mInflater;
@@ -33,6 +34,11 @@ public class ArticleArrayAdapter extends ArrayAdapter<Article> {
 			// 公開日時
 			TextView mPublishedDate = (TextView) convertView.findViewById(R.id.publishedDateText);
 			mPublishedDate.setText(article.getPublishedDate());
+
+			if(NanairoBusinessConstant.MIDOKU_ON == article.getMidoku()){
+				//TODO
+				mPublishedDate.setTextColor(NO_SELECTION);
+			}
 		}
 		return convertView;
 	}

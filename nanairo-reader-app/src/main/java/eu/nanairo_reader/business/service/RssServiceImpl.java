@@ -41,7 +41,7 @@ public class RssServiceImpl implements RssService {
 
 	@Inject
 	SubscriptionListManager subscriptionListManager;
-	
+
 	@Override
 	public List<Subscription> loadSubscription() {
 		List<Subscription> s = getSubscriptionList();
@@ -77,6 +77,7 @@ public class RssServiceImpl implements RssService {
 			article.setContent(entity.getContent());
 			article.setLink(entity.getLink());
 			article.setPublishedDate(entity.getPublishedDate());
+			article.setMidoku(entity.getMidoku());
 
 			result.add(article);
 		}
@@ -153,10 +154,11 @@ public class RssServiceImpl implements RssService {
 		return articleId;
 	}
 
-	//TODO 移動
+	// TODO 移動
 	public static String convertDateToString(Date date) {
 		return (new SimpleDateFormat("yyyy/MM/dd HH:mm:ss")).format(date);
 	}
+
 	protected SubscriptionArticleEntity addSubscriptionArticle(long subscriptionId, long articleId) {
 		SubscriptionArticleEntity subscriptionArticleEntity = new SubscriptionArticleEntity();
 		subscriptionArticleEntity.setSubscriptionId(subscriptionId);
@@ -188,10 +190,10 @@ public class RssServiceImpl implements RssService {
 	@Override
 	public void kidoku(long articleId) {
 		ArticleEntity articleEntity = this.articleDao.findByPrimaryKey(articleId);
-		if(articleEntity.getMidoku() == MIDOKU_OFF){
+		if (articleEntity.getMidoku() == MIDOKU_OFF) {
 			return;
 		}
-		
+
 		articleEntity.setMidoku(MIDOKU_OFF);
 		this.articleDao.update(articleEntity);
 
@@ -200,8 +202,8 @@ public class RssServiceImpl implements RssService {
 		List<SubscriptionArticleEntity> subscriptionArticleEntitieList = this.subscriptionArticleDao.findList(parameter);
 
 		long subscriptionId = subscriptionArticleEntitieList.get(0).getSubscriptionId();
-		for(Subscription subscription: this.subscriptionListManager.getSubscriptionList()){
-			if(subscription.getId() == subscriptionId){
+		for (Subscription subscription : this.subscriptionListManager.getSubscriptionList()) {
+			if (subscription.getId() == subscriptionId) {
 				subscription.setMidokuCount(subscription.getMidokuCount() - 1);
 				break;
 			}
@@ -228,7 +230,7 @@ public class RssServiceImpl implements RssService {
 			this.nanairoApplication.getDb().beginTransaction();
 
 			long subscriptionId = subscription.getId();
-			
+
 			// subscription
 			SubscriptionEntity subscriptionEntity = new SubscriptionEntity();
 			subscriptionEntity.setId(subscriptionId);
