@@ -22,7 +22,7 @@ public class RssParsingServiceMock implements RssParsingService {
 				FeedItem feedItem = new FeedItem();
 				feedItem.setTitle("title" + i);
 				feedItem.setContent("aa<br>bb" + i);
-				feedItem.setUri("http://test?" + i);
+				feedItem.setLink("http://test?" + i);
 				feedItemList.add(feedItem);
 			}
 		} else {
@@ -31,13 +31,13 @@ public class RssParsingServiceMock implements RssParsingService {
 			FeedItem feedItem = new FeedItem();
 			feedItem.setTitle("title1");
 			feedItem.setContent("a<br>b");
-			feedItem.setUri("http://tbn17.com/archives/1764915.html");
+			feedItem.setLink("http://tbn17.com/archives/1764915.html");
 			feedItemList.add(feedItem);
 
 			FeedItem feedItem2 = new FeedItem();
 			feedItem2.setTitle("title2");
 			feedItem2.setContent("aa<br>bb");
-			feedItem2.setUri("http://tbn17.com/archives/1764916.html");
+			feedItem2.setLink("http://tbn17.com/archives/1764916.html");
 			feedItemList.add(feedItem2);
 		}
 

@@ -10,19 +10,7 @@ public class FeedItem {
 	private String title;
 
 	/***/
-	private String author;
-
-	/***/
 	private String content;
-
-	/***/
-	private String copyright;
-
-	/***/
-	private String feedType;
-
-	/***/
-	private String uri;
 
 	/***/
 	private String link;
@@ -35,36 +23,12 @@ public class FeedItem {
 		this.title = title;
 	}
 
-	public String getAuthor() {
-		return author;
+	public String getContent() {
+		return content;
 	}
 
-	public void setAuthor(String author) {
-		this.author = author;
-	}
-
-	public String getCopyright() {
-		return copyright;
-	}
-
-	public void setCopyright(String copyright) {
-		this.copyright = copyright;
-	}
-
-	public String getFeedType() {
-		return feedType;
-	}
-
-	public void setFeedType(String feedType) {
-		this.feedType = feedType;
-	}
-
-	public String getUri() {
-		return uri;
-	}
-
-	public void setUri(String uri) {
-		this.uri = uri;
+	public void setContent(String content) {
+		this.content = content;
 	}
 
 	public String getLink() {
@@ -73,13 +37,5 @@ public class FeedItem {
 
 	public void setLink(String link) {
 		this.link = link;
-	}
-
-	public String getContent() {
-		return content;
-	}
-
-	public void setContent(String content) {
-		this.content = content;
 	}
 }

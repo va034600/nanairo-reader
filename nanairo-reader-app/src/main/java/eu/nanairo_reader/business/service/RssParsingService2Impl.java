@@ -32,7 +32,7 @@ public class RssParsingService2Impl implements RssParsingService {
 			for (RssItemBean item : items) {
 				FeedItem feedItem = new FeedItem();
 				feedItem.setTitle(item.getTitle());
-				feedItem.setUri(item.getLink());
+				feedItem.setLink(item.getLink());
 				feedItem.setContent(item.getDescription());
 				feedItemList.add(feedItem);
 			}

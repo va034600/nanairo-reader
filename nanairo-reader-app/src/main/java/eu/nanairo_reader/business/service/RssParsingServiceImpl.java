@@ -39,16 +39,13 @@ public class RssParsingServiceImpl implements RssParsingService {
 				SyndEntry ent = (SyndEntry) iterator.next();
 
 				feedItem.setTitle(ent.getTitle());
-				feedItem.setAuthor(feed.getAuthor());
 
 				if(ent.getContents().size() > 0){
 					SyndContent contents = (SyndContent) ent.getContents().get(0);
 					feedItem.setContent(contents.getValue());
 				}
 
-				feedItem.setCopyright(feed.getCopyright());
-				feedItem.setFeedType(feed.getFeedType());
-				feedItem.setUri(ent.getUri());
+				feedItem.setLink(ent.getUri());
 
 				feedItemList.add(feedItem);
 			}

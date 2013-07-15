@@ -101,7 +101,7 @@ public class RssServiceImpl implements RssService {
 
 			for (FeedItem feedItem : feed.getFeedItemList()) {
 				// 登録済みの場合、登録しない。
-				boolean flag = isDuplicated(feedItem.getUri());
+				boolean flag = isDuplicated(feedItem.getLink());
 				if (flag) {
 					continue;
 				}
@@ -141,7 +141,7 @@ public class RssServiceImpl implements RssService {
 
 		articleEntity.setTitle(feedItem.getTitle());
 		articleEntity.setContent(feedItem.getContent());
-		articleEntity.setLink(feedItem.getUri());
+		articleEntity.setLink(feedItem.getLink());
 		articleEntity.setMidoku(MIDOKU_ON);
 
 		long articleId = this.articleDao.add(articleEntity);
