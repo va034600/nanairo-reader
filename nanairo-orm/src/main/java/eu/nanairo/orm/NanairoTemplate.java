@@ -275,20 +275,21 @@ public class NanairoTemplate {
 			}
 
 			Class<?> type = field.getType();
+			String propertyName = camelToSnake(field.getName());
 			if (type.equals(Integer.class)) {
-				values.put(field.getName(), (Integer) parameter);
+				values.put(propertyName, (Integer) parameter);
 			} else if (type.equals(Long.class)) {
-				values.put(field.getName(), (Long) parameter);
+				values.put(propertyName, (Long) parameter);
 			} else if (type.equals(Short.class)) {
-				values.put(field.getName(), (Short) parameter);
+				values.put(propertyName, (Short) parameter);
 			} else if (type.equals(Float.class)) {
-				values.put(field.getName(), (Float) parameter);
+				values.put(propertyName, (Float) parameter);
 			} else if (type.equals(Double.class)) {
-				values.put(field.getName(), (Double) parameter);
+				values.put(propertyName, (Double) parameter);
 			} else if (type.equals(String.class)) {
-				values.put(field.getName(), (String) parameter);
+				values.put(propertyName, (String) parameter);
 			} else {
-				values.put(field.getName(), (byte[]) parameter);
+				values.put(propertyName, (byte[]) parameter);
 			}
 		}
 
