@@ -83,6 +83,10 @@ public class ArticleListActivity extends BaseActivity {
 			rssService.kidokuAll(this.subscriptionId);
 			Toast.makeText(ArticleListActivity.this, "全て既読にしました。", Toast.LENGTH_SHORT).show();
 			// TODO 次のsubscriptionIdを呼び出したい。
+
+			// 購読の再表示
+			ListView listView = (ListView) findViewById(R.id.listView);
+			((ArticleArrayAdapter) listView.getAdapter()).notifyDataSetChanged();
 		}
 	};
 }

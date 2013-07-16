@@ -110,7 +110,7 @@ public class RssServiceImpl implements RssService {
 			// TODO できれば、トランザクションは明示的ではなく、暗黙的にaopで管理したい。
 			this.nanairoApplication.getDb().beginTransaction();
 			long subscriptionId = subscriptionEntity.getId();
-			
+
 			for (FeedItem feedItem : feed.getFeedItemList()) {
 				// 登録済みの場合、登録しない。
 				boolean flag = isDuplicated(feedItem.getLink());
@@ -235,6 +235,10 @@ public class RssServiceImpl implements RssService {
 		for (ArticleEntity articleEntity : articleEntityList) {
 			articleEntity.setMidoku(MIDOKU_OFF);
 			this.articleDao.update(articleEntity);
+		}
+
+		for (Article article : this.subscriptionListManager.getArticleList()) {
+			article.setMidoku(MIDOKU_OFF);
 		}
 	}
 
