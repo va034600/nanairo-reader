@@ -3,6 +3,7 @@ package eu.nanairo_reader.ui.component;
 import java.util.List;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,11 +36,19 @@ public class ArticleArrayAdapter extends ArrayAdapter<Article> {
 			TextView mPublishedDate = (TextView) convertView.findViewById(R.id.publishedDateText);
 			mPublishedDate.setText(article.getPublishedDate());
 
-			if(NanairoBusinessConstant.MIDOKU_ON == article.getMidoku()){
-				//TODO
-				mPublishedDate.setTextColor(NO_SELECTION);
-			}
+			int color = getColor(article.getMidoku());
+			mPublishedDate.setTextColor(color);
 		}
 		return convertView;
+	}
+
+	private int getColor(int midoku) {
+		int color;
+		if (NanairoBusinessConstant.MIDOKU_ON == midoku) {
+			color = Color.RED;
+		} else {
+			color = Color.WHITE;
+		}
+		return color;
 	}
 }
