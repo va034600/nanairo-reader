@@ -29,12 +29,13 @@ public class SubscriptionArticleDaoImpl extends BaseDaoImpl<SubscriptionArticleE
 
 	@Override
 	public void updateKidokuBySubscriptionId(Long subscriptionId) {
+		// TODO INよりEXISTS使いたいけど、うまくいかない。 
 		String sql = "";
 		sql += "UPDATE ARTICLE SET ";
 		sql += "MIDOKU = ? ";
 		sql += "WHERE ";
 		sql += "MIDOKU = ? AND ";
-		sql += "ID = (";
+		sql += "ID IN (";
 		sql += "SELECT ARTICLE_ID FROM SUBSCRIPTION_ARTICLE ";
 		sql += "WHERE SUBSCRIPTION_ID = ? AND ARTICLE.ID = SUBSCRIPTION_ARTICLE.ARTICLE_ID";
 		sql += ")";

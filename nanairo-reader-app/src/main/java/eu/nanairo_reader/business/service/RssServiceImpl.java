@@ -232,6 +232,13 @@ public class RssServiceImpl implements RssService {
 		for (Article article : this.subscriptionListManager.getArticleList()) {
 			article.setMidoku(MIDOKU_OFF);
 		}
+
+		for (Subscription subscription : this.subscriptionListManager.getSubscriptionList()) {
+			if (subscription.getId() == subscriptionId) {
+				subscription.setMidokuCount(0);
+				break;
+			}
+		}
 	}
 
 	@Override
