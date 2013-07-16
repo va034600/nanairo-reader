@@ -52,7 +52,7 @@ public class RssServiceImpl implements RssService {
 
 	protected List<Subscription> getSubscriptionList() {
 		List<Subscription> result = new ArrayList<Subscription>();
-		for (SubscriptionEntity entity : this.subscriptionDao.getList()) {
+		for (SubscriptionEntity entity : this.subscriptionDao.findList(null)) {
 			Subscription subscription = new Subscription();
 
 			subscription.setId(entity.getId());
@@ -93,7 +93,7 @@ public class RssServiceImpl implements RssService {
 
 	@Override
 	public void storeArticles() {
-		for (SubscriptionEntity subscriptionEntity : this.subscriptionDao.getList()) {
+		for (SubscriptionEntity subscriptionEntity : this.subscriptionDao.findList(null)) {
 			storeArticle(subscriptionEntity);
 		}
 	}

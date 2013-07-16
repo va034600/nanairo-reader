@@ -7,7 +7,7 @@ import eu.nanairo_reader.data.entity.SubscriptionEntity;
 
 public class SubscriptionDaoMock extends BaseDaoMock<SubscriptionEntity, Long> implements SubscriptionDao {
 	@Override
-	public List<SubscriptionEntity> getList() {
+	public List<SubscriptionEntity> findList(SubscriptionEntity param) {
 		List<SubscriptionEntity> list = new ArrayList<SubscriptionEntity>();
 
 		SubscriptionEntity subscription1 = new SubscriptionEntity();
