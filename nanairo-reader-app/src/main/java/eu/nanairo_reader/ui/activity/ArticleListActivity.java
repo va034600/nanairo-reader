@@ -40,9 +40,7 @@ public class ArticleListActivity extends BaseActivity {
 
 		// ListView
 		ListView listView = (ListView) findViewById(R.id.listView);
-
-		// Adapterの設定
-		List<Article> list = this.rssService.getArticleList(subscription.getId());
+		List<Article> list = this.rssService.loadArticleList(subscription.getId());
 		ListAdapter listAdapter = new ArticleArrayAdapter(getApplicationContext(), list);
 		listView.setAdapter(listAdapter);
 
@@ -65,6 +63,15 @@ public class ArticleListActivity extends BaseActivity {
 		updateButton.setOnClickListener(new UpdateButtonOnClickListener(subscription.getId()));
 	}
 
+	@Override
+	protected void onResume() {
+		super.onResume();
+
+		// 購読の再表示
+		ListView listView = (ListView) findViewById(R.id.listView);
+		((ArticleArrayAdapter) listView.getAdapter()).notifyDataSetChanged();
+	}
+
 	class UpdateButtonOnClickListener implements View.OnClickListener {
 		long subscriptionId;
 
@@ -75,7 +82,7 @@ public class ArticleListActivity extends BaseActivity {
 		public void onClick(View v) {
 			rssService.kidokuAll(this.subscriptionId);
 			Toast.makeText(ArticleListActivity.this, "全て既読にしました。", Toast.LENGTH_SHORT).show();
-			//TODO 次のsubscriptionIdを呼び出したい。
+			// TODO 次のsubscriptionIdを呼び出したい。
 		}
 	};
 }

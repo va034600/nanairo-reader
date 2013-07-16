@@ -43,10 +43,10 @@ public class RssServiceImpl implements RssService {
 	SubscriptionListManager subscriptionListManager;
 
 	@Override
-	public List<Subscription> loadSubscription() {
-		List<Subscription> s = getSubscriptionList();
+	public List<Subscription> loadSubscriptionList() {
+		List<Subscription> list = getSubscriptionList();
 		this.subscriptionListManager.getSubscriptionList().clear();
-		this.subscriptionListManager.getSubscriptionList().addAll(s);
+		this.subscriptionListManager.getSubscriptionList().addAll(list);
 		return this.subscriptionListManager.getSubscriptionList();
 	}
 
@@ -67,7 +67,14 @@ public class RssServiceImpl implements RssService {
 	}
 
 	@Override
-	public List<Article> getArticleList(long articleId) {
+	public List<Article> loadArticleList(long articleId) {
+		List<Article> list = getArticleList(articleId);
+		this.subscriptionListManager.getArticleList().clear();
+		this.subscriptionListManager.getArticleList().addAll(list);
+		return this.subscriptionListManager.getArticleList();
+	}
+
+	private List<Article> getArticleList(long articleId) {
 		List<Article> result = new ArrayList<Article>();
 		for (ArticleEntity entity : this.articleDao.getList(articleId)) {
 			Article article = new Article();
@@ -208,6 +215,13 @@ public class RssServiceImpl implements RssService {
 				break;
 			}
 		}
+
+		for (Article article : this.subscriptionListManager.getArticleList()) {
+			if (article.getId() == articleId) {
+				article.setMidoku(MIDOKU_OFF);
+				break;
+			}
+		}
 	}
 
 	@Override
@@ -224,7 +238,7 @@ public class RssServiceImpl implements RssService {
 	}
 
 	@Override
-	public void delete(Subscription subscription) {
+	public void deleteSubscription(Subscription subscription) {
 		try {
 			// TODO できれば、トランザクションは明示的ではなく、暗黙的にaopで管理したい。
 			this.nanairoApplication.getDb().beginTransaction();

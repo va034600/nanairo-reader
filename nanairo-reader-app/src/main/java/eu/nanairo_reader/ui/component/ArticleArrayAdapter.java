@@ -28,27 +28,26 @@ public class ArticleArrayAdapter extends ArrayAdapter<Article> {
 
 		Article article = this.getItem(position);
 		if (article != null) {
+			int color = getColor(article.getMidoku());
+
 			// タイトル
 			TextView mTitle = (TextView) convertView.findViewById(R.id.nameText);
 			mTitle.setText(article.getTitle());
+			mTitle.setTextColor(color);
 
 			// 公開日時
 			TextView mPublishedDate = (TextView) convertView.findViewById(R.id.publishedDateText);
 			mPublishedDate.setText(article.getPublishedDate());
-
-			int color = getColor(article.getMidoku());
 			mPublishedDate.setTextColor(color);
 		}
 		return convertView;
 	}
 
 	private int getColor(int midoku) {
-		int color;
 		if (NanairoBusinessConstant.MIDOKU_ON == midoku) {
-			color = Color.RED;
+			return Color.RED;
 		} else {
-			color = Color.WHITE;
+			return Color.WHITE;
 		}
-		return color;
 	}
 }

@@ -6,9 +6,9 @@ import eu.nanairo_reader.business.bean.Article;
 import eu.nanairo_reader.business.bean.Subscription;
 
 public interface RssService {
-	List<Subscription> loadSubscription();
+	List<Subscription> loadSubscriptionList();
 
-	List<Article> getArticleList(long subscriptionId);
+	List<Article> loadArticleList(long subscriptionId);
 
 	void storeArticles();
 
@@ -18,5 +18,5 @@ public interface RssService {
 
 	void kidokuAll(long subscriptionId);
 
-	void delete(Subscription subscription);
+	void deleteSubscription(Subscription subscription);
 }

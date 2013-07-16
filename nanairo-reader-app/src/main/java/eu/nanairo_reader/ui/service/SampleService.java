@@ -46,7 +46,7 @@ public class SampleService extends Service {
 		Thread t = new Thread() {
 			public void run() {
 				SampleService.this.rssService.storeArticles();
-				SampleService.this.rssService.loadSubscription();
+				SampleService.this.rssService.loadSubscriptionList();
 
 				Intent intent = new Intent(SAMPLE_SERVICE_ACTION);
 				// TODO テスト

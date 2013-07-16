@@ -56,10 +56,7 @@ public class SubscriptionListActivity extends BaseActivity {
 
 		// ListView
 		ListView listView = (ListView) findViewById(R.id.listView);
-
-		List<Subscription> subscriptionList = rssService.loadSubscription();
-
-		// Adapterの設定
+		List<Subscription> subscriptionList = rssService.loadSubscriptionList();
 		SubscriptionArrayAdapter listAdapter = new SubscriptionArrayAdapter(getApplicationContext(), subscriptionList);
 		listView.setAdapter(listAdapter);
 
@@ -125,7 +122,7 @@ public class SubscriptionListActivity extends BaseActivity {
 			break;
 		case CONTEXT_ITEM_SUBSCRIPTION_DELETE:
 			// 購読削除
-			this.rssService.delete(subscription);
+			this.rssService.deleteSubscription(subscription);
 			((SubscriptionArrayAdapter) listView.getAdapter()).notifyDataSetChanged();
 			Toast.makeText(SubscriptionListActivity.this, "削除しました。", Toast.LENGTH_SHORT).show();
 			break;
