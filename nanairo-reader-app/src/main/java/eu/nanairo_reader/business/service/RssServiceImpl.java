@@ -67,16 +67,16 @@ public class RssServiceImpl implements RssService {
 	}
 
 	@Override
-	public List<Article> loadArticleList(long articleId) {
-		List<Article> list = getArticleList(articleId);
+	public List<Article> loadArticleList(long subscriptionId) {
+		List<Article> list = getArticleList(subscriptionId);
 		this.subscriptionListManager.getArticleList().clear();
 		this.subscriptionListManager.getArticleList().addAll(list);
 		return this.subscriptionListManager.getArticleList();
 	}
 
-	private List<Article> getArticleList(long articleId) {
+	private List<Article> getArticleList(long subscriptionId) {
 		List<Article> result = new ArrayList<Article>();
-		for (ArticleEntity entity : this.articleDao.getList(articleId)) {
+		for (ArticleEntity entity : this.articleDao.getListBySubscriptionId(subscriptionId)) {
 			Article article = new Article();
 
 			article.setId(entity.getId());
@@ -109,7 +109,8 @@ public class RssServiceImpl implements RssService {
 		try {
 			// TODO できれば、トランザクションは明示的ではなく、暗黙的にaopで管理したい。
 			this.nanairoApplication.getDb().beginTransaction();
-
+			long subscriptionId = subscriptionEntity.getId();
+			
 			for (FeedItem feedItem : feed.getFeedItemList()) {
 				// 登録済みの場合、登録しない。
 				boolean flag = isDuplicated(feedItem.getLink());
@@ -121,14 +122,14 @@ public class RssServiceImpl implements RssService {
 				long articleId = addArticle(feedItem);
 
 				// 購読記事を登録する。
-				addSubscriptionArticle(subscriptionEntity.getId(), articleId);
+				addSubscriptionArticle(subscriptionId, articleId);
 			}
 
 			// TODO 件数確認
 			// 古いのを削除する。
 			final int MAX_ARTICLE = 20;
-			this.articleDao.deleteTheOld(subscriptionEntity.getId(), MAX_ARTICLE);
-			this.subscriptionArticleDao.deleteTheOld(subscriptionEntity.getId(), MAX_ARTICLE);
+			this.articleDao.deleteTheOld(subscriptionId, MAX_ARTICLE);
+			this.subscriptionArticleDao.deleteTheOld(subscriptionId, MAX_ARTICLE);
 
 			this.nanairoApplication.getDb().setTransactionSuccessful();
 		} finally {
@@ -228,7 +229,7 @@ public class RssServiceImpl implements RssService {
 	public void kidokuAll(long subscriptionId) {
 		SubscriptionEntity subscriptionEntity = new SubscriptionEntity();
 		subscriptionEntity.setId(subscriptionId);
-		List<ArticleEntity> articleEntityList = this.articleDao.getList(subscriptionId);
+		List<ArticleEntity> articleEntityList = this.articleDao.getListBySubscriptionId(subscriptionId);
 
 		// TODO 一括で更新できるように。要リファクタリング
 		for (ArticleEntity articleEntity : articleEntityList) {

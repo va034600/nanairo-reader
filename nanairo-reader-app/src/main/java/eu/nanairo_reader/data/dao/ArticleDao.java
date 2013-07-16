@@ -5,9 +5,9 @@ import java.util.List;
 import eu.nanairo_reader.data.entity.ArticleEntity;
 
 public interface ArticleDao extends BaseDao<ArticleEntity, Long> {
-	List<ArticleEntity> getList(long id);
+	List<ArticleEntity> getListBySubscriptionId(long subscriptionId);
 
-	int getMidokuCount(long id);
+	int getMidokuCount(long subscriptionId);
 
-	void deleteTheOld(Long id, int count);
+	void deleteTheOld(Long subscriptionId, int count);
 }

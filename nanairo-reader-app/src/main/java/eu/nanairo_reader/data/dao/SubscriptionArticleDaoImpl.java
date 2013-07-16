@@ -9,7 +9,7 @@ public class SubscriptionArticleDaoImpl extends BaseDaoImpl<SubscriptionArticleE
 	}
 
 	@Override
-	public void deleteTheOld(Long id, int count) {
+	public void deleteTheOld(Long subscriptionId, int count) {
 		// TODO INよりEXISTS使いたいけど、うまくいかない。 
 		// TODO execSQLは実施件数がわからないので、rawQueryを使いたい。
 		String sql = "";
@@ -21,7 +21,7 @@ public class SubscriptionArticleDaoImpl extends BaseDaoImpl<SubscriptionArticleE
 		sql += "ORDER BY ARTICLE_ID ";
 		sql += "LIMIT -1 OFFSET ?";
 		sql += ")";
-		Object[] bindArgs = new Object[] { id, count };
+		Object[] bindArgs = new Object[] { subscriptionId, count };
 		getNanairoTemplate().execSQL(sql, bindArgs);
 	}
 }

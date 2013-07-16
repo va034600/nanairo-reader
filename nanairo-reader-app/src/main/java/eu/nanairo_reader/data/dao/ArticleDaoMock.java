@@ -7,7 +7,7 @@ import eu.nanairo_reader.data.entity.ArticleEntity;
 
 public class ArticleDaoMock extends BaseDaoMock<ArticleEntity, Long> implements ArticleDao {
 	@Override
-	public List<ArticleEntity> getList(long id) {
+	public List<ArticleEntity> getListBySubscriptionId(long id) {
 		List<ArticleEntity> list = new ArrayList<ArticleEntity>();
 
 		ArticleEntity article1 = new ArticleEntity();
