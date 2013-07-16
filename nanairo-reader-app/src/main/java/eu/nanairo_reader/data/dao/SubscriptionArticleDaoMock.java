@@ -6,4 +6,10 @@ public class SubscriptionArticleDaoMock extends BaseDaoMock<SubscriptionArticleE
 	@Override
 	public void deleteTheOld(Long id, int count) {
 	}
+
+	@Override
+	public void updateKidokuBySubscriptionId(Long subscriptionId) {
+		// TODO 自動生成されたメソッド・スタブ
+		
+	}
 }

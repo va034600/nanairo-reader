@@ -227,15 +227,7 @@ public class RssServiceImpl implements RssService {
 
 	@Override
 	public void kidokuAll(long subscriptionId) {
-		SubscriptionEntity subscriptionEntity = new SubscriptionEntity();
-		subscriptionEntity.setId(subscriptionId);
-		List<ArticleEntity> articleEntityList = this.articleDao.getListBySubscriptionId(subscriptionId);
-
-		// TODO 一括で更新できるように。要リファクタリング
-		for (ArticleEntity articleEntity : articleEntityList) {
-			articleEntity.setMidoku(MIDOKU_OFF);
-			this.articleDao.update(articleEntity);
-		}
+		this.subscriptionArticleDao.updateKidokuBySubscriptionId(subscriptionId);
 
 		for (Article article : this.subscriptionListManager.getArticleList()) {
 			article.setMidoku(MIDOKU_OFF);
