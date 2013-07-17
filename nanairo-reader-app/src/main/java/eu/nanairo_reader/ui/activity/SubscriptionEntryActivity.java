@@ -2,6 +2,7 @@ package eu.nanairo_reader.ui.activity;
 
 import javax.inject.Inject;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
@@ -26,6 +27,19 @@ public class SubscriptionEntryActivity extends BaseActivity {
 
 		Button entryButton = (Button) findViewById(R.id.entryButton);
 		entryButton.setOnClickListener(onSave);
+
+		Intent intent = getIntent();
+		String action = intent.getAction();
+		if (Intent.ACTION_SEND.equals(action)) {
+			Bundle extras = intent.getExtras();
+			if (extras != null) {
+				CharSequence charSequence = extras.getCharSequence(Intent.EXTRA_TEXT);
+				if (charSequence != null) {
+					EditText urlEditText = (EditText) findViewById(R.id.urlEditText);
+					urlEditText.setText(charSequence);
+				}
+			}
+		}
 	}
 
 	private View.OnClickListener onSave = new View.OnClickListener() {
