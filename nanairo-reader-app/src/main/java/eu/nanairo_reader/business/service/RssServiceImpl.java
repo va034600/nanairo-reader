@@ -110,35 +110,41 @@ public class RssServiceImpl implements RssService {
 			// TODO ログ出力
 			return;
 		}
+
+		long subscriptionId = subscriptionEntity.getId();
 		try {
 			// TODO できれば、トランザクションは明示的ではなく、暗黙的にaopで管理したい。
 			this.nanairoApplication.getDb().beginTransaction();
-			long subscriptionId = subscriptionEntity.getId();
 
-			for (FeedItem feedItem : feed.getFeedItemList()) {
-				// 登録済みの場合、登録しない。
-				boolean flag = isDuplicated(feedItem.getLink());
-				if (flag) {
-					continue;
-				}
-
-				// 記事を登録する。
-				long articleId = addArticle(feedItem);
-
-				// 購読記事を登録する。
-				addSubscriptionArticle(subscriptionId, articleId);
-			}
-
-			// TODO 件数確認
-			// 古いのを削除する。
-			final int MAX_ARTICLE = 20;
-			this.articleDao.deleteTheOld(subscriptionId, MAX_ARTICLE);
-			this.subscriptionArticleDao.deleteTheOld(subscriptionId, MAX_ARTICLE);
+			// 記事一覧追加
+			addArticleListByFeed(subscriptionId, feed);
 
 			this.nanairoApplication.getDb().setTransactionSuccessful();
 		} finally {
 			this.nanairoApplication.getDb().endTransaction();
 		}
+	}
+
+	protected void addArticleListByFeed(long subscriptionId, FeedResult feedResult) {
+		for (FeedItem feedItem : feedResult.getFeedItemList()) {
+			// 登録済みの場合、登録しない。
+			boolean flag = isDuplicated(feedItem.getLink());
+			if (flag) {
+				continue;
+			}
+
+			// 記事を登録する。
+			long articleId = addArticle(feedItem);
+
+			// 購読記事を登録する。
+			addSubscriptionArticle(subscriptionId, articleId);
+		}
+
+		// TODO 件数確認
+		// 古いのを削除する。
+		final int MAX_ARTICLE = 20;
+		this.articleDao.deleteTheOld(subscriptionId, MAX_ARTICLE);
+		this.subscriptionArticleDao.deleteTheOld(subscriptionId, MAX_ARTICLE);
 	}
 
 	protected boolean isDuplicated(String uri) {
@@ -190,15 +196,27 @@ public class RssServiceImpl implements RssService {
 			return false;
 		}
 
-		SubscriptionEntity subscriptionEntity = new SubscriptionEntity();
-		subscriptionEntity.setUrl(url);
-		subscriptionEntity.setTitle(feedResult.getTitle());
-		long subscriptionId = this.subscriptionDao.add(subscriptionEntity);
-		subscriptionEntity.setId(subscriptionId);
+		try {
+			// TODO できれば、トランザクションは明示的ではなく、暗黙的にaopで管理したい。
+			this.nanairoApplication.getDb().beginTransaction();
 
-		// list 追加
-		Subscription subscription = convertEntity(subscriptionEntity);
-		this.subscriptionListManager.getSubscriptionList().add(subscription);
+			SubscriptionEntity subscriptionEntity = new SubscriptionEntity();
+			subscriptionEntity.setUrl(url);
+			subscriptionEntity.setTitle(feedResult.getTitle());
+			long subscriptionId = this.subscriptionDao.add(subscriptionEntity);
+			subscriptionEntity.setId(subscriptionId);
+
+			// 記事一覧追加
+			addArticleListByFeed(subscriptionId, feedResult);
+
+			// list 追加
+			Subscription subscription = convertEntity(subscriptionEntity);
+			this.subscriptionListManager.getSubscriptionList().add(subscription);
+
+			this.nanairoApplication.getDb().setTransactionSuccessful();
+		} finally {
+			this.nanairoApplication.getDb().endTransaction();
+		}
 
 		return true;
 	}
