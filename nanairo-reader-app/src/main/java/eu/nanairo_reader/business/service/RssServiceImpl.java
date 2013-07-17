@@ -194,18 +194,7 @@ public class RssServiceImpl implements RssService {
 			// TODO できれば、トランザクションは明示的ではなく、暗黙的にaopで管理したい。
 			this.nanairoApplication.getDb().beginTransaction();
 
-			SubscriptionEntity subscriptionEntity = new SubscriptionEntity();
-			subscriptionEntity.setUrl(url);
-			subscriptionEntity.setTitle(feedResult.getTitle());
-			long subscriptionId = this.subscriptionDao.add(subscriptionEntity);
-			subscriptionEntity.setId(subscriptionId);
-
-			// 記事一覧追加
-			addArticleListByFeed(subscriptionId, feedResult);
-
-			// list 追加
-			Subscription subscription = convertEntity(subscriptionEntity);
-			this.subscriptionListManager.getSubscriptionList().add(subscription);
+			addSubscription(url, feedResult);
 
 			this.nanairoApplication.getDb().setTransactionSuccessful();
 		} finally {
@@ -213,6 +202,21 @@ public class RssServiceImpl implements RssService {
 		}
 
 		return true;
+	}
+
+	protected void addSubscription(String url, FeedResult feedResult) {
+		SubscriptionEntity subscriptionEntity = new SubscriptionEntity();
+		subscriptionEntity.setUrl(url);
+		subscriptionEntity.setTitle(feedResult.getTitle());
+		long subscriptionId = this.subscriptionDao.add(subscriptionEntity);
+		subscriptionEntity.setId(subscriptionId);
+
+		// 記事一覧追加
+		addArticleListByFeed(subscriptionId, feedResult);
+
+		// list 追加
+		Subscription subscription = convertEntity(subscriptionEntity);
+		this.subscriptionListManager.getSubscriptionList().add(subscription);
 	}
 
 	@Override
@@ -267,33 +271,37 @@ public class RssServiceImpl implements RssService {
 			// TODO できれば、トランザクションは明示的ではなく、暗黙的にaopで管理したい。
 			this.nanairoApplication.getDb().beginTransaction();
 
-			long subscriptionId = subscription.getId();
-
-			// subscription
-			SubscriptionEntity subscriptionEntity = new SubscriptionEntity();
-			subscriptionEntity.setId(subscriptionId);
-			this.subscriptionDao.delete(subscriptionEntity);
-
-			// article
-			SubscriptionArticleEntity subscriptionArticleEntity = new SubscriptionArticleEntity();
-			subscriptionArticleEntity.setSubscriptionId(subscriptionId);
-			List<SubscriptionArticleEntity> subscriptionArticleEntityList = this.subscriptionArticleDao.findList(subscriptionArticleEntity);
-
-			// TODO 一括で削除できるように。要リファクタリング
-			for (SubscriptionArticleEntity subscriptionArticleEntity2 : subscriptionArticleEntityList) {
-				ArticleEntity articleEntity = new ArticleEntity();
-				articleEntity.setId(subscriptionArticleEntity2.getArticleId());
-				this.articleDao.delete(articleEntity);
-			}
-
-			// subscriptionArticle
-			this.subscriptionArticleDao.delete(subscriptionArticleEntity);
-
-			this.subscriptionListManager.getSubscriptionList().remove(subscription);
+			deleteSubscriptionCore(subscription);
 
 			this.nanairoApplication.getDb().setTransactionSuccessful();
 		} finally {
 			this.nanairoApplication.getDb().endTransaction();
 		}
+	}
+
+	private void deleteSubscriptionCore(Subscription subscription) {
+		long subscriptionId = subscription.getId();
+
+		// subscription
+		SubscriptionEntity subscriptionEntity = new SubscriptionEntity();
+		subscriptionEntity.setId(subscriptionId);
+		this.subscriptionDao.delete(subscriptionEntity);
+
+		// article
+		SubscriptionArticleEntity subscriptionArticleEntity = new SubscriptionArticleEntity();
+		subscriptionArticleEntity.setSubscriptionId(subscriptionId);
+		List<SubscriptionArticleEntity> subscriptionArticleEntityList = this.subscriptionArticleDao.findList(subscriptionArticleEntity);
+
+		// TODO 一括で削除できるように。要リファクタリング
+		for (SubscriptionArticleEntity subscriptionArticleEntity2 : subscriptionArticleEntityList) {
+			ArticleEntity articleEntity = new ArticleEntity();
+			articleEntity.setId(subscriptionArticleEntity2.getArticleId());
+			this.articleDao.delete(articleEntity);
+		}
+
+		// subscriptionArticle
+		this.subscriptionArticleDao.delete(subscriptionArticleEntity);
+
+		this.subscriptionListManager.getSubscriptionList().remove(subscription);
 	}
 }
