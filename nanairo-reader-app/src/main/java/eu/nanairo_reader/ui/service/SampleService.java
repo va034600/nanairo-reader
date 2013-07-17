@@ -68,11 +68,13 @@ public class SampleService extends Service {
 	@Override
 	public void onDestroy() {
 		super.onDestroy();
+
 		Toast.makeText(this, "サービスを終了しました！", Toast.LENGTH_SHORT).show();
+
 		NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
 		Notification notification = new Notification();
 		notification.icon = R.drawable.icon;
-		notification.tickerText = "サービス終了";
+		notification.tickerText = "記事取得終了しました。";
 		// ノーティフィケーション一覧画面での表示内容、クリック時の動作を設定
 		notification.setLatestEventInfo(getApplicationContext(), "七色リーダー", "記事取得が終了しました", contentIntent());
 		// Notificationを発行して表示する
