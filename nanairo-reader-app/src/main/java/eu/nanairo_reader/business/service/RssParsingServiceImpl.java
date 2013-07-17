@@ -54,19 +54,19 @@ public class RssParsingServiceImpl implements RssParsingService {
 		} catch (MalformedURLException e) {
 			// TODO RSSパース例外を考える
 			e.printStackTrace();
-			throw new RuntimeException("rss", e);
+			throw new RssParsingException("rss", e);
 		} catch (IllegalArgumentException e) {
 			// TODO RSSパース例外を考える
 			e.printStackTrace();
-			throw new RuntimeException("rss", e);
+			throw new RssParsingException("rss", e);
 		} catch (FeedException e) {
 			// TODO RSSパース例外を考える
 			e.printStackTrace();
-			throw new RuntimeException("rss", e);
+			throw new RssParsingException("rss", e);
 		} catch (IOException e) {
 			// TODO RSSパース例外を考える
 			e.printStackTrace();
-			throw new RuntimeException("rss", e);
+			throw new RssParsingException("rss", e);
 		}
 
 		Log.i("rss end", rss);

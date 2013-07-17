@@ -43,8 +43,7 @@ public class RssParsingService2Impl implements RssParsingService {
 			return result;
 
 		} catch (Exception e) {
-			// Something to do if an exception occurs
-			throw new RuntimeException("rss", e);
+			throw new RssParsingException("rss", e);
 		}
 	}
 }
