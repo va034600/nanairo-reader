@@ -3,9 +3,7 @@ package eu.nanairo_reader.business.service;
 import static eu.nanairo_reader.business.constant.NanairoBusinessConstant.MIDOKU_OFF;
 import static eu.nanairo_reader.business.constant.NanairoBusinessConstant.MIDOKU_ON;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -13,6 +11,7 @@ import javax.inject.Inject;
 import eu.nanairo_reader.business.bean.Article;
 import eu.nanairo_reader.business.bean.Subscription;
 import eu.nanairo_reader.business.exception.RssParsingException;
+import eu.nanairo_reader.business.util.NanairoDateUtils;
 import eu.nanairo_reader.business.vo.FeedItem;
 import eu.nanairo_reader.business.vo.FeedResult;
 import eu.nanairo_reader.data.dao.ArticleDao;
@@ -164,17 +163,12 @@ public class RssServiceImpl implements RssService {
 		articleEntity.setTitle(feedItem.getTitle());
 		articleEntity.setContent(feedItem.getContent());
 		articleEntity.setLink(feedItem.getLink());
-		articleEntity.setPublishedDate(convertDateToString(feedItem.getPublishedDate()));
+		articleEntity.setPublishedDate(NanairoDateUtils.convertDateToString(feedItem.getPublishedDate()));
 		articleEntity.setMidoku(MIDOKU_ON);
 
 		long articleId = this.articleDao.add(articleEntity);
 
 		return articleId;
-	}
-
-	// TODO 移動
-	public static String convertDateToString(Date date) {
-		return (new SimpleDateFormat("yyyy/MM/dd HH:mm:ss")).format(date);
 	}
 
 	protected SubscriptionArticleEntity addSubscriptionArticle(long subscriptionId, long articleId) {
