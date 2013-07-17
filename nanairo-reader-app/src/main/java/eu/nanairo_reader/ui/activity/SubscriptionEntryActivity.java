@@ -49,22 +49,21 @@ public class SubscriptionEntryActivity extends BaseActivity {
 
 				@Override
 				protected void onPostExecute(Boolean flag) {
-					if (!flag) {
-						// URL
-						EditText urlEditText = (EditText) findViewById(R.id.urlEditText);
-						urlEditText.setEnabled(true);
-
-						// entryButton
-						Button entryButton = (Button) findViewById(R.id.entryButton);
-						entryButton.setEnabled(true);
-
-						Toast.makeText(getApplicationContext(), "登録できませんでした。", Toast.LENGTH_SHORT).show();
+					if (flag) {
+						Toast.makeText(getApplicationContext(), "登録しました。", Toast.LENGTH_SHORT).show();
+						finish();
 						return;
 					}
 
-					Toast.makeText(getApplicationContext(), "登録しました。", Toast.LENGTH_SHORT).show();
+					// URL
+					EditText urlEditText = (EditText) findViewById(R.id.urlEditText);
+					urlEditText.setEnabled(true);
 
-					finish();
+					// entryButton
+					Button entryButton = (Button) findViewById(R.id.entryButton);
+					entryButton.setEnabled(true);
+
+					Toast.makeText(getApplicationContext(), "登録できませんでした。", Toast.LENGTH_SHORT).show();
 				};
 			}.execute(url);
 		}
