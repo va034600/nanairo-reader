@@ -171,12 +171,11 @@ public class RssServiceImpl implements RssService {
 		return articleId;
 	}
 
-	protected SubscriptionArticleEntity addSubscriptionArticle(long subscriptionId, long articleId) {
+	protected void addSubscriptionArticle(long subscriptionId, long articleId) {
 		SubscriptionArticleEntity subscriptionArticleEntity = new SubscriptionArticleEntity();
 		subscriptionArticleEntity.setSubscriptionId(subscriptionId);
 		subscriptionArticleEntity.setArticleId(articleId);
 		this.subscriptionArticleDao.add(subscriptionArticleEntity);
-		return subscriptionArticleEntity;
 	}
 
 	@Override
