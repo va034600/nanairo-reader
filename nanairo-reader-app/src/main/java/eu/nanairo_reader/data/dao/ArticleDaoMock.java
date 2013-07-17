@@ -51,4 +51,8 @@ public class ArticleDaoMock extends BaseDaoMock<ArticleEntity, Long> implements 
 	@Override
 	public void deleteTheOld(Long id, int count) {
 	}
+
+	@Override
+	public void deleteBySucriptionId(Long subscriptionId) {
+	}
 }

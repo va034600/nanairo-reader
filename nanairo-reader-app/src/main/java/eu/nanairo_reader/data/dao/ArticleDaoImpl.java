@@ -37,7 +37,7 @@ public class ArticleDaoImpl extends BaseDaoImpl<ArticleEntity, Long> implements 
 
 	@Override
 	public void deleteTheOld(Long subscriptionId, int count) {
-		// TODO INよりEXISTS使いたいけど、うまくいかない。 
+		// TODO INよりEXISTS使いたいけど、うまくいかない。
 		// TODO execSQLは実施件数がわからないので、rawQueryを使いたい。
 		String sql = "";
 		sql += "DELETE FROM ARTICLE ";
@@ -49,6 +49,20 @@ public class ArticleDaoImpl extends BaseDaoImpl<ArticleEntity, Long> implements 
 		sql += "LIMIT -1 OFFSET ?";
 		sql += ")";
 		Object[] bindArgs = new Object[] { subscriptionId, count };
+		getNanairoTemplate().execSQL(sql, bindArgs);
+	}
+
+	@Override
+	public void deleteBySucriptionId(Long subscriptionId) {
+		// TODO execSQLは実施件数がわからないので、rawQueryを使いたい。
+		String sql = "";
+		sql += "DELETE FROM ARTICLE ";
+		sql += "WHERE ";
+		sql += "ID IN (";
+		sql += "SELECT ARTICLE_ID FROM SUBSCRIPTION_ARTICLE ";
+		sql += "WHERE SUBSCRIPTION_ID = ? ";
+		sql += ")";
+		Object[] bindArgs = new Object[] { subscriptionId };
 		getNanairoTemplate().execSQL(sql, bindArgs);
 	}
 }

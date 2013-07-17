@@ -288,18 +288,11 @@ public class RssServiceImpl implements RssService {
 		this.subscriptionDao.delete(subscriptionEntity);
 
 		// article
-		SubscriptionArticleEntity subscriptionArticleEntity = new SubscriptionArticleEntity();
-		subscriptionArticleEntity.setSubscriptionId(subscriptionId);
-		List<SubscriptionArticleEntity> subscriptionArticleEntityList = this.subscriptionArticleDao.findList(subscriptionArticleEntity);
-
-		// TODO 一括で削除できるように。要リファクタリング
-		for (SubscriptionArticleEntity subscriptionArticleEntity2 : subscriptionArticleEntityList) {
-			ArticleEntity articleEntity = new ArticleEntity();
-			articleEntity.setId(subscriptionArticleEntity2.getArticleId());
-			this.articleDao.delete(articleEntity);
-		}
+		this.articleDao.deleteBySucriptionId(subscriptionId);
 
 		// subscriptionArticle
+		SubscriptionArticleEntity subscriptionArticleEntity = new SubscriptionArticleEntity();
+		subscriptionArticleEntity.setSubscriptionId(subscriptionId);
 		this.subscriptionArticleDao.delete(subscriptionArticleEntity);
 
 		this.subscriptionListManager.getSubscriptionList().remove(subscription);

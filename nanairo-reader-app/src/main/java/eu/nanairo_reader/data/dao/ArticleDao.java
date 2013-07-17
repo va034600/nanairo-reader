@@ -10,4 +10,6 @@ public interface ArticleDao extends BaseDao<ArticleEntity, Long> {
 	int getMidokuCount(long subscriptionId);
 
 	void deleteTheOld(Long subscriptionId, int count);
+
+	void deleteBySucriptionId(Long subscriptionId);
 }
