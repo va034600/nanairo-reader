@@ -17,6 +17,7 @@ public class ArticleDaoImpl extends BaseDaoImpl<ArticleEntity, Long> implements 
 		sql += "FROM ARTICLE INNER JOIN SUBSCRIPTION_ARTICLE ";
 		sql += "ON ARTICLE.ID = SUBSCRIPTION_ARTICLE.ARTICLE_ID ";
 		sql += "WHERE SUBSCRIPTION_ARTICLE.SUBSCRIPTION_ID = ?";
+		sql += "ORDER BY ARTICLE.ID";
 		String[] selectionArgs = { Long.toString(subscriptionId) };
 		// TODO 自動でやりたい
 		return queryForList(sql, selectionArgs);
