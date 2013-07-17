@@ -99,6 +99,8 @@ public class RssServiceImpl implements RssService {
 		for (SubscriptionEntity subscriptionEntity : this.subscriptionDao.findList(null)) {
 			storeArticle(subscriptionEntity);
 		}
+
+		loadSubscriptionList();
 	}
 
 	protected void storeArticle(SubscriptionEntity subscriptionEntity) {
