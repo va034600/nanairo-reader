@@ -2,6 +2,7 @@ package eu.nanairo_reader.ui.activity;
 
 import javax.inject.Inject;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -29,18 +30,43 @@ public class SubscriptionEntryActivity extends BaseActivity {
 
 	private View.OnClickListener onSave = new View.OnClickListener() {
 		public void onClick(View v) {
-			// TODO AsyncTaskにする？
+			// URL
 			EditText urlEditText = (EditText) findViewById(R.id.urlEditText);
-			boolean flag = rssService.addSubscription(urlEditText.getText().toString());
+			urlEditText.setEnabled(false);
+			String url = urlEditText.getText().toString();
 
-			if (!flag) {
-				Toast.makeText(getApplicationContext(), "登録できませんでした。", Toast.LENGTH_SHORT).show();
-				return;
-			}
+			// entryButton
+			Button entryButton = (Button) findViewById(R.id.entryButton);
+			entryButton.setEnabled(false);
 
-			Toast.makeText(getApplicationContext(), "登録しました。", Toast.LENGTH_SHORT).show();
+			//
+			new AsyncTask<String, Void, Boolean>() {
+				@Override
+				protected Boolean doInBackground(String... params) {
+					boolean flag = rssService.addSubscription(params[0]);
+					return flag;
+				}
 
-			finish();
+				@Override
+				protected void onPostExecute(Boolean flag) {
+					if (!flag) {
+						// URL
+						EditText urlEditText = (EditText) findViewById(R.id.urlEditText);
+						urlEditText.setEnabled(true);
+
+						// entryButton
+						Button entryButton = (Button) findViewById(R.id.entryButton);
+						entryButton.setEnabled(true);
+
+						Toast.makeText(getApplicationContext(), "登録できませんでした。", Toast.LENGTH_SHORT).show();
+						return;
+					}
+
+					Toast.makeText(getApplicationContext(), "登録しました。", Toast.LENGTH_SHORT).show();
+
+					finish();
+				};
+			}.execute(url);
 		}
 	};
 }
