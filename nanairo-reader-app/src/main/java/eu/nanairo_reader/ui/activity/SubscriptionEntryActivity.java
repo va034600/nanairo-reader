@@ -2,7 +2,6 @@ package eu.nanairo_reader.ui.activity;
 
 import javax.inject.Inject;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -11,7 +10,6 @@ import android.widget.Toast;
 import eu.nanairo_reader.R;
 import eu.nanairo_reader.business.service.RssService;
 import eu.nanairo_reader.ui.NanairoApplication;
-import eu.nanairo_reader.ui.service.SampleService;
 
 public class SubscriptionEntryActivity extends BaseActivity {
 	@Inject
@@ -31,6 +29,7 @@ public class SubscriptionEntryActivity extends BaseActivity {
 
 	private View.OnClickListener onSave = new View.OnClickListener() {
 		public void onClick(View v) {
+			// TODO AsyncTaskにする？
 			EditText urlEditText = (EditText) findViewById(R.id.urlEditText);
 			boolean flag = rssService.addSubscription(urlEditText.getText().toString());
 
@@ -38,10 +37,6 @@ public class SubscriptionEntryActivity extends BaseActivity {
 				Toast.makeText(getApplicationContext(), "登録できませんでした。", Toast.LENGTH_SHORT).show();
 				return;
 			}
-
-			// サービスの起動
-			Intent intent = new Intent(SubscriptionEntryActivity.this, SampleService.class);
-			startService(intent);
 
 			Toast.makeText(getApplicationContext(), "登録しました。", Toast.LENGTH_SHORT).show();
 

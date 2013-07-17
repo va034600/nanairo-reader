@@ -53,17 +53,21 @@ public class RssServiceImpl implements RssService {
 	protected List<Subscription> getSubscriptionList() {
 		List<Subscription> result = new ArrayList<Subscription>();
 		for (SubscriptionEntity entity : this.subscriptionDao.findList(null)) {
-			Subscription subscription = new Subscription();
-
-			subscription.setId(entity.getId());
-			subscription.setTitle(entity.getTitle());
-			subscription.setUrl(entity.getUrl());
-			int midokuCount = this.articleDao.getMidokuCount(entity.getId());
-			subscription.setMidokuCount(midokuCount);
-
+			Subscription subscription = convertEntity(entity);
 			result.add(subscription);
 		}
 		return result;
+	}
+
+	private Subscription convertEntity(SubscriptionEntity entity) {
+		Subscription subscription = new Subscription();
+
+		subscription.setId(entity.getId());
+		subscription.setTitle(entity.getTitle());
+		subscription.setUrl(entity.getUrl());
+		int midokuCount = this.articleDao.getMidokuCount(entity.getId());
+		subscription.setMidokuCount(midokuCount);
+		return subscription;
 	}
 
 	@Override
@@ -189,8 +193,12 @@ public class RssServiceImpl implements RssService {
 		SubscriptionEntity subscriptionEntity = new SubscriptionEntity();
 		subscriptionEntity.setUrl(url);
 		subscriptionEntity.setTitle(feedResult.getTitle());
+		long subscriptionId = this.subscriptionDao.add(subscriptionEntity);
+		subscriptionEntity.setId(subscriptionId);
 
-		this.subscriptionDao.add(subscriptionEntity);
+		// list 追加
+		Subscription subscription = convertEntity(subscriptionEntity);
+		this.subscriptionListManager.getSubscriptionList().add(subscription);
 
 		return true;
 	}
