@@ -1,5 +1,7 @@
 package eu.nanairo_reader.data.dao;
 
+import static eu.nanairo_reader.business.constant.NanairoBusinessConstant.MIDOKU_ON;
+
 import java.util.List;
 
 import eu.nanairo_reader.data.entity.ArticleEntity;
@@ -17,7 +19,7 @@ public class ArticleDaoImpl extends BaseDaoImpl<ArticleEntity, Long> implements 
 		sql += "FROM ARTICLE INNER JOIN SUBSCRIPTION_ARTICLE ";
 		sql += "ON ARTICLE.ID = SUBSCRIPTION_ARTICLE.ARTICLE_ID ";
 		sql += "WHERE SUBSCRIPTION_ARTICLE.SUBSCRIPTION_ID = ?";
-		sql += "ORDER BY ARTICLE.ID";
+		sql += "ORDER BY ARTICLE.PUBLISHED_DATE DESC, ARTICLE.ID DESC";
 		String[] selectionArgs = { Long.toString(subscriptionId) };
 		// TODO 自動でやりたい
 		return queryForList(sql, selectionArgs);
@@ -29,8 +31,8 @@ public class ArticleDaoImpl extends BaseDaoImpl<ArticleEntity, Long> implements 
 		sql += "SELECT COUNT(*) ";
 		sql += "FROM ARTICLE INNER JOIN SUBSCRIPTION_ARTICLE ";
 		sql += "ON ARTICLE.ID = SUBSCRIPTION_ARTICLE.ARTICLE_ID ";
-		sql += "WHERE SUBSCRIPTION_ARTICLE.SUBSCRIPTION_ID = ? AND ARTICLE.MIDOKU = 1";
-		String[] selectionArgs = { Long.toString(subscriptionId) };
+		sql += "WHERE SUBSCRIPTION_ARTICLE.SUBSCRIPTION_ID = ? AND ARTICLE.MIDOKU = ?";
+		String[] selectionArgs = { Long.toString(subscriptionId), Integer.toString(MIDOKU_ON) };
 		// TODO 自動でやりたい
 		return getNanairoTemplate().queryForInt(sql, selectionArgs);
 	}

@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
@@ -22,7 +23,7 @@ import eu.nanairo_reader.business.vo.FeedResult;
 
 public class RssParsingServiceImpl implements RssParsingService {
 	@Override
-	public FeedResult getFeedResult(String rss) throws RssParsingException{
+	public FeedResult getFeedResult(String rss) throws RssParsingException {
 		Log.i("rss start", rss);
 
 		FeedResult result = new FeedResult();
@@ -31,8 +32,9 @@ public class RssParsingServiceImpl implements RssParsingService {
 			URL feedUrl = new URL(rss);
 			SyndFeedInput input = new SyndFeedInput();
 			SyndFeed feed = input.build(new XmlReader(feedUrl));
-			
+
 			List<Object> entries = feed.getEntries();
+			Collections.reverse(entries);
 			Iterator iterator = entries.listIterator();
 			while (iterator.hasNext()) {
 				FeedItem feedItem = new FeedItem();
@@ -42,7 +44,7 @@ public class RssParsingServiceImpl implements RssParsingService {
 				feedItem.setLink(ent.getUri());
 				feedItem.setPublishedDate(ent.getPublishedDate());
 
-				if(ent.getContents().size() > 0){
+				if (ent.getContents().size() > 0) {
 					SyndContent contents = (SyndContent) ent.getContents().get(0);
 					feedItem.setContent(contents.getValue());
 				}

@@ -1,6 +1,7 @@
 package eu.nanairo_reader.business.service;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.horrabin.horrorss.RssChannelBean;
@@ -29,6 +30,7 @@ public class RssParsingService2Impl implements RssParsingService {
 			result.setTitle(channel.getTitle());
 
 			List<RssItemBean> items = feed.getItems();
+			Collections.reverse(items);
 			for (RssItemBean item : items) {
 				FeedItem feedItem = new FeedItem();
 				feedItem.setTitle(item.getTitle());
