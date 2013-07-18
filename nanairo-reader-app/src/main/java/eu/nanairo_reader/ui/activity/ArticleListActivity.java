@@ -11,7 +11,6 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListAdapter;
@@ -39,7 +38,7 @@ public class ArticleListActivity extends BaseActivity {
 		// パラメータ取得
 		Intent intent = getIntent();
 		// TODO finalとる
-		final Subscription subscription = (Subscription) intent.getSerializableExtra(SUBSCRIPTION);
+		Subscription subscription = (Subscription) intent.getSerializableExtra(SUBSCRIPTION);
 
 		// ListView
 		ListView listView = (ListView) findViewById(R.id.listView);
@@ -63,28 +62,11 @@ public class ArticleListActivity extends BaseActivity {
 
 		// 更新ボタン
 		Button updateButton = (Button) findViewById(R.id.updateButton);
-		updateButton.setOnClickListener(new OnClickListener() {
-			public void onClick(View v) {
-				new AsyncTask<Long, Void, Integer>() {
-					@Override
-					protected Integer doInBackground(Long... params) {
-						rssService.storeArticle(params[0]);
-						return 0;
-					}
-
-					@Override
-					protected void onPostExecute(Integer count) {
-						ListView listView = (ListView) findViewById(R.id.listView);
-						((ArticleArrayAdapter) listView.getAdapter()).notifyDataSetChanged();
-						Toast.makeText(getApplicationContext(), count + "個の新しい記事", Toast.LENGTH_SHORT).show();
-					};
-				}.execute(subscription.getId());
-			}
-		});
+		updateButton.setOnClickListener(new UpdateButtonOnClickListener(subscription.getId()));
 
 		// 全既読ボタン
 		Button allCheckButton = (Button) findViewById(R.id.allCheckButton);
-		allCheckButton.setOnClickListener(new UpdateButtonOnClickListener(subscription.getId()));
+		allCheckButton.setOnClickListener(new AllCheckButtonOnClickListener(subscription.getId()));
 	}
 
 	@Override
@@ -100,6 +82,31 @@ public class ArticleListActivity extends BaseActivity {
 		long subscriptionId;
 
 		UpdateButtonOnClickListener(long subscriptionId) {
+			this.subscriptionId = subscriptionId;
+		}
+
+		public void onClick(View v) {
+			new AsyncTask<Long, Void, Integer>() {
+				@Override
+				protected Integer doInBackground(Long... params) {
+					rssService.storeArticle(params[0]);
+					return 0;
+				}
+
+				@Override
+				protected void onPostExecute(Integer count) {
+					ListView listView = (ListView) findViewById(R.id.listView);
+					((ArticleArrayAdapter) listView.getAdapter()).notifyDataSetChanged();
+					Toast.makeText(getApplicationContext(), count + "個の新しい記事", Toast.LENGTH_SHORT).show();
+				};
+			}.execute(subscriptionId);
+		}
+	};
+
+	class AllCheckButtonOnClickListener implements View.OnClickListener {
+		long subscriptionId;
+
+		AllCheckButtonOnClickListener(long subscriptionId) {
 			this.subscriptionId = subscriptionId;
 		}
 
