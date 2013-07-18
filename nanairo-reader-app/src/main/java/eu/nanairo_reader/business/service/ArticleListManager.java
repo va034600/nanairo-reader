@@ -1,5 +1,7 @@
 package eu.nanairo_reader.business.service;
 
+import static eu.nanairo_reader.business.constant.NanairoBusinessConstant.MIDOKU_OFF;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,5 +12,14 @@ public class ArticleListManager {
 
 	public List<Article> getArticleList() {
 		return articleList;
+	}
+
+	public void kidoku(long articleId) {
+		for (Article article : this.articleList) {
+			if (article.getId() == articleId) {
+				article.setMidoku(MIDOKU_OFF);
+				return;
+			}
+		}
 	}
 }

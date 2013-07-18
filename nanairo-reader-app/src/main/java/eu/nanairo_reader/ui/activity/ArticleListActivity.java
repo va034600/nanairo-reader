@@ -110,4 +110,14 @@ public class ArticleListActivity extends BaseActivity {
 			((ArticleArrayAdapter) listView.getAdapter()).notifyDataSetChanged();
 		}
 	};
+
+	@Override
+	protected void onResume() {
+		super.onResume();
+
+		//TODO StartActivityForResult
+		// 購読の再表示
+		ListView listView = (ListView) findViewById(R.id.listView);
+		((ArticleArrayAdapter) listView.getAdapter()).notifyDataSetChanged();
+	}
 }

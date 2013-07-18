@@ -11,4 +11,13 @@ public class SubscriptionListManager {
 	public List<Subscription> getSubscriptionList() {
 		return subscriptionList;
 	}
+
+	public void kidoku(long subscriptionId) {
+		for (Subscription subscription : this.subscriptionList) {
+			if (subscription.getId() == subscriptionId) {
+				subscription.setMidokuCount(subscription.getMidokuCount() - 1);
+				return;
+			}
+		}
+	}
 }
