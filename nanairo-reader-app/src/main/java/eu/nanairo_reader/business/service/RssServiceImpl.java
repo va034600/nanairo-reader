@@ -152,7 +152,7 @@ public class RssServiceImpl implements RssService {
 
 		// TODO 件数確認
 		// 古いのを削除する。
-		final int MAX_ARTICLE = 100;
+		final int MAX_ARTICLE = 20;
 		this.articleDao.deleteTheOld(subscriptionId, MAX_ARTICLE);
 		this.subscriptionArticleDao.deleteTheOld(subscriptionId, MAX_ARTICLE);
 	}
