@@ -4,6 +4,7 @@ import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
+import eu.nanairo_reader.business.service.ArticleListManager;
 import eu.nanairo_reader.business.service.RssParsingService;
 import eu.nanairo_reader.business.service.RssParsingServiceMock;
 import eu.nanairo_reader.business.service.RssService;
@@ -41,6 +42,8 @@ import eu.nanairo_reader.ui.service.SampleService;
 		//
 		SubscriptionListManager.class,
 		//
+		ArticleListManager.class,
+		//
 		SubscriptionDao.class,
 		//
 		SubscriptionArticleDao.class,
@@ -75,6 +78,12 @@ public class DaggerModule {
 	@Singleton
 	SubscriptionListManager provideSubscriptionListManager() {
 		return new SubscriptionListManager();
+	}
+
+	@Provides
+	@Singleton
+	ArticleListManager provideArticleListManager() {
+		return new ArticleListManager();
 	}
 
 	@Provides

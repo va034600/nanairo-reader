@@ -41,21 +41,23 @@ public class RssServiceImpl implements RssService {
 	@Inject
 	SubscriptionListManager subscriptionListManager;
 
+	@Inject
+	ArticleListManager articleListManager;
+
 	@Override
 	public List<Subscription> loadSubscriptionList() {
-		List<Subscription> list = getSubscriptionList();
-		this.subscriptionListManager.getSubscriptionList().clear();
-		this.subscriptionListManager.getSubscriptionList().addAll(list);
+		List<SubscriptionEntity> entityList = this.subscriptionDao.findList(null);
+		addAll(entityList);
 		return this.subscriptionListManager.getSubscriptionList();
 	}
 
-	protected List<Subscription> getSubscriptionList() {
-		List<Subscription> result = new ArrayList<Subscription>();
-		for (SubscriptionEntity entity : this.subscriptionDao.findList(null)) {
+	protected void addAll(List<SubscriptionEntity> entityList) {
+		this.subscriptionListManager.getSubscriptionList().clear();
+
+		for (SubscriptionEntity entity : entityList) {
 			Subscription subscription = convertEntity(entity);
-			result.add(subscription);
+			this.subscriptionListManager.getSubscriptionList().add(subscription);
 		}
-		return result;
 	}
 
 	private Subscription convertEntity(SubscriptionEntity entity) {
@@ -64,6 +66,7 @@ public class RssServiceImpl implements RssService {
 		subscription.setId(entity.getId());
 		subscription.setTitle(entity.getTitle());
 		subscription.setUrl(entity.getUrl());
+		//TODO リファクタリング
 		int midokuCount = this.articleDao.getMidokuCount(entity.getId());
 		subscription.setMidokuCount(midokuCount);
 		return subscription;
@@ -72,9 +75,9 @@ public class RssServiceImpl implements RssService {
 	@Override
 	public List<Article> loadArticleList(long subscriptionId) {
 		List<Article> list = getArticleList(subscriptionId);
-		this.subscriptionListManager.getArticleList().clear();
-		this.subscriptionListManager.getArticleList().addAll(list);
-		return this.subscriptionListManager.getArticleList();
+		this.articleListManager.getArticleList().clear();
+		this.articleListManager.getArticleList().addAll(list);
+		return this.articleListManager.getArticleList();
 	}
 
 	private List<Article> getArticleList(long subscriptionId) {
@@ -108,10 +111,10 @@ public class RssServiceImpl implements RssService {
 		SubscriptionEntity subscriptionEntity = this.subscriptionDao.findByPrimaryKey(subscriptionId);
 		storeArticle(subscriptionEntity);
 
-		//TODO just one
+		// TODO just one
 		loadSubscriptionList();
 
-		//TODO 更新件数
+		// TODO 更新件数
 		return 0;
 	}
 
@@ -160,8 +163,8 @@ public class RssServiceImpl implements RssService {
 		this.subscriptionArticleDao.deleteTheOld(subscriptionId, MAX_ARTICLE);
 
 		List<Article> list = getArticleList(subscriptionId);
-		this.subscriptionListManager.getArticleList().clear();
-		this.subscriptionListManager.getArticleList().addAll(list);
+		this.articleListManager.getArticleList().clear();
+		this.articleListManager.getArticleList().addAll(list);
 	}
 
 	protected boolean isDuplicated(String uri) {
@@ -258,7 +261,7 @@ public class RssServiceImpl implements RssService {
 			}
 		}
 
-		for (Article article : this.subscriptionListManager.getArticleList()) {
+		for (Article article : this.articleListManager.getArticleList()) {
 			if (article.getId() == articleId) {
 				article.setMidoku(MIDOKU_OFF);
 				break;
@@ -270,7 +273,7 @@ public class RssServiceImpl implements RssService {
 	public void kidokuAll(long subscriptionId) {
 		this.subscriptionArticleDao.updateKidokuBySubscriptionId(subscriptionId);
 
-		for (Article article : this.subscriptionListManager.getArticleList()) {
+		for (Article article : this.articleListManager.getArticleList()) {
 			article.setMidoku(MIDOKU_OFF);
 		}
 
