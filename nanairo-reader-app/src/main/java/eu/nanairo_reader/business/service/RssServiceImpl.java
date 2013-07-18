@@ -263,16 +263,9 @@ public class RssServiceImpl implements RssService {
 	public void kidokuAll(long subscriptionId) {
 		this.subscriptionArticleDao.updateKidokuBySubscriptionId(subscriptionId);
 
-		for (Article article : this.articleListManager.getArticleList()) {
-			article.setMidoku(MIDOKU_OFF);
-		}
+		this.articleListManager.kidokuAll(subscriptionId);
 
-		for (Subscription subscription : this.subscriptionListManager.getSubscriptionList()) {
-			if (subscription.getId() == subscriptionId) {
-				subscription.setMidokuCount(0);
-				break;
-			}
-		}
+		this.subscriptionListManager.kidokuAll(subscriptionId);
 	}
 
 	@Override

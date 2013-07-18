@@ -20,4 +20,13 @@ public class SubscriptionListManager {
 			}
 		}
 	}
+
+	public void kidokuAll(long subscriptionId) {
+		for (Subscription subscription : this.subscriptionList) {
+			if (subscription.getId() == subscriptionId) {
+				subscription.setMidokuCount(0);
+				break;
+			}
+		}
+	}
 }

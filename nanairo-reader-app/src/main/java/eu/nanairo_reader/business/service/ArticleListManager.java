@@ -22,4 +22,10 @@ public class ArticleListManager {
 			}
 		}
 	}
+
+	public void kidokuAll(long subscriptionId) {
+		for (Article article : this.articleList) {
+			article.setMidoku(MIDOKU_OFF);
+		}
+	}
 }
