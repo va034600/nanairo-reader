@@ -1,20 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
-    android:layout_height="40dp"
-    android:minHeight="40dp" >
+    android:layout_height="60dp"
+    android:minHeight="60dp" >
 
     <TextView
-        android:id="@+id/nameText"
+        android:id="@+id/idText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1" >
     </TextView>
 
     <TextView
-        android:id="@+id/publishedDateText"
-        android:layout_width="wrap_content"
+        android:id="@+id/nameText"
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
+        android:layout_weight="1" >
+    </TextView>
+    
+    <TextView
+        android:id="@+id/publishedDateText"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
         android:layout_gravity="right" >
     </TextView>
 

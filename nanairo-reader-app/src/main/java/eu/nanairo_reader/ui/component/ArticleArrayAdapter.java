@@ -30,6 +30,11 @@ public class ArticleArrayAdapter extends ArrayAdapter<Article> {
 		if (article != null) {
 			int color = getColor(article.getMidoku());
 
+			// ID
+			TextView mId = (TextView) convertView.findViewById(R.id.idText);
+			mId.setText(Long.toString(article.getId()));
+			mId.setTextColor(color);
+
 			// タイトル
 			TextView mTitle = (TextView) convertView.findViewById(R.id.nameText);
 			mTitle.setText(article.getTitle());
