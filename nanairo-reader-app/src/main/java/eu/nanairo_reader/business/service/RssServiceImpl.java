@@ -104,12 +104,15 @@ public class RssServiceImpl implements RssService {
 	}
 
 	@Override
-	public void storeArticle(long subscriptionId) {
+	public int storeArticle(long subscriptionId) {
 		SubscriptionEntity subscriptionEntity = this.subscriptionDao.findByPrimaryKey(subscriptionId);
 		storeArticle(subscriptionEntity);
 
 		//TODO just one
 		loadSubscriptionList();
+
+		//TODO 更新件数
+		return 0;
 	}
 
 	protected void storeArticle(SubscriptionEntity subscriptionEntity) {

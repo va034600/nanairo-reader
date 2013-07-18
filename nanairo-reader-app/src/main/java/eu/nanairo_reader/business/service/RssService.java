@@ -12,7 +12,7 @@ public interface RssService {
 
 	void storeArticles();
 
-	void storeArticle(long subscriptionId);
+	int storeArticle(long subscriptionId);
 
 	boolean addSubscription(String url);
 

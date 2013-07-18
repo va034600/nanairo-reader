@@ -69,15 +69,6 @@ public class ArticleListActivity extends BaseActivity {
 		allCheckButton.setOnClickListener(new AllCheckButtonOnClickListener(subscription.getId()));
 	}
 
-	@Override
-	protected void onResume() {
-		super.onResume();
-
-		// 購読の再表示
-		ListView listView = (ListView) findViewById(R.id.listView);
-		((ArticleArrayAdapter) listView.getAdapter()).notifyDataSetChanged();
-	}
-
 	class UpdateButtonOnClickListener implements View.OnClickListener {
 		long subscriptionId;
 
@@ -89,8 +80,7 @@ public class ArticleListActivity extends BaseActivity {
 			new AsyncTask<Long, Void, Integer>() {
 				@Override
 				protected Integer doInBackground(Long... params) {
-					rssService.storeArticle(params[0]);
-					return 0;
+					return rssService.storeArticle(params[0]);
 				}
 
 				@Override
