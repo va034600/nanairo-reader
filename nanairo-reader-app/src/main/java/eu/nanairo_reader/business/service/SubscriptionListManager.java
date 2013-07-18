@@ -12,6 +12,14 @@ public class SubscriptionListManager {
 		return subscriptionList;
 	}
 
+	public void add(Subscription subscription){
+		this.subscriptionList.add(subscription);
+	}
+	
+	public void remove(Subscription subscription){
+		this.subscriptionList.remove(subscription);
+	}
+	
 	public void kidoku(long subscriptionId) {
 		for (Subscription subscription : this.subscriptionList) {
 			if (subscription.getId() == subscriptionId) {

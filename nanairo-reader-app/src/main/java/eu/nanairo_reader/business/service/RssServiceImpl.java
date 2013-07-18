@@ -56,7 +56,7 @@ public class RssServiceImpl implements RssService {
 
 		for (SubscriptionEntity entity : entityList) {
 			Subscription subscription = convertEntity(entity);
-			this.subscriptionListManager.getSubscriptionList().add(subscription);
+			this.subscriptionListManager.add(subscription);
 		}
 	}
 
@@ -236,7 +236,7 @@ public class RssServiceImpl implements RssService {
 
 		// list 追加
 		Subscription subscription = convertEntity(subscriptionEntity);
-		this.subscriptionListManager.getSubscriptionList().add(subscription);
+		this.subscriptionListManager.add(subscription);
 	}
 
 	@Override
@@ -298,6 +298,6 @@ public class RssServiceImpl implements RssService {
 		subscriptionArticleEntity.setSubscriptionId(subscriptionId);
 		this.subscriptionArticleDao.delete(subscriptionArticleEntity);
 
-		this.subscriptionListManager.getSubscriptionList().remove(subscription);
+		this.subscriptionListManager.remove(subscription);
 	}
 }
