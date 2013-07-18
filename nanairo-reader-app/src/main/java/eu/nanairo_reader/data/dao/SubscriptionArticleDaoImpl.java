@@ -20,7 +20,7 @@ public class SubscriptionArticleDaoImpl extends BaseDaoImpl<SubscriptionArticleE
 		sql += "ARTICLE_ID IN (";
 		sql += "SELECT ARTICLE_ID FROM SUBSCRIPTION_ARTICLE ";
 		sql += "WHERE SUBSCRIPTION_ID = ? ";
-		sql += "ORDER BY ARTICLE_ID ";
+		sql += "ORDER BY ARTICLE_ID DESC ";
 		sql += "LIMIT -1 OFFSET ?";
 		sql += ")";
 		Object[] bindArgs = new Object[] { subscriptionId, count };

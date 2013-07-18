@@ -155,6 +155,10 @@ public class RssServiceImpl implements RssService {
 		final int MAX_ARTICLE = 20;
 		this.articleDao.deleteTheOld(subscriptionId, MAX_ARTICLE);
 		this.subscriptionArticleDao.deleteTheOld(subscriptionId, MAX_ARTICLE);
+
+		List<Article> list = getArticleList(subscriptionId);
+		this.subscriptionListManager.getArticleList().clear();
+		this.subscriptionListManager.getArticleList().addAll(list);
 	}
 
 	protected boolean isDuplicated(String uri) {
