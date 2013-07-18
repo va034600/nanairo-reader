@@ -3,7 +3,6 @@ package eu.nanairo_reader.business.service;
 import static eu.nanairo_reader.business.constant.NanairoBusinessConstant.MIDOKU_OFF;
 import static eu.nanairo_reader.business.constant.NanairoBusinessConstant.MIDOKU_ON;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -46,12 +45,12 @@ public class RssServiceImpl implements RssService {
 
 	@Override
 	public List<Subscription> loadSubscriptionList() {
-		List<SubscriptionEntity> entityList = this.subscriptionDao.findList(null);
-		addAll(entityList);
+		reflashSubscriptionAll();
 		return this.subscriptionListManager.getSubscriptionList();
 	}
 
-	protected void addAll(List<SubscriptionEntity> entityList) {
+	protected void reflashSubscriptionAll() {
+		List<SubscriptionEntity> entityList = this.subscriptionDao.findList(null);
 		this.subscriptionListManager.getSubscriptionList().clear();
 
 		for (SubscriptionEntity entity : entityList) {
@@ -74,27 +73,29 @@ public class RssServiceImpl implements RssService {
 
 	@Override
 	public List<Article> loadArticleList(long subscriptionId) {
-		List<Article> list = getArticleList(subscriptionId);
-		this.articleListManager.getArticleList().clear();
-		this.articleListManager.getArticleList().addAll(list);
+		reflashArticleList(subscriptionId);
 		return this.articleListManager.getArticleList();
 	}
 
-	private List<Article> getArticleList(long subscriptionId) {
-		List<Article> result = new ArrayList<Article>();
-		for (ArticleEntity entity : this.articleDao.getListBySubscriptionId(subscriptionId)) {
-			Article article = new Article();
-
-			article.setId(entity.getId());
-			article.setTitle(entity.getTitle());
-			article.setContent(entity.getContent());
-			article.setLink(entity.getLink());
-			article.setPublishedDate(entity.getPublishedDate());
-			article.setMidoku(entity.getMidoku());
-
-			result.add(article);
+	private void reflashArticleList(long subscriptionId) {
+		List<ArticleEntity> entityList = this.articleDao.getListBySubscriptionId(subscriptionId);
+		this.articleListManager.getArticleList().clear();
+		for (ArticleEntity entity : entityList) {
+			Article article = convertEntity(entity);
+			this.articleListManager.add(article);
 		}
-		return result;
+	}
+
+	private Article convertEntity(ArticleEntity entity) {
+		Article article = new Article();
+
+		article.setId(entity.getId());
+		article.setTitle(entity.getTitle());
+		article.setContent(entity.getContent());
+		article.setLink(entity.getLink());
+		article.setPublishedDate(entity.getPublishedDate());
+		article.setMidoku(entity.getMidoku());
+		return article;
 	}
 
 	@Override
@@ -162,9 +163,7 @@ public class RssServiceImpl implements RssService {
 		this.articleDao.deleteTheOld(subscriptionId, MAX_ARTICLE);
 		this.subscriptionArticleDao.deleteTheOld(subscriptionId, MAX_ARTICLE);
 
-		List<Article> list = getArticleList(subscriptionId);
-		this.articleListManager.getArticleList().clear();
-		this.articleListManager.getArticleList().addAll(list);
+		reflashArticleList(subscriptionId);
 	}
 
 	protected boolean isDuplicated(String uri) {

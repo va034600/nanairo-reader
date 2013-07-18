@@ -14,6 +14,10 @@ public class ArticleListManager {
 		return articleList;
 	}
 
+	public void add(Article article) {
+		this.articleList.add(article);
+	}
+
 	public void kidoku(long articleId) {
 		for (Article article : this.articleList) {
 			if (article.getId() == articleId) {
