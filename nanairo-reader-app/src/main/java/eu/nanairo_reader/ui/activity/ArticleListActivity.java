@@ -8,8 +8,10 @@ import java.util.List;
 import javax.inject.Inject;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListAdapter;
@@ -36,7 +38,8 @@ public class ArticleListActivity extends BaseActivity {
 
 		// パラメータ取得
 		Intent intent = getIntent();
-		Subscription subscription = (Subscription) intent.getSerializableExtra(SUBSCRIPTION);
+		// TODO finalとる
+		final Subscription subscription = (Subscription) intent.getSerializableExtra(SUBSCRIPTION);
 
 		// ListView
 		ListView listView = (ListView) findViewById(R.id.listView);
@@ -58,9 +61,30 @@ public class ArticleListActivity extends BaseActivity {
 			}
 		});
 
+		// 更新ボタン
+		Button updateButton = (Button) findViewById(R.id.updateButton);
+		updateButton.setOnClickListener(new OnClickListener() {
+			public void onClick(View v) {
+				new AsyncTask<Long, Void, Integer>() {
+					@Override
+					protected Integer doInBackground(Long... params) {
+						rssService.storeArticle(params[0]);
+						return 0;
+					}
+
+					@Override
+					protected void onPostExecute(Integer count) {
+						ListView listView = (ListView) findViewById(R.id.listView);
+						((ArticleArrayAdapter) listView.getAdapter()).notifyDataSetChanged();
+						Toast.makeText(getApplicationContext(), count + "個の新しい記事", Toast.LENGTH_SHORT).show();
+					};
+				}.execute(subscription.getId());
+			}
+		});
+
 		// 全既読ボタン
-		Button updateButton = (Button) findViewById(R.id.allCheckButton);
-		updateButton.setOnClickListener(new UpdateButtonOnClickListener(subscription.getId()));
+		Button allCheckButton = (Button) findViewById(R.id.allCheckButton);
+		allCheckButton.setOnClickListener(new UpdateButtonOnClickListener(subscription.getId()));
 	}
 
 	@Override

@@ -12,6 +12,8 @@ public interface RssService {
 
 	void storeArticles();
 
+	void storeArticle(long subscriptionId);
+
 	boolean addSubscription(String url);
 
 	void kidoku(long articleId);
