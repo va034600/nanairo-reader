@@ -15,11 +15,22 @@
 
 	<modules>
 		<module>nanairo-reader-app</module>
+		<module>nanairo-reader-data</module>
 		<module>nanairo-orm</module>
 	</modules>
 
 	<dependencyManagement>
 		<dependencies>
+			<dependency>
+				<groupId>eu.nanairo</groupId>
+				<artifactId>nanairo-orm</artifactId>
+				<version>0.0.1-SNAPSHOT</version>
+			</dependency>
+			<dependency>
+				<groupId>eu.nanairo</groupId>
+				<artifactId>nanairo-reader-data</artifactId>
+				<version>0.0.1-SNAPSHOT</version>
+			</dependency>
 			<dependency>
 				<groupId>com.google.android</groupId>
 				<artifactId>android</artifactId>
@@ -53,7 +64,7 @@
 				<scope>system</scope>
 				<systemPath>${basedir}/libs/jdom-1.1.1-android-fork.jar</systemPath>
 			</dependency>
-			<!--  -->
+			<!-- -->
 			<dependency>
 				<groupId>org.horrabin</groupId>
 				<artifactId>horrorss</artifactId>
@@ -68,7 +79,7 @@
 				<scope>system</scope>
 				<systemPath>${basedir}/libs/sparta.jar</systemPath>
 			</dependency>
-			<!--  -->
+			<!-- -->
 			<dependency>
 				<groupId>junit</groupId>
 				<artifactId>junit</artifactId>

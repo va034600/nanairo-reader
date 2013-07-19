@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="roboguice_modules">
+        <item>eu.nanairo_reader.ui.module.GuiceModule</item>
+    </string-array>
+
+</resources>

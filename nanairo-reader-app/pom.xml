@@ -13,8 +13,7 @@
 	<dependencies>
 		<dependency>
 			<groupId>eu.nanairo</groupId>
-			<artifactId>nanairo-orm</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
+			<artifactId>nanairo-reader-data</artifactId>
 		</dependency>
 
 		<dependency>
@@ -37,13 +36,18 @@
 			<groupId>jdom</groupId>
 			<artifactId>jdom</artifactId>
 		</dependency>
-			<dependency>
-				<groupId>org.horrabin</groupId>
-				<artifactId>horrorss</artifactId>
-			</dependency>
-			<dependency>
-				<groupId>com.hp.hql</groupId>
-				<artifactId>sparta</artifactId>
-			</dependency>
+		<dependency>
+			<groupId>org.horrabin</groupId>
+			<artifactId>horrorss</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.hp.hql</groupId>
+			<artifactId>sparta</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.roboguice</groupId>
+			<artifactId>roboguice</artifactId>
+			<version>2.0</version>
+		</dependency>
 	</dependencies>
 </project>
