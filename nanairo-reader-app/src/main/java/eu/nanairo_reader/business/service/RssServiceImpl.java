@@ -66,18 +66,6 @@ public class RssServiceImpl implements RssService {
 		return subscription;
 	}
 
-	private Subscription convertEntity(SubscriptionEntity entity) {
-		Subscription subscription = new Subscription();
-
-		subscription.setId(entity.getId());
-		subscription.setTitle(entity.getTitle());
-		subscription.setUrl(entity.getUrl());
-		// TODO リファクタリング
-		int midokuCount = this.articleDao.getMidokuCount(entity.getId());
-		subscription.setMidokuCount(midokuCount);
-		return subscription;
-	}
-
 	@Override
 	public void loadArticleList(long subscriptionId) {
 		List<ArticleEntity> entityList = this.articleDao.getListBySubscriptionId(subscriptionId);
@@ -238,6 +226,18 @@ public class RssServiceImpl implements RssService {
 		// list 追加
 		Subscription subscription = convertEntity(subscriptionEntity);
 		this.subscriptionListManager.add(subscription);
+	}
+
+	private Subscription convertEntity(SubscriptionEntity entity) {
+		Subscription subscription = new Subscription();
+
+		subscription.setId(entity.getId());
+		subscription.setTitle(entity.getTitle());
+		subscription.setUrl(entity.getUrl());
+		// TODO リファクタリング
+		int midokuCount = this.articleDao.getMidokuCount(entity.getId());
+		subscription.setMidokuCount(midokuCount);
+		return subscription;
 	}
 
 	@Override
