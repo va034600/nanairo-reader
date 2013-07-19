@@ -14,6 +14,10 @@ public class ArticleListManager {
 		return articleList;
 	}
 
+	public void clear(){
+		this.articleList.clear();
+	}
+
 	public void add(Article article) {
 		this.articleList.add(article);
 	}

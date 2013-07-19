@@ -12,6 +12,10 @@ public class SubscriptionListManager {
 		return subscriptionList;
 	}
 
+	public void clear(){
+		this.subscriptionList.clear();
+	}
+
 	public void add(Subscription subscription){
 		this.subscriptionList.add(subscription);
 	}

@@ -51,7 +51,7 @@ public class RssServiceImpl implements RssService {
 
 	protected void reflashSubscriptionAll() {
 		List<SubscriptionEntity> entityList = this.subscriptionDao.findList(null);
-		this.subscriptionListManager.getSubscriptionList().clear();
+		this.subscriptionListManager.clear();
 
 		for (SubscriptionEntity entity : entityList) {
 			Subscription subscription = convertEntity(entity);
@@ -79,7 +79,7 @@ public class RssServiceImpl implements RssService {
 
 	private void reflashArticleList(long subscriptionId) {
 		List<ArticleEntity> entityList = this.articleDao.getListBySubscriptionId(subscriptionId);
-		this.articleListManager.getArticleList().clear();
+		this.articleListManager.clear();
 		for (ArticleEntity entity : entityList) {
 			Article article = convertEntity(entity);
 			this.articleListManager.add(article);
