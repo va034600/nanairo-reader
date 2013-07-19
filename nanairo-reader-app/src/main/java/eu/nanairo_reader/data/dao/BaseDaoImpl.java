@@ -24,6 +24,10 @@ public abstract class BaseDaoImpl<ENTITY, KEY> extends NanairoDaoSupport impleme
 		return super.getNanairoTemplate().queryForList(getEntityClass(), sql, selectionArgs);
 	}
 
+	protected <RESULT> List<RESULT> queryForList(Class<RESULT> clazz, String sql, String[] selectionArgs) {
+		return super.getNanairoTemplate().queryForList(clazz, sql, selectionArgs);
+	}
+
 	@Override
 	public long add(ENTITY entity) {
 		return super.getNanairoTemplate().add(getEntityClass(), entity);

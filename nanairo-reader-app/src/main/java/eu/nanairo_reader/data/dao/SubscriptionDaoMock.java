@@ -3,6 +3,7 @@ package eu.nanairo_reader.data.dao;
 import java.util.ArrayList;
 import java.util.List;
 
+import eu.nanairo_reader.data.dto.SubscriptionDto;
 import eu.nanairo_reader.data.entity.SubscriptionEntity;
 
 public class SubscriptionDaoMock extends BaseDaoMock<SubscriptionEntity, Long> implements SubscriptionDao {
@@ -23,5 +24,10 @@ public class SubscriptionDaoMock extends BaseDaoMock<SubscriptionEntity, Long> i
 		list.add(subscription2);
 
 		return list;
+	}
+
+	@Override
+	public List<SubscriptionDto> findListAndMidokuCount() {
+		return new ArrayList<SubscriptionDto>();
 	}
 }

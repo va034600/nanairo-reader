@@ -16,6 +16,7 @@ import eu.nanairo_reader.business.vo.FeedResult;
 import eu.nanairo_reader.data.dao.ArticleDao;
 import eu.nanairo_reader.data.dao.SubscriptionArticleDao;
 import eu.nanairo_reader.data.dao.SubscriptionDao;
+import eu.nanairo_reader.data.dto.SubscriptionDto;
 import eu.nanairo_reader.data.entity.ArticleEntity;
 import eu.nanairo_reader.data.entity.SubscriptionArticleEntity;
 import eu.nanairo_reader.data.entity.SubscriptionEntity;
@@ -45,13 +46,24 @@ public class RssServiceImpl implements RssService {
 
 	@Override
 	public void loadSubscriptionList() {
-		List<SubscriptionEntity> entityList = this.subscriptionDao.findList(null);
+		List<SubscriptionDto> dtoList = this.subscriptionDao.findListAndMidokuCount();
 		this.subscriptionListManager.clear();
 
-		for (SubscriptionEntity entity : entityList) {
-			Subscription subscription = convertEntity(entity);
+		for (SubscriptionDto dto : dtoList) {
+			Subscription subscription = convertDto(dto);
 			this.subscriptionListManager.add(subscription);
 		}
+	}
+
+	private Subscription convertDto(SubscriptionDto dto) {
+		Subscription subscription = new Subscription();
+
+		subscription.setId(dto.getId());
+		subscription.setTitle(dto.getTitle());
+		subscription.setUrl(dto.getUrl());
+		subscription.setMidokuCount(dto.getMidokuCount());
+
+		return subscription;
 	}
 
 	private Subscription convertEntity(SubscriptionEntity entity) {
