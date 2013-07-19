@@ -44,12 +44,7 @@ public class RssServiceImpl implements RssService {
 	ArticleListManager articleListManager;
 
 	@Override
-	public List<Subscription> loadSubscriptionList() {
-		reflashSubscriptionAll();
-		return this.subscriptionListManager.getSubscriptionList();
-	}
-
-	protected void reflashSubscriptionAll() {
+	public void loadSubscriptionList() {
 		List<SubscriptionEntity> entityList = this.subscriptionDao.findList(null);
 		this.subscriptionListManager.clear();
 
@@ -72,12 +67,7 @@ public class RssServiceImpl implements RssService {
 	}
 
 	@Override
-	public List<Article> loadArticleList(long subscriptionId) {
-		reflashArticleList(subscriptionId);
-		return this.articleListManager.getArticleList();
-	}
-
-	private void reflashArticleList(long subscriptionId) {
+	public void loadArticleList(long subscriptionId) {
 		List<ArticleEntity> entityList = this.articleDao.getListBySubscriptionId(subscriptionId);
 		this.articleListManager.clear();
 		for (ArticleEntity entity : entityList) {
@@ -163,7 +153,7 @@ public class RssServiceImpl implements RssService {
 		this.articleDao.deleteTheOld(subscriptionId, MAX_ARTICLE);
 		this.subscriptionArticleDao.deleteTheOld(subscriptionId, MAX_ARTICLE);
 
-		reflashArticleList(subscriptionId);
+		loadArticleList(subscriptionId);
 	}
 
 	protected boolean isDuplicated(String uri) {

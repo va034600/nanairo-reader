@@ -26,6 +26,7 @@ import android.widget.Toast;
 import eu.nanairo_reader.R;
 import eu.nanairo_reader.business.bean.Subscription;
 import eu.nanairo_reader.business.service.RssService;
+import eu.nanairo_reader.business.service.SubscriptionListManager;
 import eu.nanairo_reader.ui.NanairoApplication;
 import eu.nanairo_reader.ui.component.SubscriptionArrayAdapter;
 import eu.nanairo_reader.ui.service.SampleService;
@@ -36,6 +37,9 @@ public class SubscriptionListActivity extends BaseActivity {
 
 	/***/
 	private final static int CONTEXT_ITEM_ALL_KIDOKU = 1001;
+
+	@Inject
+	SubscriptionListManager subscriptionListManager;
 
 	@Inject
 	RssService rssService;
@@ -56,7 +60,8 @@ public class SubscriptionListActivity extends BaseActivity {
 
 		// ListView
 		ListView listView = (ListView) findViewById(R.id.listView);
-		List<Subscription> subscriptionList = rssService.loadSubscriptionList();
+		List<Subscription> subscriptionList = this.subscriptionListManager.getSubscriptionList();
+		rssService.loadSubscriptionList();
 		SubscriptionArrayAdapter listAdapter = new SubscriptionArrayAdapter(getApplicationContext(), subscriptionList);
 		listView.setAdapter(listAdapter);
 

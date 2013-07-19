@@ -19,11 +19,15 @@ import android.widget.Toast;
 import eu.nanairo_reader.R;
 import eu.nanairo_reader.business.bean.Article;
 import eu.nanairo_reader.business.bean.Subscription;
+import eu.nanairo_reader.business.service.ArticleListManager;
 import eu.nanairo_reader.business.service.RssService;
 import eu.nanairo_reader.ui.NanairoApplication;
 import eu.nanairo_reader.ui.component.ArticleArrayAdapter;
 
 public class ArticleListActivity extends BaseActivity {
+	@Inject
+	ArticleListManager articleListManager;
+
 	@Inject
 	RssService rssService;
 
@@ -42,7 +46,8 @@ public class ArticleListActivity extends BaseActivity {
 
 		// ListView
 		ListView listView = (ListView) findViewById(R.id.listView);
-		List<Article> list = this.rssService.loadArticleList(subscription.getId());
+		List<Article> list = this.articleListManager.getArticleList();
+		this.rssService.loadArticleList(subscription.getId());
 		ListAdapter listAdapter = new ArticleArrayAdapter(getApplicationContext(), list);
 		listView.setAdapter(listAdapter);
 
@@ -115,7 +120,7 @@ public class ArticleListActivity extends BaseActivity {
 	protected void onResume() {
 		super.onResume();
 
-		//TODO StartActivityForResult
+		// TODO StartActivityForResult
 		// 購読の再表示
 		ListView listView = (ListView) findViewById(R.id.listView);
 		((ArticleArrayAdapter) listView.getAdapter()).notifyDataSetChanged();
