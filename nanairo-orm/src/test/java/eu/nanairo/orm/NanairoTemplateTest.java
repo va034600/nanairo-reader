@@ -1,21 +1,16 @@
 package eu.nanairo.orm;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import junit.framework.TestCase;
 
-import org.junit.Test;
-
-public class NanairoTemplateTest {
-	@Test
+public class NanairoTemplateTest extends TestCase {
 	public void testConvertColumns_01() {
 		String[] columns = NanairoTemplate.convertColumns(SampleNewEntity.class);
 		assertNotNull(columns[0]);
-		 assertEquals("ID", columns[0]);
-		 assertEquals("TITLE", columns[1]);
-		 assertEquals("NEW_OLD_TITLE", columns[2]);
+		assertEquals("ID", columns[0]);
+		assertEquals("TITLE", columns[1]);
+		assertEquals("NEW_OLD_TITLE", columns[2]);
 	}
 
-	@Test
 	public void testGetSqlForInsert_01() {
 		SampleNewEntity sampleEntity = new SampleNewEntity();
 		sampleEntity.setId(3L);
@@ -24,7 +19,6 @@ public class NanairoTemplateTest {
 		assertEquals("INSERT INTO SAMPLE_NEW (ID, NEW_OLD_TITLE) VALUES (?, ?)", sql);
 	}
 
-	@Test
 	public void testGetTableName_01() {
 		String tableName = NanairoTemplate.getTableName(SampleNewEntity.class);
 		assertEquals("SAMPLE_NEW", tableName);

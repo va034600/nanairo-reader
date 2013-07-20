@@ -8,7 +8,7 @@
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
 	<artifactId>nanairo-orm</artifactId>
-	<packaging>jar</packaging>
+	<packaging>apklib</packaging>
 
 	<dependencies>
 		<dependency>
@@ -16,8 +16,8 @@
 			<artifactId>android</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
+			<groupId>com.google.android</groupId>
+			<artifactId>android-test</artifactId>
 		</dependency>
 	</dependencies>
 </project>
