@@ -34,7 +34,6 @@ public class ArticleListActivity extends BaseActivity {
 
 		// パラメータ取得
 		Intent intent = getIntent();
-		// TODO finalとる
 		Subscription subscription = (Subscription) intent.getSerializableExtra(SUBSCRIPTION);
 
 		// ListView
