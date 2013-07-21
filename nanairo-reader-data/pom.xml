@@ -12,8 +12,8 @@
 
 	<dependencies>
 		<dependency>
-			<groupId>eu.nanairo</groupId>
-			<artifactId>nanairo-orm</artifactId>
+			<groupId>eu.otemoto</groupId>
+			<artifactId>otemoto</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>com.google.android</groupId>

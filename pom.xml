@@ -16,19 +16,20 @@
 	<modules>
 		<module>nanairo-reader-app</module>
 		<module>nanairo-reader-data</module>
-		<module>nanairo-orm</module>
 	</modules>
 
 	<dependencyManagement>
 		<dependencies>
-			<dependency>
-				<groupId>eu.nanairo</groupId>
-				<artifactId>nanairo-orm</artifactId>
-				<version>0.0.1-SNAPSHOT</version>
-			</dependency>
+			<!-- nanairo -->
 			<dependency>
 				<groupId>eu.nanairo</groupId>
 				<artifactId>nanairo-reader-data</artifactId>
+				<version>0.0.1-SNAPSHOT</version>
+			</dependency>
+			<!-- otemoto -->
+			<dependency>
+				<groupId>eu.otemoto</groupId>
+				<artifactId>otemoto</artifactId>
 				<version>0.0.1-SNAPSHOT</version>
 			</dependency>
 			<!-- android -->
