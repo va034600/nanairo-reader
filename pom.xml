@@ -26,12 +26,6 @@
 				<artifactId>nanairo-reader-data</artifactId>
 				<version>0.0.1-SNAPSHOT</version>
 			</dependency>
-			<!-- otemoto -->
-			<dependency>
-				<groupId>eu.otemoto</groupId>
-				<artifactId>otemoto</artifactId>
-				<version>0.0.1-SNAPSHOT</version>
-			</dependency>
 			<!-- android -->
 			<dependency>
 				<groupId>com.google.android</groupId>

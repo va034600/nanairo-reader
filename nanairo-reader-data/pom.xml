@@ -11,10 +11,14 @@
 	<packaging>jar</packaging>
 
 	<dependencies>
-		<dependency>
-			<groupId>eu.otemoto</groupId>
-			<artifactId>otemoto</artifactId>
-		</dependency>
+			<!-- otemoto -->
+			<dependency>
+				<groupId>eu.otemoto</groupId>
+				<artifactId>otemoto</artifactId>
+				<version>0.0.1-SNAPSHOT</version>
+				<scope>system</scope>
+				<systemPath>${basedir}/libs/otemoto-0.0.1-SNAPSHOT.jar</systemPath>
+			</dependency>
 		<dependency>
 			<groupId>com.google.android</groupId>
 			<artifactId>android</artifactId>
