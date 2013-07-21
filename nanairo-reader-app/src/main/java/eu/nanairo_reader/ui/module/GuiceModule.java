@@ -31,6 +31,10 @@ private final Context context;
 		this.context = context;
 	}
 	
+	private SubscriptionListManager subscriptionListManager = new SubscriptionListManager();
+	
+	private ArticleListManager articleListManager = new ArticleListManager();
+	
 	@Override
 	protected void configure() {
 		// service
@@ -38,17 +42,11 @@ private final Context context;
 		// bind(RssParsingService.class).to(RssParsingServiceImpl.class);
 		bind(RssParsingService.class).to(RssParsingServiceMock.class);
 
-//		SubscriptionListManager a = new SubscriptionListManager();
-//		bind(SubscriptionListManager.class).toInstance(a);
-//
-//		ArticleListManager b = new ArticleListManager();
-//		bind(ArticleListManager.class).toInstance(b);
+		bind(SubscriptionListManager.class).to(SubscriptionListManager.class).in(Singleton.class);
+		bind(ArticleListManager.class).to(ArticleListManager.class).in(Singleton.class);
 
-//		requestStaticInjection(SubscriptionListManager.class);
-//		requestStaticInjection(ArticleListManager.class);
-
-		bind(SubscriptionListManager.class).in(Singleton.class);
-		bind(ArticleListManager.class).in(Singleton.class);
+		bind(SubscriptionListManager.class).toInstance(subscriptionListManager);
+		bind(ArticleListManager.class).toInstance(articleListManager);
 
 		// dao
 		// TODO
