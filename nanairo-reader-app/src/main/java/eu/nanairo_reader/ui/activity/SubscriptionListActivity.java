@@ -25,9 +25,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 import eu.nanairo_reader.R;
 import eu.nanairo_reader.business.bean.Subscription;
-import eu.nanairo_reader.business.service.RssService;
 import eu.nanairo_reader.business.service.SubscriptionListManager;
-import eu.nanairo_reader.ui.NanairoApplication;
 import eu.nanairo_reader.ui.component.SubscriptionArrayAdapter;
 import eu.nanairo_reader.ui.service.SampleService;
 
@@ -41,9 +39,6 @@ public class SubscriptionListActivity extends BaseActivity {
 	@Inject
 	SubscriptionListManager subscriptionListManager;
 
-	@Inject
-	RssService rssService;
-
 	private MyServiceReceiver receiver = new MyServiceReceiver();
 
 	@Override
@@ -51,8 +46,6 @@ public class SubscriptionListActivity extends BaseActivity {
 		super.onCreate(savedInstanceState);
 
 		setContentView(R.layout.subscription_list);
-
-		((NanairoApplication) getApplication()).inject(this.rssService);
 
 		// レシーバー登録
 		IntentFilter filter = new IntentFilter(SAMPLE_SERVICE_ACTION);

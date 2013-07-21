@@ -6,6 +6,8 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
 
+    <uses-sdk android:minSdkVersion="10" android:targetSdkVersion="10"/>
+
     <application
         android:name="eu.nanairo_reader.ui.NanairoApplication"
         android:icon="@drawable/icon"

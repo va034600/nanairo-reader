@@ -20,24 +20,17 @@ import eu.nanairo_reader.R;
 import eu.nanairo_reader.business.bean.Article;
 import eu.nanairo_reader.business.bean.Subscription;
 import eu.nanairo_reader.business.service.ArticleListManager;
-import eu.nanairo_reader.business.service.RssService;
-import eu.nanairo_reader.ui.NanairoApplication;
 import eu.nanairo_reader.ui.component.ArticleArrayAdapter;
 
 public class ArticleListActivity extends BaseActivity {
 	@Inject
 	ArticleListManager articleListManager;
 
-	@Inject
-	RssService rssService;
-
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
 		setContentView(R.layout.article_list);
-
-		((NanairoApplication) getApplication()).inject(this.rssService);
 
 		// パラメータ取得
 		Intent intent = getIntent();

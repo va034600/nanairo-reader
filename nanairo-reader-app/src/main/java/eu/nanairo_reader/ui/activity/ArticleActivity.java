@@ -1,29 +1,19 @@
 package eu.nanairo_reader.ui.activity;
 
 import static eu.nanairo_reader.ui.constant.NanairoUiConstant.ARTICLE;
-
-import javax.inject.Inject;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.webkit.WebView;
 import android.widget.TextView;
 import eu.nanairo_reader.R;
 import eu.nanairo_reader.business.bean.Article;
-import eu.nanairo_reader.business.service.RssService;
-import eu.nanairo_reader.ui.NanairoApplication;
 
 public class ArticleActivity extends BaseActivity {
-	@Inject
-	RssService rssService;
-
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
 		setContentView(R.layout.article_detail);
-
-		((NanairoApplication) getApplication()).inject(this.rssService);
 
 		// パラメータ取得
 		Intent intent = getIntent();
