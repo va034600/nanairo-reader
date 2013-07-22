@@ -15,6 +15,5 @@ public abstract class BaseActivity extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		((NanairoApplication) getApplication()).inject(this);
-		((NanairoApplication) getApplication()).inject(this.rssService);
 	}
 }

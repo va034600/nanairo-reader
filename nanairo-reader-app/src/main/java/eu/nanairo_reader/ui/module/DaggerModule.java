@@ -23,7 +23,7 @@ import eu.nanairo_reader.ui.activity.SubscriptionEntryActivity;
 import eu.nanairo_reader.ui.activity.SubscriptionListActivity;
 import eu.nanairo_reader.ui.service.SampleService;
 
-@Module(library = true, injects = {
+@Module(injects = {
 //
 		//
 		SubscriptionListActivity.class,
@@ -63,7 +63,9 @@ public class DaggerModule {
 
 	@Provides
 	RssService provideRssService() {
-		return new RssServiceImpl();
+		RssService rssService = new RssServiceImpl();
+		application.inject(rssService);
+		return rssService;
 	}
 
 	@Provides
