@@ -5,6 +5,8 @@ import javax.inject.Singleton;
 import dagger.Module;
 import dagger.Provides;
 import eu.nanairo_reader.business.service.ArticleListManager;
+import eu.nanairo_reader.business.service.ArticleService;
+import eu.nanairo_reader.business.service.ArticleServiceImpl;
 import eu.nanairo_reader.business.service.RssParsingService;
 import eu.nanairo_reader.business.service.RssParsingServiceMock;
 import eu.nanairo_reader.business.service.RssService;
@@ -40,6 +42,9 @@ import eu.nanairo_reader.ui.service.SampleService;
 		//
 		RssParsingService.class,
 		//
+		// TODO implとりたいよね。
+		ArticleServiceImpl.class,
+		//
 		SubscriptionListManager.class,
 		//
 		ArticleListManager.class,
@@ -66,6 +71,13 @@ public class DaggerModule {
 		RssService rssService = new RssServiceImpl();
 		application.inject(rssService);
 		return rssService;
+	}
+
+	@Provides
+	ArticleService provideArticleService() {
+		ArticleService articleService = new ArticleServiceImpl();
+		application.inject(articleService);
+		return articleService;
 	}
 
 	@Provides

@@ -1,23 +1,16 @@
 package eu.nanairo_reader.business.service;
 
-import static eu.nanairo_reader.business.constant.NanairoBusinessConstant.MIDOKU_OFF;
-import static eu.nanairo_reader.business.constant.NanairoBusinessConstant.MIDOKU_ON;
-
 import java.util.List;
 
 import javax.inject.Inject;
 
-import eu.nanairo_reader.business.bean.Article;
 import eu.nanairo_reader.business.bean.Subscription;
 import eu.nanairo_reader.business.exception.RssParsingException;
-import eu.nanairo_reader.business.util.NanairoDateUtils;
 import eu.nanairo_reader.business.vo.FeedItem;
 import eu.nanairo_reader.business.vo.FeedResult;
-import eu.nanairo_reader.data.dao.ArticleDao;
 import eu.nanairo_reader.data.dao.SubscriptionArticleDao;
 import eu.nanairo_reader.data.dao.SubscriptionDao;
 import eu.nanairo_reader.data.dto.SubscriptionDto;
-import eu.nanairo_reader.data.entity.ArticleEntity;
 import eu.nanairo_reader.data.entity.SubscriptionArticleEntity;
 import eu.nanairo_reader.data.entity.SubscriptionEntity;
 import eu.nanairo_reader.ui.NanairoApplication;
@@ -30,7 +23,7 @@ public class RssServiceImpl implements RssService {
 	SubscriptionDao subscriptionDao;
 
 	@Inject
-	ArticleDao articleDao;
+	ArticleService articleService;
 
 	@Inject
 	SubscriptionArticleDao subscriptionArticleDao;
@@ -40,9 +33,6 @@ public class RssServiceImpl implements RssService {
 
 	@Inject
 	SubscriptionListManager subscriptionListManager;
-
-	@Inject
-	ArticleListManager articleListManager;
 
 	@Override
 	public void loadSubscriptionList() {
@@ -68,24 +58,7 @@ public class RssServiceImpl implements RssService {
 
 	@Override
 	public void loadArticleList(long subscriptionId) {
-		List<ArticleEntity> entityList = this.articleDao.getListBySubscriptionId(subscriptionId);
-		this.articleListManager.clear();
-		for (ArticleEntity entity : entityList) {
-			Article article = convertEntity(entity);
-			this.articleListManager.add(article);
-		}
-	}
-
-	private Article convertEntity(ArticleEntity entity) {
-		Article article = new Article();
-
-		article.setId(entity.getId());
-		article.setTitle(entity.getTitle());
-		article.setContent(entity.getContent());
-		article.setLink(entity.getLink());
-		article.setPublishedDate(entity.getPublishedDate());
-		article.setMidoku(entity.getMidoku());
-		return article;
+		this.articleService.loadArticleList(subscriptionId);
 	}
 
 	@Override
@@ -135,13 +108,13 @@ public class RssServiceImpl implements RssService {
 	protected void addArticleListByFeed(long subscriptionId, FeedResult feedResult) {
 		for (FeedItem feedItem : feedResult.getFeedItemList()) {
 			// 登録済みの場合、登録しない。
-			boolean flag = isDuplicated(feedItem.getLink());
+			boolean flag = this.articleService.isDuplicated(feedItem.getLink());
 			if (flag) {
 				continue;
 			}
 
 			// 記事を登録する。
-			long articleId = addArticle(feedItem);
+			long articleId = this.articleService.addArticle(feedItem);
 
 			// 購読記事を登録する。
 			addSubscriptionArticle(subscriptionId, articleId);
@@ -150,35 +123,10 @@ public class RssServiceImpl implements RssService {
 		// TODO 件数確認
 		// 古いのを削除する。
 		final int MAX_ARTICLE = 100;
-		this.articleDao.deleteTheOld(subscriptionId, MAX_ARTICLE);
+		this.articleService.deleteTheOld(subscriptionId, MAX_ARTICLE);
 		this.subscriptionArticleDao.deleteTheOld(subscriptionId, MAX_ARTICLE);
 
 		loadArticleList(subscriptionId);
-	}
-
-	protected boolean isDuplicated(String uri) {
-		ArticleEntity articleEntityParameter = new ArticleEntity();
-		articleEntityParameter.setLink(uri);
-		List<ArticleEntity> articleEntitieList = this.articleDao.findList(articleEntityParameter);
-		if (articleEntitieList.size() == 0) {
-			return false;
-		} else {
-			return true;
-		}
-	}
-
-	protected long addArticle(FeedItem feedItem) {
-		ArticleEntity articleEntity = new ArticleEntity();
-
-		articleEntity.setTitle(feedItem.getTitle());
-		articleEntity.setContent(feedItem.getContent());
-		articleEntity.setLink(feedItem.getLink());
-		articleEntity.setPublishedDate(NanairoDateUtils.convertDateToString(feedItem.getPublishedDate()));
-		articleEntity.setMidoku(MIDOKU_ON);
-
-		long articleId = this.articleDao.add(articleEntity);
-
-		return articleId;
 	}
 
 	protected void addSubscriptionArticle(long subscriptionId, long articleId) {
@@ -235,20 +183,16 @@ public class RssServiceImpl implements RssService {
 		subscription.setTitle(entity.getTitle());
 		subscription.setUrl(entity.getUrl());
 		// TODO リファクタリング
-		int midokuCount = this.articleDao.getMidokuCount(entity.getId());
+		int midokuCount = this.articleService.getMidokuCount(entity.getId());
 		subscription.setMidokuCount(midokuCount);
 		return subscription;
 	}
 
 	@Override
 	public void kidoku(long articleId) {
-		ArticleEntity articleEntity = this.articleDao.findByPrimaryKey(articleId);
-		if (articleEntity.getMidoku() == MIDOKU_OFF) {
+		if (this.articleService.kidoku(articleId)) {
 			return;
 		}
-
-		articleEntity.setMidoku(MIDOKU_OFF);
-		this.articleDao.update(articleEntity);
 
 		SubscriptionArticleEntity parameter = new SubscriptionArticleEntity();
 		parameter.setArticleId(articleId);
@@ -257,14 +201,13 @@ public class RssServiceImpl implements RssService {
 		long subscriptionId = subscriptionArticleEntitieList.get(0).getSubscriptionId();
 
 		this.subscriptionListManager.kidoku(subscriptionId);
-		this.articleListManager.kidoku(articleId);
 	}
 
 	@Override
 	public void kidokuAll(long subscriptionId) {
 		this.subscriptionArticleDao.updateKidokuBySubscriptionId(subscriptionId);
 
-		this.articleListManager.kidokuAll(subscriptionId);
+		this.articleService.kidokuAll(subscriptionId);
 
 		this.subscriptionListManager.kidokuAll(subscriptionId);
 	}
@@ -292,7 +235,7 @@ public class RssServiceImpl implements RssService {
 		this.subscriptionDao.delete(subscriptionEntity);
 
 		// article
-		this.articleDao.deleteBySucriptionId(subscriptionId);
+		this.articleService.deleteBySucriptionId(subscriptionId);
 
 		// subscriptionArticle
 		SubscriptionArticleEntity subscriptionArticleEntity = new SubscriptionArticleEntity();
