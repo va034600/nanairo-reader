@@ -153,7 +153,7 @@ public class SubscriptionListActivity extends BaseActivity {
 			((SubscriptionArrayAdapter) listView.getAdapter()).notifyDataSetChanged();
 
 			int count = intent.getIntExtra(MIDOKU_COUNT, 0);
-			Toast.makeText(SubscriptionListActivity.this, "更新件数:" + count, Toast.LENGTH_SHORT).show();
+			Toast.makeText(SubscriptionListActivity.this, "新規記事数:" + count, Toast.LENGTH_SHORT).show();
 		}
 	}
 }

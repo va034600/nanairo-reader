@@ -114,6 +114,7 @@ public class ArticleServiceImpl implements ArticleService {
 
 	@Override
 	public int addArticleListByFeed(long subscriptionId, FeedResult feedResult) {
+		int newMidokuCount = 0;
 		for (FeedItem feedItem : feedResult.getFeedItemList()) {
 			// 登録済みの場合、登録しない。
 			boolean flag = isDuplicated(feedItem.getLink());
@@ -123,7 +124,7 @@ public class ArticleServiceImpl implements ArticleService {
 
 			// 記事を登録する。
 			Article article = addArticle(subscriptionId, feedItem);
-			
+			newMidokuCount++;
 		}
 
 		// TODO 件数確認
@@ -134,9 +135,7 @@ public class ArticleServiceImpl implements ArticleService {
 		//TODO loadArticleList を削除。代わりに。articleListManagerを操作
 		loadArticleList(subscriptionId);
 
-		int midokuCount = this.articleDao.getMidokuCount(subscriptionId);
-
-		return midokuCount;
+		return newMidokuCount;
 	}
 
 }

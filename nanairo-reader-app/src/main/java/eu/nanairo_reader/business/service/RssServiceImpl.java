@@ -32,33 +32,37 @@ public class RssServiceImpl implements RssService {
 	}
 
 	@Override
-	public void storeArticles() {
+	public int storeArticles() {
+		int newMidokuCount = 0;
 		for (SubscriptionEntity subscriptionEntity : this.subscriptionService.findList()) {
-			parseAdding(subscriptionEntity);
+			newMidokuCount += parseAdding(subscriptionEntity);
 		}
 
 		this.subscriptionService.loadSubscriptionList();
+
+		return newMidokuCount;
 	}
 
 	@Override
 	public int storeArticle(long subscriptionId) {
 		SubscriptionEntity subscriptionEntity = this.subscriptionService.findByPrimaryKey(subscriptionId);
-		parseAdding(subscriptionEntity);
+		int newMidokuCount = parseAdding(subscriptionEntity);
 
 		// TODO just one
 		this.subscriptionService.loadSubscriptionList();
 
 		// TODO 更新件数
-		return 0;
+		return newMidokuCount;
 	}
 
-	protected void parseAdding(SubscriptionEntity subscriptionEntity) {
+	protected int parseAdding(SubscriptionEntity subscriptionEntity) {
+		int newMidokuCount = 0;
 		FeedResult feed;
 		try {
 			feed = this.rssParsingService.getFeedResult(subscriptionEntity.getUrl());
 		} catch (RssParsingException e) {
 			// TODO ログ出力
-			return;
+			return 0;
 		}
 
 		long subscriptionId = subscriptionEntity.getId();
@@ -67,12 +71,14 @@ public class RssServiceImpl implements RssService {
 			this.nanairoApplication.getDb().beginTransaction();
 
 			// 記事一覧追加
-			this.articleService.addArticleListByFeed(subscriptionId, feed);
+			newMidokuCount = this.articleService.addArticleListByFeed(subscriptionId, feed);
 
 			this.nanairoApplication.getDb().setTransactionSuccessful();
 		} finally {
 			this.nanairoApplication.getDb().endTransaction();
 		}
+
+		return newMidokuCount;
 	}
 
 	@Override

@@ -7,7 +7,7 @@ public interface RssService {
 
 	void loadArticleList(long subscriptionId);
 
-	void storeArticles();
+	int storeArticles();
 
 	int storeArticle(long subscriptionId);
 

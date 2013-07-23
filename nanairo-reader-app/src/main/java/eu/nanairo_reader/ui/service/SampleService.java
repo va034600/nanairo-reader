@@ -47,14 +47,13 @@ public class SampleService extends Service {
 		((NanairoApplication) getApplication()).inject(this.rssService);
 
 		// 開始時にトーストを表示
-		Toast.makeText(this, "サービスを開始しました！", Toast.LENGTH_SHORT).show();
+		Toast.makeText(this, "記事取得を開始しました！", Toast.LENGTH_SHORT).show();
 		Thread t = new Thread() {
 			public void run() {
-				SampleService.this.rssService.storeArticles();
+				int midokuCount = SampleService.this.rssService.storeArticles();
 
 				Intent intent = new Intent(SAMPLE_SERVICE_ACTION);
-				// TODO テスト
-				intent.putExtra(MIDOKU_COUNT, 55);
+				intent.putExtra(MIDOKU_COUNT, midokuCount);
 				sendBroadcast(intent);
 
 				// 自分自身を止めてonDestroy()メソッドへ
@@ -68,8 +67,6 @@ public class SampleService extends Service {
 	@Override
 	public void onDestroy() {
 		super.onDestroy();
-
-		Toast.makeText(this, "サービスを終了しました！", Toast.LENGTH_SHORT).show();
 
 		NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
 		Notification notification = new Notification();
