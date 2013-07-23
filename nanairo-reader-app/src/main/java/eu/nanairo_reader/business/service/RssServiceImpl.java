@@ -38,7 +38,7 @@ public class RssServiceImpl implements RssService {
 	@Override
 	public void storeArticles() {
 		for (SubscriptionEntity subscriptionEntity : this.subscriptionService.findList()) {
-			storeArticle(subscriptionEntity);
+			parseAdding(subscriptionEntity);
 		}
 
 		loadSubscriptionList();
@@ -47,7 +47,7 @@ public class RssServiceImpl implements RssService {
 	@Override
 	public int storeArticle(long subscriptionId) {
 		SubscriptionEntity subscriptionEntity = this.subscriptionService.findByPrimaryKey(subscriptionId);
-		storeArticle(subscriptionEntity);
+		parseAdding(subscriptionEntity);
 
 		// TODO just one
 		loadSubscriptionList();
@@ -56,7 +56,7 @@ public class RssServiceImpl implements RssService {
 		return 0;
 	}
 
-	protected void storeArticle(SubscriptionEntity subscriptionEntity) {
+	protected void parseAdding(SubscriptionEntity subscriptionEntity) {
 		FeedResult feed;
 		try {
 			feed = this.rssParsingService.getFeedResult(subscriptionEntity.getUrl());
