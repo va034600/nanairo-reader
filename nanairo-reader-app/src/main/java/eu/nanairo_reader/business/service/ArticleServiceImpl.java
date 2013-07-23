@@ -59,7 +59,7 @@ public class ArticleServiceImpl implements ArticleService {
 		}
 	}
 
-	protected long addArticle(long subscriptionId, FeedItem feedItem) {
+	protected Article addArticle(long subscriptionId, FeedItem feedItem) {
 		ArticleEntity articleEntity = new ArticleEntity();
 
 		articleEntity.setTitle(feedItem.getTitle());
@@ -69,11 +69,14 @@ public class ArticleServiceImpl implements ArticleService {
 		articleEntity.setMidoku(MIDOKU_ON);
 
 		long articleId = this.articleDao.add(articleEntity);
+		articleEntity.setId(articleId);
 
 		// 購読記事を登録する。
 		this.subscriptionArticleService.addSubscriptionArticle(subscriptionId, articleId);
 
-		return articleId;
+		Article article = convertEntity(articleEntity);
+
+		return article;
 	}
 
 	@Override
@@ -119,7 +122,8 @@ public class ArticleServiceImpl implements ArticleService {
 			}
 
 			// 記事を登録する。
-			addArticle(subscriptionId, feedItem);
+			Article article = addArticle(subscriptionId, feedItem);
+			
 		}
 
 		// TODO 件数確認
@@ -127,6 +131,7 @@ public class ArticleServiceImpl implements ArticleService {
 		final int MAX_ARTICLE = 100;
 		deleteTheOld(subscriptionId, MAX_ARTICLE);
 
+		//TODO loadArticleList を削除。代わりに。articleListManagerを操作
 		loadArticleList(subscriptionId);
 
 		int midokuCount = this.articleDao.getMidokuCount(subscriptionId);
