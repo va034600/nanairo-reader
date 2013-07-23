@@ -17,8 +17,6 @@ public class RssServiceImpl implements RssService {
 	@Inject
 	NanairoApplication nanairoApplication;
 
-	@Inject
-	SubscriptionDao subscriptionDao;
 
 	@Inject
 	ArticleService articleService;
@@ -28,9 +26,6 @@ public class RssServiceImpl implements RssService {
 
 	@Inject
 	RssParsingService rssParsingService;
-
-	@Inject
-	SubscriptionListManager subscriptionListManager;
 
 	@Override
 	public void loadSubscriptionList() {
@@ -153,18 +148,19 @@ public class RssServiceImpl implements RssService {
 	}
 
 	protected void addSubscription(String url, FeedResult feedResult) {
+		// 購読追加
 		SubscriptionEntity subscriptionEntity = new SubscriptionEntity();
 		subscriptionEntity.setUrl(url);
 		subscriptionEntity.setTitle(feedResult.getTitle());
 		long subscriptionId = this.subscriptionDao.add(subscriptionEntity);
 		subscriptionEntity.setId(subscriptionId);
 
-		// 記事一覧追加
-		addArticleListByFeed(subscriptionId, feedResult);
-
 		// list 追加
 		Subscription subscription = convertEntity(subscriptionEntity);
 		this.subscriptionListManager.add(subscription);
+
+		// 記事一覧追加
+		addArticleListByFeed(subscriptionId, feedResult);
 	}
 
 	private Subscription convertEntity(SubscriptionEntity entity) {
@@ -221,12 +217,12 @@ public class RssServiceImpl implements RssService {
 		subscriptionEntity.setId(subscriptionId);
 		this.subscriptionDao.delete(subscriptionEntity);
 
+		this.subscriptionListManager.remove(subscription);
+
 		// article
 		this.articleService.deleteBySucriptionId(subscriptionId);
 
 		// subscriptionArticle
 		this.subscriptionArticleService.deleteBySubscriptionId(subscriptionId);
-
-		this.subscriptionListManager.remove(subscription);
 	}
 }
