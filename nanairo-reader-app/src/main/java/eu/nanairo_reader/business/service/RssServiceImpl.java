@@ -17,6 +17,11 @@ public class RssServiceImpl implements RssService {
 	@Inject
 	NanairoApplication nanairoApplication;
 
+	@Inject
+	SubscriptionDao subscriptionDao;
+
+	@Inject
+	SubscriptionListManager subscriptionListManager;
 
 	@Inject
 	ArticleService articleService;
