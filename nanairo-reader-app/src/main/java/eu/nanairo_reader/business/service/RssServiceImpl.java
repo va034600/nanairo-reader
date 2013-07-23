@@ -104,10 +104,8 @@ public class RssServiceImpl implements RssService {
 		Subscription subscription = this.subscriptionService.addSubscription(url, feedResult);
 
 		// 記事一覧追加
-		this.articleService.addArticleListByFeed(subscription.getId(), feedResult);
-
+		int midokuCount = this.articleService.addArticleListByFeed(subscription.getId(), feedResult);
 		// TODO subscriptionServiceに移動
-		int midokuCount = this.articleService.getMidokuCount(subscription.getId());
 		subscription.setMidokuCount(midokuCount);
 	}
 

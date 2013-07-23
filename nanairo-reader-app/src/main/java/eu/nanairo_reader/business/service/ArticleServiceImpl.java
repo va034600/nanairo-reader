@@ -25,11 +25,6 @@ public class ArticleServiceImpl implements ArticleService {
 	SubscriptionArticleService subscriptionArticleService;
 
 	@Override
-	public int getMidokuCount(long subscriptionId) {
-		return this.articleDao.getMidokuCount(subscriptionId);
-	}
-
-	@Override
 	public void loadArticleList(long subscriptionId) {
 		this.articleListManager.clear();
 
@@ -40,7 +35,7 @@ public class ArticleServiceImpl implements ArticleService {
 		}
 	}
 
-	private Article convertEntity(ArticleEntity entity) {
+	protected Article convertEntity(ArticleEntity entity) {
 		Article article = new Article();
 
 		article.setId(entity.getId());
@@ -114,7 +109,8 @@ public class ArticleServiceImpl implements ArticleService {
 		return subscriptionId;
 	}
 
-	public void addArticleListByFeed(long subscriptionId, FeedResult feedResult) {
+	@Override
+	public int addArticleListByFeed(long subscriptionId, FeedResult feedResult) {
 		for (FeedItem feedItem : feedResult.getFeedItemList()) {
 			// 登録済みの場合、登録しない。
 			boolean flag = isDuplicated(feedItem.getLink());
@@ -132,6 +128,10 @@ public class ArticleServiceImpl implements ArticleService {
 		deleteTheOld(subscriptionId, MAX_ARTICLE);
 
 		loadArticleList(subscriptionId);
+
+		int midokuCount = this.articleDao.getMidokuCount(subscriptionId);
+
+		return midokuCount;
 	}
 
 }
