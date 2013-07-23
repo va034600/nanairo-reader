@@ -84,7 +84,7 @@ public class ArticleListActivity extends BaseActivity {
 				protected void onPostExecute(Integer count) {
 					ListView listView = (ListView) findViewById(R.id.listView);
 					((ArticleArrayAdapter) listView.getAdapter()).notifyDataSetChanged();
-					Toast.makeText(getApplicationContext(), count + "個の新しい記事", Toast.LENGTH_SHORT).show();
+					Toast.makeText(getApplicationContext(), "新規記事数:" + count, Toast.LENGTH_SHORT).show();
 				};
 			}.execute(subscriptionId);
 		}
