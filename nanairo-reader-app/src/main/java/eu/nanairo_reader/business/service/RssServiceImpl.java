@@ -100,7 +100,7 @@ public class RssServiceImpl implements RssService {
 		this.articleService.deleteTheOld(subscriptionId, MAX_ARTICLE);
 		this.subscriptionArticleService.deleteTheOld(subscriptionId, MAX_ARTICLE);
 
-		loadArticleList(subscriptionId);
+		this.articleService.loadArticleList(subscriptionId);
 	}
 
 	@Override
