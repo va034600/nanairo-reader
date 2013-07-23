@@ -36,10 +36,11 @@ public class ArticleListActivity extends BaseActivity {
 		Intent intent = getIntent();
 		Subscription subscription = (Subscription) intent.getSerializableExtra(SUBSCRIPTION);
 
+		this.rssService.loadArticleList(subscription.getId());
+
 		// ListView
 		ListView listView = (ListView) findViewById(R.id.listView);
 		List<Article> list = this.articleListManager.getArticleList();
-		this.rssService.loadArticleList(subscription.getId());
 		ListAdapter listAdapter = new ArticleArrayAdapter(getApplicationContext(), list);
 		listView.setAdapter(listAdapter);
 
