@@ -20,7 +20,7 @@ public class ArticleServiceImpl implements ArticleService{
 	@Inject
 	ArticleListManager articleListManager;
 
-	public int getMidokuCount(Long subscriptionId) {
+	public int getMidokuCount(long subscriptionId) {
 		return this.articleDao.getMidokuCount(subscriptionId);
 	}
 

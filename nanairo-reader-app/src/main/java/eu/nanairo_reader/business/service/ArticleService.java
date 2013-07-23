@@ -3,7 +3,7 @@ package eu.nanairo_reader.business.service;
 import eu.nanairo_reader.business.vo.FeedItem;
 
 public interface ArticleService {
-	public int getMidokuCount(Long subscriptionId);
+	public int getMidokuCount(long subscriptionId);
 
 	public void loadArticleList(long subscriptionId);
 
