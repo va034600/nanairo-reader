@@ -41,7 +41,7 @@ public class RssServiceImpl implements RssService {
 			parseAdding(subscriptionEntity);
 		}
 
-		loadSubscriptionList();
+		this.subscriptionService.loadSubscriptionList();
 	}
 
 	@Override
@@ -50,7 +50,7 @@ public class RssServiceImpl implements RssService {
 		parseAdding(subscriptionEntity);
 
 		// TODO just one
-		loadSubscriptionList();
+		this.subscriptionService.loadSubscriptionList();
 
 		// TODO 更新件数
 		return 0;
