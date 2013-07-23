@@ -20,4 +20,6 @@ public interface SubscriptionService {
 	List<SubscriptionEntity> findList();
 
 	SubscriptionEntity findByPrimaryKey(long subscriptionId);
+
+	Long getNextSubscriptionId(long subscriptionId);
 }

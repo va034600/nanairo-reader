@@ -100,8 +100,13 @@ public class ArticleListActivity extends BaseActivity {
 
 		public void onClick(View v) {
 			rssService.kidokuAll(this.subscriptionId);
+
 			Toast.makeText(ArticleListActivity.this, "全て既読にしました。", Toast.LENGTH_SHORT).show();
-			// TODO 次のsubscriptionIdを呼び出したい。
+
+			// 次のsubscriptionIdを呼ぶ。
+			boolean isLoaded = rssService.loadArticleListByNext(this.subscriptionId);
+
+			//TODO ロードできない場合、画面戻る
 
 			// 購読の再表示
 			ListView listView = (ListView) findViewById(R.id.listView);

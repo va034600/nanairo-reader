@@ -151,4 +151,16 @@ public class RssServiceImpl implements RssService {
 
 		this.articleService.deleteBySucriptionId(subscription.getId());
 	}
+
+	@Override
+	public boolean loadArticleListByNext(long subscriptionId) {
+		// 次のsubscriptionIdを探す
+		Long nextSubscriptionId = this.subscriptionService.getNextSubscriptionId(subscriptionId);
+		if(nextSubscriptionId == null){
+			return false;
+		}
+
+		this.articleService.loadArticleList(nextSubscriptionId);
+		return true;
+	}
 }

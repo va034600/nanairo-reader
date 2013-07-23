@@ -18,4 +18,6 @@ public interface RssService {
 	void kidokuAll(long subscriptionId);
 
 	void deleteSubscription(Subscription subscription);
+
+	boolean loadArticleListByNext(long subscriptionId);
 }

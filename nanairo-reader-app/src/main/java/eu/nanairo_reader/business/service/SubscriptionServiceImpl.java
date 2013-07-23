@@ -92,4 +92,19 @@ public class SubscriptionServiceImpl implements SubscriptionService {
 	public SubscriptionEntity findByPrimaryKey(long subscriptionId) {
 		return this.findByPrimaryKey(subscriptionId);
 	}
+
+	@Override
+	public Long getNextSubscriptionId(long subscriptionId) {
+		List<Subscription> list = this.subscriptionListManager.getSubscriptionList();
+		for (int i = 0; i < list.size(); i++) {
+			Subscription subscription = list.get(i);
+			if (subscriptionId == subscription.getId()) {
+				if (list.size() - 1 > i) {
+					Subscription nextSubscription =this.subscriptionListManager.getSubscriptionList().get(i + 1);
+					return nextSubscription.getId();
+				}
+			}
+		}
+		return null;
+	}
 }
