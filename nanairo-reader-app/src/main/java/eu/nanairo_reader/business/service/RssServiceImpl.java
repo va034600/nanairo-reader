@@ -4,7 +4,6 @@ import javax.inject.Inject;
 
 import eu.nanairo_reader.business.bean.Subscription;
 import eu.nanairo_reader.business.exception.RssParsingException;
-import eu.nanairo_reader.business.vo.FeedItem;
 import eu.nanairo_reader.business.vo.FeedResult;
 import eu.nanairo_reader.data.entity.SubscriptionEntity;
 import eu.nanairo_reader.ui.NanairoApplication;
@@ -18,9 +17,6 @@ public class RssServiceImpl implements RssService {
 
 	@Inject
 	ArticleService articleService;
-
-	@Inject
-	SubscriptionArticleService subscriptionArticleService;
 
 	@Inject
 	RssParsingService rssParsingService;
@@ -71,36 +67,12 @@ public class RssServiceImpl implements RssService {
 			this.nanairoApplication.getDb().beginTransaction();
 
 			// 記事一覧追加
-			addArticleListByFeed(subscriptionId, feed);
+			this.articleService.addArticleListByFeed(subscriptionId, feed);
 
 			this.nanairoApplication.getDb().setTransactionSuccessful();
 		} finally {
 			this.nanairoApplication.getDb().endTransaction();
 		}
-	}
-
-	protected void addArticleListByFeed(long subscriptionId, FeedResult feedResult) {
-		for (FeedItem feedItem : feedResult.getFeedItemList()) {
-			// 登録済みの場合、登録しない。
-			boolean flag = this.articleService.isDuplicated(feedItem.getLink());
-			if (flag) {
-				continue;
-			}
-
-			// 記事を登録する。
-			long articleId = this.articleService.addArticle(feedItem);
-
-			// 購読記事を登録する。
-			this.subscriptionArticleService.addSubscriptionArticle(subscriptionId, articleId);
-		}
-
-		// TODO 件数確認
-		// 古いのを削除する。
-		final int MAX_ARTICLE = 100;
-		this.articleService.deleteTheOld(subscriptionId, MAX_ARTICLE);
-		this.subscriptionArticleService.deleteTheOld(subscriptionId, MAX_ARTICLE);
-
-		this.articleService.loadArticleList(subscriptionId);
 	}
 
 	@Override
@@ -131,29 +103,26 @@ public class RssServiceImpl implements RssService {
 	protected void addSubscription(String url, FeedResult feedResult) {
 		Subscription subscription = this.subscriptionService.addSubscription(url, feedResult);
 
+		// 記事一覧追加
+		this.articleService.addArticleListByFeed(subscription.getId(), feedResult);
+
 		// TODO subscriptionServiceに移動
 		int midokuCount = this.articleService.getMidokuCount(subscription.getId());
 		subscription.setMidokuCount(midokuCount);
-
-		// 記事一覧追加
-		addArticleListByFeed(subscription.getId(), feedResult);
 	}
 
 	@Override
 	public void kidoku(long articleId) {
-		if (this.articleService.kidoku(articleId)) {
+		Long subscriptionId = this.articleService.kidoku(articleId);
+		if (subscriptionId == null) {
 			return;
 		}
-
-		long subscriptionId = this.subscriptionArticleService.findSubscriptionIdByArticleId(articleId);
 
 		this.subscriptionService.kidoku(subscriptionId);
 	}
 
 	@Override
 	public void kidokuAll(long subscriptionId) {
-		this.subscriptionArticleService.updateKidokuBySubscriptionId(subscriptionId);
-
 		this.articleService.kidokuAll(subscriptionId);
 
 		this.subscriptionService.kidokuAll(subscriptionId);
@@ -174,15 +143,8 @@ public class RssServiceImpl implements RssService {
 	}
 
 	private void deleteSubscriptionCore(Subscription subscription) {
-		long subscriptionId = subscription.getId();
-
-		// subscription
 		this.subscriptionService.deleteSubscription(subscription);
 
-		// article
-		this.articleService.deleteBySucriptionId(subscriptionId);
-
-		// subscriptionArticle
-		this.subscriptionArticleService.deleteBySubscriptionId(subscriptionId);
+		this.articleService.deleteBySucriptionId(subscription.getId());
 	}
 }

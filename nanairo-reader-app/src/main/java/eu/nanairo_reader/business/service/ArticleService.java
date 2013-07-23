@@ -1,21 +1,17 @@
 package eu.nanairo_reader.business.service;
 
-import eu.nanairo_reader.business.vo.FeedItem;
+import eu.nanairo_reader.business.vo.FeedResult;
 
 public interface ArticleService {
-	public int getMidokuCount(long subscriptionId);
+	int getMidokuCount(long subscriptionId);
 
-	public void loadArticleList(long subscriptionId);
+	void loadArticleList(long subscriptionId);
 
-	public boolean isDuplicated(String uri);
+	void deleteBySucriptionId(long subscriptionId);
 
-	public long addArticle(FeedItem feedItem);
+	void kidokuAll(long subscriptionId);
 
-	public void deleteBySucriptionId(long subscriptionId);
+	Long kidoku(long articleId);
 
-	public void deleteTheOld(long subscriptionId, int count);
-
-	public void kidokuAll(long subscriptionId);
-
-	public boolean kidoku(long articleId);
+	void addArticleListByFeed(long subscriptionId, FeedResult feedResult);
 }
