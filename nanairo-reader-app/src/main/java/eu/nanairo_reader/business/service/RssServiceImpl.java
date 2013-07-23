@@ -1,15 +1,11 @@
 package eu.nanairo_reader.business.service;
 
-import java.util.List;
-
 import javax.inject.Inject;
 
 import eu.nanairo_reader.business.bean.Subscription;
 import eu.nanairo_reader.business.exception.RssParsingException;
 import eu.nanairo_reader.business.vo.FeedItem;
 import eu.nanairo_reader.business.vo.FeedResult;
-import eu.nanairo_reader.data.dao.SubscriptionDao;
-import eu.nanairo_reader.data.dto.SubscriptionDto;
 import eu.nanairo_reader.data.entity.SubscriptionEntity;
 import eu.nanairo_reader.ui.NanairoApplication;
 
@@ -18,10 +14,7 @@ public class RssServiceImpl implements RssService {
 	NanairoApplication nanairoApplication;
 
 	@Inject
-	SubscriptionDao subscriptionDao;
-
-	@Inject
-	SubscriptionListManager subscriptionListManager;
+	SubscriptionService subscriptionService;
 
 	@Inject
 	ArticleService articleService;
@@ -34,24 +27,7 @@ public class RssServiceImpl implements RssService {
 
 	@Override
 	public void loadSubscriptionList() {
-		List<SubscriptionDto> dtoList = this.subscriptionDao.findListAndMidokuCount();
-		this.subscriptionListManager.clear();
-
-		for (SubscriptionDto dto : dtoList) {
-			Subscription subscription = convertDto(dto);
-			this.subscriptionListManager.add(subscription);
-		}
-	}
-
-	private Subscription convertDto(SubscriptionDto dto) {
-		Subscription subscription = new Subscription();
-
-		subscription.setId(dto.getId());
-		subscription.setTitle(dto.getTitle());
-		subscription.setUrl(dto.getUrl());
-		subscription.setMidokuCount(dto.getMidokuCount());
-
-		return subscription;
+		this.subscriptionService.loadSubscriptionList();
 	}
 
 	@Override
@@ -61,7 +37,7 @@ public class RssServiceImpl implements RssService {
 
 	@Override
 	public void storeArticles() {
-		for (SubscriptionEntity subscriptionEntity : this.subscriptionDao.findList(null)) {
+		for (SubscriptionEntity subscriptionEntity : this.subscriptionService.findList()) {
 			storeArticle(subscriptionEntity);
 		}
 
@@ -70,7 +46,7 @@ public class RssServiceImpl implements RssService {
 
 	@Override
 	public int storeArticle(long subscriptionId) {
-		SubscriptionEntity subscriptionEntity = this.subscriptionDao.findByPrimaryKey(subscriptionId);
+		SubscriptionEntity subscriptionEntity = this.subscriptionService.findByPrimaryKey(subscriptionId);
 		storeArticle(subscriptionEntity);
 
 		// TODO just one
@@ -153,31 +129,14 @@ public class RssServiceImpl implements RssService {
 	}
 
 	protected void addSubscription(String url, FeedResult feedResult) {
-		// 購読追加
-		SubscriptionEntity subscriptionEntity = new SubscriptionEntity();
-		subscriptionEntity.setUrl(url);
-		subscriptionEntity.setTitle(feedResult.getTitle());
-		long subscriptionId = this.subscriptionDao.add(subscriptionEntity);
-		subscriptionEntity.setId(subscriptionId);
+		Subscription subscription = this.subscriptionService.addSubscription(url, feedResult);
 
-		// list 追加
-		Subscription subscription = convertEntity(subscriptionEntity);
-		this.subscriptionListManager.add(subscription);
+		// TODO subscriptionServiceに移動
+		int midokuCount = this.articleService.getMidokuCount(subscription.getId());
+		subscription.setMidokuCount(midokuCount);
 
 		// 記事一覧追加
-		addArticleListByFeed(subscriptionId, feedResult);
-	}
-
-	private Subscription convertEntity(SubscriptionEntity entity) {
-		Subscription subscription = new Subscription();
-
-		subscription.setId(entity.getId());
-		subscription.setTitle(entity.getTitle());
-		subscription.setUrl(entity.getUrl());
-		// TODO リファクタリング
-		int midokuCount = this.articleService.getMidokuCount(entity.getId());
-		subscription.setMidokuCount(midokuCount);
-		return subscription;
+		addArticleListByFeed(subscription.getId(), feedResult);
 	}
 
 	@Override
@@ -188,7 +147,7 @@ public class RssServiceImpl implements RssService {
 
 		long subscriptionId = this.subscriptionArticleService.findSubscriptionIdByArticleId(articleId);
 
-		this.subscriptionListManager.kidoku(subscriptionId);
+		this.subscriptionService.kidoku(subscriptionId);
 	}
 
 	@Override
@@ -197,7 +156,7 @@ public class RssServiceImpl implements RssService {
 
 		this.articleService.kidokuAll(subscriptionId);
 
-		this.subscriptionListManager.kidokuAll(subscriptionId);
+		this.subscriptionService.kidokuAll(subscriptionId);
 	}
 
 	@Override
@@ -218,11 +177,7 @@ public class RssServiceImpl implements RssService {
 		long subscriptionId = subscription.getId();
 
 		// subscription
-		SubscriptionEntity subscriptionEntity = new SubscriptionEntity();
-		subscriptionEntity.setId(subscriptionId);
-		this.subscriptionDao.delete(subscriptionEntity);
-
-		this.subscriptionListManager.remove(subscription);
+		this.subscriptionService.deleteSubscription(subscription);
 
 		// article
 		this.articleService.deleteBySucriptionId(subscriptionId);

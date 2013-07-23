@@ -14,6 +14,8 @@ import eu.nanairo_reader.business.service.RssServiceImpl;
 import eu.nanairo_reader.business.service.SubscriptionArticleService;
 import eu.nanairo_reader.business.service.SubscriptionArticleServiceImpl;
 import eu.nanairo_reader.business.service.SubscriptionListManager;
+import eu.nanairo_reader.business.service.SubscriptionService;
+import eu.nanairo_reader.business.service.SubscriptionServiceImpl;
 import eu.nanairo_reader.data.dao.ArticleDao;
 import eu.nanairo_reader.data.dao.ArticleDaoImpl;
 import eu.nanairo_reader.data.dao.SubscriptionArticleDao;
@@ -43,6 +45,8 @@ import eu.nanairo_reader.ui.service.SampleService;
 		RssParsingService.class,
 		// TODO implとりたいよね。
 		RssServiceImpl.class,
+		// TODO implとりたいよね。
+		SubscriptionServiceImpl.class,
 		// TODO implとりたいよね。
 		SubscriptionArticleServiceImpl.class,
 		// TODO implとりたいよね。
@@ -74,6 +78,13 @@ public class DaggerModule {
 		RssService rssService = new RssServiceImpl();
 		application.inject(rssService);
 		return rssService;
+	}
+
+	@Provides
+	SubscriptionService provideSubscriptionService() {
+		SubscriptionService subscriptionService = new SubscriptionServiceImpl();
+		application.inject(subscriptionService);
+		return subscriptionService;
 	}
 
 	@Provides
