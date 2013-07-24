@@ -123,6 +123,7 @@ public class ArticleServiceImpl implements ArticleService {
 			}
 
 			// 記事を登録する。
+			//TODO loadArticleList を削除。代わりに。articleListManagerを操作
 			Article article = addArticle(subscriptionId, feedItem);
 			newMidokuCount++;
 		}
