@@ -16,11 +16,11 @@ public class SubscriptionDaoImpl extends BaseDaoImpl<SubscriptionEntity, Long> i
 	public List<SubscriptionDto> findListAndMidokuCount() {
 		String sql = "";
 		sql += "SELECT SUBSCRIPTION.*, COUNT(ARTICLE.ID) AS MIDOKU_COUNT ";
-		sql += "FROM SUBSCRIPTION INNER JOIN SUBSCRIPTION_ARTICLE ";
+		sql += "FROM SUBSCRIPTION ";
+		sql += "LEFT JOIN SUBSCRIPTION_ARTICLE ";
 		sql += "ON SUBSCRIPTION.ID = SUBSCRIPTION_ARTICLE.SUBSCRIPTION_ID ";
-		sql += "INNER JOIN ARTICLE ";
-		sql += "ON SUBSCRIPTION_ARTICLE.ARTICLE_ID = ARTICLE.ID ";
-		sql += "WHERE ARTICLE.MIDOKU = ? ";
+		sql += "LEFT JOIN ARTICLE ";
+		sql += "ON SUBSCRIPTION_ARTICLE.ARTICLE_ID = ARTICLE.ID AND ARTICLE.MIDOKU = ? ";
 		sql += "GROUP BY SUBSCRIPTION.ID ";
 		sql += "ORDER BY SUBSCRIPTION.ID DESC";
 		return queryForList(SubscriptionDto.class, sql, new String[]{Integer.toString(MIDOKU_ON)});
