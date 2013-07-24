@@ -100,8 +100,10 @@ public class SubscriptionServiceImpl implements SubscriptionService {
 			Subscription subscription = list.get(i);
 			if (subscriptionId == subscription.getId()) {
 				if (list.size() - 1 > i) {
-					Subscription nextSubscription =this.subscriptionListManager.getSubscriptionList().get(i + 1);
-					return nextSubscription.getId();
+					Subscription nextSubscription = this.subscriptionListManager.getSubscriptionList().get(i + 1);
+					if (nextSubscription.getMidokuCount() > 0) {
+						return nextSubscription.getId();
+					}
 				}
 			}
 		}
