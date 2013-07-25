@@ -2,20 +2,32 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="40dp"
-    android:minHeight="40dp" >
+    android:minHeight="40dp" 
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" >
+
+        <TextView
+            android:id="@+id/nameText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" >
+        </TextView>
+
+        <TextView
+            android:id="@+id/midokuCountText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right" >
+        </TextView>
+    </LinearLayout>
 
     <TextView
-        android:id="@+id/nameText"
+        android:id="@+id/lastPublishedDateText"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="1" >
-    </TextView>
-
-    <TextView
-        android:id="@+id/midokuCountText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="right" >
+        android:layout_height="wrap_content" >
     </TextView>
 
 </LinearLayout>

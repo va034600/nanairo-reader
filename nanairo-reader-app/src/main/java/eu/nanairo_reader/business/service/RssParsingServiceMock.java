@@ -16,6 +16,7 @@ public class RssParsingServiceMock implements RssParsingService {
 		}
 
 		FeedResult result = new FeedResult();
+		result.setPublishedDate(new Date());
 
 		List<FeedItem> feedItemList = new ArrayList<FeedItem>();
 

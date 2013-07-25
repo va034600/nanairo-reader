@@ -32,6 +32,8 @@ public class RssParsingServiceImpl implements RssParsingService {
 			URL feedUrl = new URL(rss);
 			SyndFeedInput input = new SyndFeedInput();
 			SyndFeed feed = input.build(new XmlReader(feedUrl));
+			result.setTitle(feed.getTitle());
+			result.setPublishedDate(feed.getPublishedDate());
 
 			List<Object> entries = feed.getEntries();
 			Collections.reverse(entries);

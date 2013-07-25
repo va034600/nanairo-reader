@@ -28,6 +28,7 @@ public class RssParsingService2Impl implements RssParsingService {
 
 			RssChannelBean channel = feed.getChannel();
 			result.setTitle(channel.getTitle());
+			result.setPublishedDate(channel.getPubDate());
 
 			List<RssItemBean> items = feed.getItems();
 			Collections.reverse(items);

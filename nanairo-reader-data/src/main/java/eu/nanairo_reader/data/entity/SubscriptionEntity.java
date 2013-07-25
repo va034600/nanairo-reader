@@ -13,6 +13,9 @@ public class SubscriptionEntity {
 	private String title;
 
 	/***/
+	private String publishedDate;
+
+	/***/
 	private String url;
 
 	public String getTitle() {
@@ -37,5 +40,13 @@ public class SubscriptionEntity {
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	public String getPublishedDate() {
+		return publishedDate;
+	}
+
+	public void setPublishedDate(String publishedDate) {
+		this.publishedDate = publishedDate;
 	}
 }

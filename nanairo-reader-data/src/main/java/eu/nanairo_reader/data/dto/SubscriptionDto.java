@@ -8,6 +8,9 @@ public class SubscriptionDto {
 	private String title;
 
 	/***/
+	private String publishedDate;
+
+	/***/
 	private String url;
 
 	/***/
@@ -43,5 +46,13 @@ public class SubscriptionDto {
 
 	public void setMidokuCount(Integer midokuCount) {
 		this.midokuCount = midokuCount;
+	}
+
+	public String getPublishedDate() {
+		return publishedDate;
+	}
+
+	public void setPublishedDate(String publishedDate) {
+		this.publishedDate = publishedDate;
 	}
 }

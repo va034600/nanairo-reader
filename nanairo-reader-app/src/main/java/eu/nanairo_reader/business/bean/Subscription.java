@@ -16,6 +16,9 @@ public class Subscription implements Serializable {
 	private String title;
 
 	/***/
+	private String publishedDate;
+
+	/***/
 	private String url;
 
 	/***/
@@ -51,5 +54,13 @@ public class Subscription implements Serializable {
 
 	public void setMidokuCount(int midokuCount) {
 		this.midokuCount = midokuCount;
+	}
+
+	public String getPublishedDate() {
+		return publishedDate;
+	}
+
+	public void setPublishedDate(String publishedDate) {
+		this.publishedDate = publishedDate;
 	}
 }

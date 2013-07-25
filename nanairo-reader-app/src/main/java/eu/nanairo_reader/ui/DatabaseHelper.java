@@ -25,14 +25,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		String sql = "CREATE TABLE SUBSCRIPTION (";
 		sql += "ID INTEGER PRIMARY KEY AUTOINCREMENT, ";
 		sql += "TITLE TEXT, ";
+		sql += "PUBLISHED_DATE TEXT, ";
 		sql += "URL TEXT";
 		sql += ");";
 		db.execSQL(sql);
 
 		// TODO 今だけ
-		//db.execSQL("INSERT INTO SUBSCRIPTION (TITLE, URL) VALUES('okstate','http://www.okstate.com/headline-rss.xml');");
-		db.execSQL("INSERT INTO SUBSCRIPTION (TITLE, URL) VALUES('TBN','http://tbn17.com/index.rdf');");
-		db.execSQL("INSERT INTO SUBSCRIPTION (TITLE, URL) VALUES('注目ま','ha');");
+		//db.execSQL("INSERT INTO SUBSCRIPTION (TITLE, PUBLISHED_DATE, URL) VALUES('okstate',datetime('now', 'localtime'),'http://www.okstate.com/headline-rss.xml');");
+		db.execSQL("INSERT INTO SUBSCRIPTION (TITLE, PUBLISHED_DATE, URL) VALUES('TBN',datetime('now', 'localtime'),'http://tbn17.com/index.rdf');");
+		db.execSQL("INSERT INTO SUBSCRIPTION (TITLE, PUBLISHED_DATE, URL) VALUES('注目ま',datetime('now', 'localtime'),'ha');");
 	}
 
 	private void createSubscriptionArticle(SQLiteDatabase db) {
@@ -47,9 +48,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		String sql = "CREATE TABLE ARTICLE (";
 		sql += "ID INTEGER PRIMARY KEY AUTOINCREMENT, ";
 		sql += "TITLE TEXT, ";
+		sql += "PUBLISHED_DATE TEXT, ";
 		sql += "CONTENT TEXT, ";
 		sql += "LINK TEXT, ";
-		sql += "PUBLISHED_DATE TEXT, ";
 		sql += "MIDOKU INTEGER";
 		sql += ");";
 		db.execSQL(sql);

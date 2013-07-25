@@ -33,6 +33,11 @@ public 	class SubscriptionArrayAdapter extends ArrayAdapter<Subscription> {
 			// 未読数
 			TextView mCount = (TextView) convertView.findViewById(R.id.midokuCountText);
 			mCount.setText(Integer.toString(subscription.getMidokuCount()));
+
+			// 最終更新日
+			//TODO
+			TextView mLastPublishedDate = (TextView) convertView.findViewById(R.id.lastPublishedDateText);
+			mLastPublishedDate.setText(subscription.getPublishedDate());
 		}
 		return convertView;
 	}

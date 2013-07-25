@@ -57,9 +57,9 @@ public class RssServiceImpl implements RssService {
 
 	protected int parseAdding(SubscriptionEntity subscriptionEntity) {
 		int newMidokuCount = 0;
-		FeedResult feed;
+		FeedResult feedResult;
 		try {
-			feed = this.rssParsingService.getFeedResult(subscriptionEntity.getUrl());
+			feedResult = this.rssParsingService.getFeedResult(subscriptionEntity.getUrl());
 		} catch (RssParsingException e) {
 			// TODO ログ出力
 			return 0;
@@ -71,7 +71,7 @@ public class RssServiceImpl implements RssService {
 			this.nanairoApplication.getDb().beginTransaction();
 
 			// 記事一覧追加
-			newMidokuCount = this.articleService.addArticleListByFeed(subscriptionId, feed);
+			newMidokuCount = this.articleService.addArticleListByFeed(subscriptionId, feedResult);
 
 			this.nanairoApplication.getDb().setTransactionSuccessful();
 		} finally {

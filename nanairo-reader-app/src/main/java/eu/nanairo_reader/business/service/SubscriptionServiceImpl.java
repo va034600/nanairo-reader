@@ -5,6 +5,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import eu.nanairo_reader.business.bean.Subscription;
+import eu.nanairo_reader.business.util.NanairoDateUtils;
 import eu.nanairo_reader.business.vo.FeedResult;
 import eu.nanairo_reader.data.dao.SubscriptionDao;
 import eu.nanairo_reader.data.dto.SubscriptionDto;
@@ -33,6 +34,7 @@ public class SubscriptionServiceImpl implements SubscriptionService {
 
 		subscription.setId(dto.getId());
 		subscription.setTitle(dto.getTitle());
+		subscription.setPublishedDate(dto.getPublishedDate());
 		subscription.setUrl(dto.getUrl());
 		subscription.setMidokuCount(dto.getMidokuCount());
 
@@ -64,6 +66,7 @@ public class SubscriptionServiceImpl implements SubscriptionService {
 		SubscriptionEntity subscriptionEntity = new SubscriptionEntity();
 		subscriptionEntity.setUrl(url);
 		subscriptionEntity.setTitle(feedResult.getTitle());
+		subscriptionEntity.setPublishedDate(NanairoDateUtils.convertDateToString(feedResult.getPublishedDate()));
 		long subscriptionId = this.subscriptionDao.add(subscriptionEntity);
 		subscriptionEntity.setId(subscriptionId);
 
@@ -80,6 +83,8 @@ public class SubscriptionServiceImpl implements SubscriptionService {
 		subscription.setId(entity.getId());
 		subscription.setTitle(entity.getTitle());
 		subscription.setUrl(entity.getUrl());
+		subscription.setPublishedDate(entity.getPublishedDate());
+
 		return subscription;
 	}
 
