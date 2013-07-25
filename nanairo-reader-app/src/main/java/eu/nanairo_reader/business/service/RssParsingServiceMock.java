@@ -20,7 +20,7 @@ public class RssParsingServiceMock implements RssParsingService {
 
 		List<FeedItem> feedItemList = new ArrayList<FeedItem>();
 
-		if (rss.startsWith("ha")) {
+		if (rss.startsWith("http://matome.")) {
 			result.setTitle("Test Title");
 
 			final int FEED_COUNT = 30;
