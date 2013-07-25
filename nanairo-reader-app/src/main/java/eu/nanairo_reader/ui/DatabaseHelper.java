@@ -31,9 +31,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		db.execSQL(sql);
 
 		// TODO 今だけ
-		//db.execSQL("INSERT INTO SUBSCRIPTION (TITLE, PUBLISHED_DATE, URL) VALUES('okstate',datetime('now', 'localtime'),'http://www.okstate.com/headline-rss.xml');");
-		db.execSQL("INSERT INTO SUBSCRIPTION (TITLE, PUBLISHED_DATE, URL) VALUES('TBN',datetime('now', 'localtime'),'http://tbn17.com/index.rdf');");
-		db.execSQL("INSERT INTO SUBSCRIPTION (TITLE, PUBLISHED_DATE, URL) VALUES('注目ま',datetime('now', 'localtime'),'ha');");
+		//db.execSQL("INSERT INTO SUBSCRIPTION (TITLE, PUBLISHED_DATE, URL) VALUES('okstate',strftime('%Y/%m/%d %H:%M:%S','now', 'localtime'),'http://www.okstate.com/headline-rss.xml');");
+		db.execSQL("INSERT INTO SUBSCRIPTION (TITLE, PUBLISHED_DATE, URL) VALUES('TBN',strftime('%Y/%m/%d %H:%M:%S','now', 'localtime'),'http://tbn17.com/index.rdf');");
+		db.execSQL("INSERT INTO SUBSCRIPTION (TITLE, PUBLISHED_DATE, URL) VALUES('注目ま',strftime('%Y/%m/%d %H:%M:%S','now', 'localtime'),'ha');");
 	}
 
 	private void createSubscriptionArticle(SQLiteDatabase db) {
