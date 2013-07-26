@@ -95,7 +95,7 @@ public class SubscriptionServiceImpl implements SubscriptionService {
 
 	@Override
 	public SubscriptionEntity findByPrimaryKey(long subscriptionId) {
-		return this.findByPrimaryKey(subscriptionId);
+		return this.subscriptionDao.findByPrimaryKey(subscriptionId);
 	}
 
 	@Override

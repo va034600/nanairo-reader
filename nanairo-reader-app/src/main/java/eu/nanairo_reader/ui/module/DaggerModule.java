@@ -8,7 +8,7 @@ import eu.nanairo_reader.business.service.ArticleListManager;
 import eu.nanairo_reader.business.service.ArticleService;
 import eu.nanairo_reader.business.service.ArticleServiceImpl;
 import eu.nanairo_reader.business.service.RssParsingService;
-import eu.nanairo_reader.business.service.RssParsingServiceMock;
+import eu.nanairo_reader.business.service.RssParsingService2Impl;
 import eu.nanairo_reader.business.service.RssService;
 import eu.nanairo_reader.business.service.RssServiceImpl;
 import eu.nanairo_reader.business.service.SubscriptionArticleService;
@@ -104,9 +104,9 @@ public class DaggerModule {
 	@Provides
 	RssParsingService provideRssParsingService() {
 		// TODO 今だけMock
-		return new RssParsingServiceMock();
+		//return new RssParsingServiceMock();
 		// return new RssParsingServiceImpl();
-		// return new RssParsingService2Impl();
+		return new RssParsingService2Impl();
 	}
 
 	@Provides
