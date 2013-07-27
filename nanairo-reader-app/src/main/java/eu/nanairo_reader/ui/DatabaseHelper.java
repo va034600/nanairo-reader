@@ -32,8 +32,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 		// TODO 今だけ
 		//db.execSQL("INSERT INTO SUBSCRIPTION (TITLE, PUBLISHED_DATE, URL) VALUES('okstate',strftime('%Y/%m/%d %H:%M:%S','now', 'localtime'),'http://www.okstate.com/headline-rss.xml');");
-		db.execSQL("INSERT INTO SUBSCRIPTION (TITLE, PUBLISHED_DATE, URL) VALUES('TBN',strftime('%Y/%m/%d %H:%M:%S','now', 'localtime'),'http://tbn17.com/index.rdf');");
-		db.execSQL("INSERT INTO SUBSCRIPTION (TITLE, PUBLISHED_DATE, URL) VALUES('注目ま',strftime('%Y/%m/%d %H:%M:%S','now', 'localtime'),'http://matome.naver.jp/feed/hot');");
+		//db.execSQL("INSERT INTO SUBSCRIPTION (TITLE, PUBLISHED_DATE, URL) VALUES('TBN',strftime('%Y/%m/%d %H:%M:%S','now', 'localtime'),'http://tbn17.com/index.rdf');");
+		//db.execSQL("INSERT INTO SUBSCRIPTION (TITLE, PUBLISHED_DATE, URL) VALUES('注目ま',strftime('%Y/%m/%d %H:%M:%S','now', 'localtime'),'http://matome.naver.jp/feed/hot');");
+		//db.execSQL("INSERT INTO SUBSCRIPTION (TITLE, PUBLISHED_DATE, URL) VALUES('Top Stories - Google News',strftime('%Y/%m/%d %H:%M:%S','now', 'localtime'),'http://news.google.com/?output=rss');");
 	}
 
 	private void createSubscriptionArticle(SQLiteDatabase db) {
