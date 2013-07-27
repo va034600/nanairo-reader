@@ -10,11 +10,11 @@
 
 	<properties>
 		<android.version>2.3.3</android.version>
-		<dagger.version>1.0.1</dagger.version>
 	</properties>
 
 	<modules>
 		<module>nanairo-reader-app</module>
+		<module>nanairo-reader-business</module>
 		<module>nanairo-reader-data</module>
 	</modules>
 
@@ -32,53 +32,6 @@
 				<artifactId>android-test</artifactId>
 				<version>${android.version}</version>
 				<scope>provided</scope>
-			</dependency>
-			<!-- dagger -->
-			<dependency>
-				<groupId>com.squareup.dagger</groupId>
-				<artifactId>dagger</artifactId>
-				<version>${dagger.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>com.squareup.dagger</groupId>
-				<artifactId>dagger-compiler</artifactId>
-				<version>${dagger.version}</version>
-				<optional>true</optional>
-			</dependency>
-			<!-- android rome -->
-			<dependency>
-				<groupId>com.google.code.rome.android</groupId>
-				<artifactId>android-rome-feed-reader</artifactId>
-				<version>1.0.0</version>
-				<scope>system</scope>
-				<systemPath>${basedir}/libs/android-rome-feed-reader-1.0.0.jar</systemPath>
-			</dependency>
-			<dependency>
-				<groupId>jdom</groupId>
-				<artifactId>jdom</artifactId>
-				<version>1.1.1</version>
-				<scope>system</scope>
-				<systemPath>${basedir}/libs/jdom-1.1.1-android-fork.jar</systemPath>
-			</dependency>
-			<!-- -->
-			<dependency>
-				<groupId>org.horrabin</groupId>
-				<artifactId>horrorss</artifactId>
-				<version>2.2.0</version>
-				<scope>system</scope>
-				<systemPath>${basedir}/libs/horrorss-2.2.0.jar</systemPath>
-			</dependency>
-			<dependency>
-				<groupId>com.hp.hql</groupId>
-				<artifactId>sparta</artifactId>
-				<version>1.0</version>
-				<scope>system</scope>
-				<systemPath>${basedir}/libs/sparta.jar</systemPath>
-			</dependency>
-			<dependency>
-				<groupId>org.roboguice</groupId>
-				<artifactId>roboguice</artifactId>
-				<version>2.0</version>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
