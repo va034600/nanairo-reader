@@ -3,7 +3,7 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<parent>
 		<artifactId>nanairo-reader</artifactId>
-		<groupId>eu.nanairo</groupId>
+		<groupId>com.gmail.va034600.nanairo</groupId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
@@ -13,7 +13,7 @@
 	<dependencies>
 			<!-- otemoto -->
 			<dependency>
-				<groupId>eu.otemoto</groupId>
+				<groupId>com.gmail.va034600.otemoto</groupId>
 				<artifactId>otemoto</artifactId>
 				<version>0.0.1-SNAPSHOT</version>
 				<scope>system</scope>
