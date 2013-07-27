@@ -2,6 +2,7 @@ package com.gmail.va034600.nreader.ui.module;
 
 import javax.inject.Singleton;
 
+import com.gmail.va034600.nreader.business.NanairoContext;
 import com.gmail.va034600.nreader.business.service.ArticleListManager;
 import com.gmail.va034600.nreader.business.service.ArticleService;
 import com.gmail.va034600.nreader.business.service.ArticleServiceImpl;
@@ -43,6 +44,8 @@ import dagger.Provides;
 		//
 		SampleService.class,
 		//
+		NanairoContext.class,
+		//
 		RssParsingService.class,
 		// TODO implとりたいよね。
 		RssServiceImpl.class,
@@ -71,6 +74,11 @@ public class DaggerModule {
 
 	@Provides
 	NanairoApplication provideNanairoApplication() {
+		return this.application;
+	}
+
+	@Provides
+	NanairoContext provideNanairoContext() {
 		return this.application;
 	}
 

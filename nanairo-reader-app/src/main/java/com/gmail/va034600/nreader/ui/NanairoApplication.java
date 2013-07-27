@@ -3,13 +3,15 @@ package com.gmail.va034600.nreader.ui;
 import java.util.Arrays;
 import java.util.List;
 
-import com.gmail.va034600.nreader.ui.module.DaggerModule;
-
 import android.app.Application;
 import android.database.sqlite.SQLiteDatabase;
+
+import com.gmail.va034600.nreader.business.NanairoContext;
+import com.gmail.va034600.nreader.ui.module.DaggerModule;
+
 import dagger.ObjectGraph;
 
-public class NanairoApplication extends Application {
+public class NanairoApplication extends Application implements NanairoContext{
 	// データベースヘルパーの作成
 	private DatabaseHelper helper;
 	// データベースの宣言
@@ -45,5 +47,20 @@ public class NanairoApplication extends Application {
 	public SQLiteDatabase getDb() {
 		//TODO ThreadLocalにするか、同期処理いれる？
 		return db;
+	}
+
+	@Override
+	public void beginTransaction() {
+		this.db.beginTransaction();
+	}
+
+	@Override
+	public void setTransactionSuccessful() {
+		this.db.setTransactionSuccessful();
+	}
+
+	@Override
+	public void endTransaction() {
+		this.db.endTransaction();
 	}
 }

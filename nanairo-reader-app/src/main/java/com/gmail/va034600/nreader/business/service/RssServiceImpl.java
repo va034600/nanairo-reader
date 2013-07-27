@@ -2,16 +2,16 @@ package com.gmail.va034600.nreader.business.service;
 
 import javax.inject.Inject;
 
+import com.gmail.va034600.nreader.business.NanairoContext;
 import com.gmail.va034600.nreader.business.bean.Subscription;
 import com.gmail.va034600.nreader.business.exception.RssParsingException;
 import com.gmail.va034600.nreader.business.vo.FeedResult;
 import com.gmail.va034600.nreader.data.entity.SubscriptionEntity;
-import com.gmail.va034600.nreader.ui.NanairoApplication;
 
 
 public class RssServiceImpl implements RssService {
 	@Inject
-	NanairoApplication nanairoApplication;
+	NanairoContext nanairoContext;
 
 	@Inject
 	SubscriptionService subscriptionService;
@@ -69,14 +69,14 @@ public class RssServiceImpl implements RssService {
 		long subscriptionId = subscriptionEntity.getId();
 		try {
 			// TODO できれば、トランザクションは明示的ではなく、暗黙的にaopで管理したい。
-			this.nanairoApplication.getDb().beginTransaction();
+			this.nanairoContext.beginTransaction();
 
 			// 記事一覧追加
 			newMidokuCount = this.articleService.addArticleListByFeed(subscriptionId, feedResult);
 
-			this.nanairoApplication.getDb().setTransactionSuccessful();
+			this.nanairoContext.setTransactionSuccessful();
 		} finally {
-			this.nanairoApplication.getDb().endTransaction();
+			this.nanairoContext.endTransaction();
 		}
 
 		return newMidokuCount;
@@ -95,13 +95,13 @@ public class RssServiceImpl implements RssService {
 
 		try {
 			// TODO できれば、トランザクションは明示的ではなく、暗黙的にaopで管理したい。
-			this.nanairoApplication.getDb().beginTransaction();
+			this.nanairoContext.beginTransaction();
 
 			addSubscription(url, feedResult);
 
-			this.nanairoApplication.getDb().setTransactionSuccessful();
+			this.nanairoContext.setTransactionSuccessful();
 		} finally {
-			this.nanairoApplication.getDb().endTransaction();
+			this.nanairoContext.endTransaction();
 		}
 
 		return true;
@@ -137,13 +137,13 @@ public class RssServiceImpl implements RssService {
 	public void deleteSubscription(Subscription subscription) {
 		try {
 			// TODO できれば、トランザクションは明示的ではなく、暗黙的にaopで管理したい。
-			this.nanairoApplication.getDb().beginTransaction();
+			this.nanairoContext.beginTransaction();
 
 			deleteSubscriptionCore(subscription);
 
-			this.nanairoApplication.getDb().setTransactionSuccessful();
+			this.nanairoContext.setTransactionSuccessful();
 		} finally {
-			this.nanairoApplication.getDb().endTransaction();
+			this.nanairoContext.endTransaction();
 		}
 	}
 
