@@ -2,7 +2,7 @@ package eu.nanairo_reader.data.dao;
 
 import java.util.List;
 
-import eu.otemoto.OtemotoDaoSupport;
+import com.gmail.va034600.otemoto.OtemotoDaoSupport;
 
 public abstract class BaseDaoImpl<ENTITY, KEY> extends OtemotoDaoSupport implements BaseDao<ENTITY, KEY> {
 	public BaseDaoImpl() {
