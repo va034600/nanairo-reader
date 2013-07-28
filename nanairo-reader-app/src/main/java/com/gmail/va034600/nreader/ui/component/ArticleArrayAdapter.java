@@ -11,8 +11,8 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.gmail.va034600.nreader.R;
-import com.gmail.va034600.nreader.business.bean.Article;
 import com.gmail.va034600.nreader.business.constant.NanairoBusinessConstant;
+import com.gmail.va034600.nreader.business.domain.bean.Article;
 
 public class ArticleArrayAdapter extends ArrayAdapter<Article> {
 	private LayoutInflater mInflater;

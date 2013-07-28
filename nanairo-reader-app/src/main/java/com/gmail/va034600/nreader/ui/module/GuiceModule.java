@@ -5,12 +5,12 @@ import javax.inject.Singleton;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.gmail.va034600.nreader.business.service.ArticleListManager;
-import com.gmail.va034600.nreader.business.service.RssParsingService;
-import com.gmail.va034600.nreader.business.service.RssParsingServiceMock;
-import com.gmail.va034600.nreader.business.service.RssService;
-import com.gmail.va034600.nreader.business.service.RssServiceImpl;
-import com.gmail.va034600.nreader.business.service.SubscriptionListManager;
+import com.gmail.va034600.nreader.business.domain.service.ArticleListManager;
+import com.gmail.va034600.nreader.business.domain.service.RssService;
+import com.gmail.va034600.nreader.business.domain.service.RssServiceImpl;
+import com.gmail.va034600.nreader.business.domain.service.SubscriptionListManager;
+import com.gmail.va034600.nreader.business.rss.service.RssParsingService;
+import com.gmail.va034600.nreader.business.rss.service.RssParsingServiceMock;
 import com.gmail.va034600.nreader.data.dao.ArticleDao;
 import com.gmail.va034600.nreader.data.dao.ArticleDaoImpl;
 import com.gmail.va034600.nreader.data.dao.ArticleDaoMock;

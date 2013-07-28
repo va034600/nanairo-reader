@@ -1,22 +1,24 @@
-package com.gmail.va034600.nreader.business.vo;
+package com.gmail.va034600.nreader.business.rss.vo;
 
 import java.util.Date;
-import java.util.List;
 
 /**
  * 
  * @author eisakuu
  * 
  */
-public class FeedResult {
+public class FeedItem {
 	/***/
 	private String title;
 
 	/***/
-	private Date publishedDate;
+	private String content;
 
 	/***/
-	private List<FeedItem> feedItemList;
+	private String link;
+
+	/***/
+	private Date publishedDate;
 
 	public String getTitle() {
 		return title;
@@ -26,12 +28,20 @@ public class FeedResult {
 		this.title = title;
 	}
 
-	public List<FeedItem> getFeedItemList() {
-		return feedItemList;
+	public String getContent() {
+		return content;
 	}
 
-	public void setFeedItemList(List<FeedItem> feedItemList) {
-		this.feedItemList = feedItemList;
+	public void setContent(String content) {
+		this.content = content;
+	}
+
+	public String getLink() {
+		return link;
+	}
+
+	public void setLink(String link) {
+		this.link = link;
 	}
 
 	public Date getPublishedDate() {

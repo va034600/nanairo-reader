@@ -2,7 +2,7 @@ package com.gmail.va034600.nreader.ui.activity;
 
 import javax.inject.Inject;
 
-import com.gmail.va034600.nreader.business.service.RssService;
+import com.gmail.va034600.nreader.business.domain.service.RssService;
 import com.gmail.va034600.nreader.ui.NanairoApplication;
 
 import android.app.Activity;

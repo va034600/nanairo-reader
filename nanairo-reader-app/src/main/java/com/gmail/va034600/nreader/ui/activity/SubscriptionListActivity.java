@@ -25,8 +25,8 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.gmail.va034600.nreader.R;
-import com.gmail.va034600.nreader.business.bean.Subscription;
-import com.gmail.va034600.nreader.business.service.SubscriptionListManager;
+import com.gmail.va034600.nreader.business.domain.bean.Subscription;
+import com.gmail.va034600.nreader.business.domain.service.SubscriptionListManager;
 import com.gmail.va034600.nreader.ui.component.SubscriptionArrayAdapter;
 import com.gmail.va034600.nreader.ui.service.SampleService;
 

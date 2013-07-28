@@ -1,4 +1,4 @@
-package com.gmail.va034600.nreader.business.exception;
+package com.gmail.va034600.nreader.business.rss.exception;
 
 @SuppressWarnings("serial")
 public class RssParsingException extends Exception {

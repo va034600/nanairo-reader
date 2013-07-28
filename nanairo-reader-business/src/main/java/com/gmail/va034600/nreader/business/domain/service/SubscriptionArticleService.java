@@ -1,4 +1,4 @@
-package com.gmail.va034600.nreader.business.service;
+package com.gmail.va034600.nreader.business.domain.service;
 
 public interface SubscriptionArticleService {
 	void deleteTheOld(long subscriptionId, int count);

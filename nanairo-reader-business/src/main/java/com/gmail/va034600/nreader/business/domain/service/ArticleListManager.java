@@ -1,11 +1,11 @@
-package com.gmail.va034600.nreader.business.service;
+package com.gmail.va034600.nreader.business.domain.service;
 
 import static com.gmail.va034600.nreader.business.constant.NanairoBusinessConstant.MIDOKU_OFF;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import com.gmail.va034600.nreader.business.bean.Article;
+import com.gmail.va034600.nreader.business.domain.bean.Article;
 
 
 public class ArticleListManager {

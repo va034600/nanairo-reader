@@ -1,12 +1,12 @@
-package com.gmail.va034600.nreader.business.service;
+package com.gmail.va034600.nreader.business.rss.service;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import com.gmail.va034600.nreader.business.exception.RssParsingException;
-import com.gmail.va034600.nreader.business.vo.FeedItem;
-import com.gmail.va034600.nreader.business.vo.FeedResult;
+import com.gmail.va034600.nreader.business.rss.exception.RssParsingException;
+import com.gmail.va034600.nreader.business.rss.vo.FeedItem;
+import com.gmail.va034600.nreader.business.rss.vo.FeedResult;
 
 
 public class RssParsingServiceMock implements RssParsingService {

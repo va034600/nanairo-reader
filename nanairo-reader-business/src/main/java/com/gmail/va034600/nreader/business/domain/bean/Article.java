@@ -1,4 +1,4 @@
-package com.gmail.va034600.nreader.business.bean;
+package com.gmail.va034600.nreader.business.domain.bean;
 
 import java.io.Serializable;
 

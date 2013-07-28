@@ -1,6 +1,6 @@
-package com.gmail.va034600.nreader.business.service;
+package com.gmail.va034600.nreader.business.domain.service;
 
-import com.gmail.va034600.nreader.business.vo.FeedResult;
+import com.gmail.va034600.nreader.business.rss.vo.FeedResult;
 
 public interface ArticleService {
 	void loadArticleList(long subscriptionId);

@@ -1,11 +1,12 @@
-package com.gmail.va034600.nreader.business.service;
+package com.gmail.va034600.nreader.business.domain.service;
 
 import javax.inject.Inject;
 
 import com.gmail.va034600.nreader.business.NanairoContext;
-import com.gmail.va034600.nreader.business.bean.Subscription;
-import com.gmail.va034600.nreader.business.exception.RssParsingException;
-import com.gmail.va034600.nreader.business.vo.FeedResult;
+import com.gmail.va034600.nreader.business.domain.bean.Subscription;
+import com.gmail.va034600.nreader.business.rss.exception.RssParsingException;
+import com.gmail.va034600.nreader.business.rss.service.RssParsingService;
+import com.gmail.va034600.nreader.business.rss.vo.FeedResult;
 import com.gmail.va034600.nreader.data.entity.SubscriptionEntity;
 
 

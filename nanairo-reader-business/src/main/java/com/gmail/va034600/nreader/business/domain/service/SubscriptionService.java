@@ -1,9 +1,9 @@
-package com.gmail.va034600.nreader.business.service;
+package com.gmail.va034600.nreader.business.domain.service;
 
 import java.util.List;
 
-import com.gmail.va034600.nreader.business.bean.Subscription;
-import com.gmail.va034600.nreader.business.vo.FeedResult;
+import com.gmail.va034600.nreader.business.domain.bean.Subscription;
+import com.gmail.va034600.nreader.business.rss.vo.FeedResult;
 import com.gmail.va034600.nreader.data.entity.SubscriptionEntity;
 
 

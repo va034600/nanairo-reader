@@ -18,9 +18,9 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.gmail.va034600.nreader.R;
-import com.gmail.va034600.nreader.business.bean.Article;
-import com.gmail.va034600.nreader.business.bean.Subscription;
-import com.gmail.va034600.nreader.business.service.ArticleListManager;
+import com.gmail.va034600.nreader.business.domain.bean.Article;
+import com.gmail.va034600.nreader.business.domain.bean.Subscription;
+import com.gmail.va034600.nreader.business.domain.service.ArticleListManager;
 import com.gmail.va034600.nreader.ui.component.ArticleArrayAdapter;
 
 public class ArticleListActivity extends BaseActivity {

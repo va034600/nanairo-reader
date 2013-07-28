@@ -1,4 +1,4 @@
-package com.gmail.va034600.nreader.business.service;
+package com.gmail.va034600.nreader.business.rss.service;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -10,9 +10,9 @@ import java.util.List;
 
 import android.util.Log;
 
-import com.gmail.va034600.nreader.business.exception.RssParsingException;
-import com.gmail.va034600.nreader.business.vo.FeedItem;
-import com.gmail.va034600.nreader.business.vo.FeedResult;
+import com.gmail.va034600.nreader.business.rss.exception.RssParsingException;
+import com.gmail.va034600.nreader.business.rss.vo.FeedItem;
+import com.gmail.va034600.nreader.business.rss.vo.FeedResult;
 import com.google.code.rome.android.repackaged.com.sun.syndication.feed.synd.SyndContent;
 import com.google.code.rome.android.repackaged.com.sun.syndication.feed.synd.SyndEntry;
 import com.google.code.rome.android.repackaged.com.sun.syndication.feed.synd.SyndFeed;

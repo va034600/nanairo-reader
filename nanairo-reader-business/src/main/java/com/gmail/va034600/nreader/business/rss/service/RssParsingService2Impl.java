@@ -1,4 +1,4 @@
-package com.gmail.va034600.nreader.business.service;
+package com.gmail.va034600.nreader.business.rss.service;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -9,9 +9,9 @@ import org.horrabin.horrorss.RssFeed;
 import org.horrabin.horrorss.RssItemBean;
 import org.horrabin.horrorss.RssParser;
 
-import com.gmail.va034600.nreader.business.exception.RssParsingException;
-import com.gmail.va034600.nreader.business.vo.FeedItem;
-import com.gmail.va034600.nreader.business.vo.FeedResult;
+import com.gmail.va034600.nreader.business.rss.exception.RssParsingException;
+import com.gmail.va034600.nreader.business.rss.vo.FeedItem;
+import com.gmail.va034600.nreader.business.rss.vo.FeedResult;
 
 import android.util.Log;
 

@@ -1,4 +1,4 @@
-package com.gmail.va034600.nreader.business.service;
+package com.gmail.va034600.nreader.business.domain.service;
 
 import static com.gmail.va034600.nreader.business.constant.NanairoBusinessConstant.MIDOKU_OFF;
 import static com.gmail.va034600.nreader.business.constant.NanairoBusinessConstant.MIDOKU_ON;
@@ -7,10 +7,10 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import com.gmail.va034600.nreader.business.bean.Article;
+import com.gmail.va034600.nreader.business.domain.bean.Article;
+import com.gmail.va034600.nreader.business.rss.vo.FeedItem;
+import com.gmail.va034600.nreader.business.rss.vo.FeedResult;
 import com.gmail.va034600.nreader.business.util.NanairoDateUtils;
-import com.gmail.va034600.nreader.business.vo.FeedItem;
-import com.gmail.va034600.nreader.business.vo.FeedResult;
 import com.gmail.va034600.nreader.data.dao.ArticleDao;
 import com.gmail.va034600.nreader.data.entity.ArticleEntity;
 

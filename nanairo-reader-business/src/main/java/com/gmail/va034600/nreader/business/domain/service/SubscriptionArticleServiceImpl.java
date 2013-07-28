@@ -1,4 +1,4 @@
-package com.gmail.va034600.nreader.business.service;
+package com.gmail.va034600.nreader.business.domain.service;
 
 import java.util.List;
 

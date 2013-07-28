@@ -1,6 +1,6 @@
-package com.gmail.va034600.nreader.business.service;
+package com.gmail.va034600.nreader.business.domain.service;
 
-import com.gmail.va034600.nreader.business.bean.Subscription;
+import com.gmail.va034600.nreader.business.domain.bean.Subscription;
 
 public interface RssService {
 	void loadSubscriptionList();

@@ -10,7 +10,7 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.gmail.va034600.nreader.R;
-import com.gmail.va034600.nreader.business.bean.Subscription;
+import com.gmail.va034600.nreader.business.domain.bean.Subscription;
 
 public 	class SubscriptionArrayAdapter extends ArrayAdapter<Subscription> {
 	private LayoutInflater mInflater;

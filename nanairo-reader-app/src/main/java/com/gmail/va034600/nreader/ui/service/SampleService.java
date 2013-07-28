@@ -12,7 +12,7 @@ import android.os.IBinder;
 import android.widget.Toast;
 
 import com.gmail.va034600.nreader.R;
-import com.gmail.va034600.nreader.business.service.RssService;
+import com.gmail.va034600.nreader.business.domain.service.RssService;
 import com.gmail.va034600.nreader.ui.NanairoApplication;
 import com.gmail.va034600.nreader.ui.activity.SubscriptionListActivity;
 

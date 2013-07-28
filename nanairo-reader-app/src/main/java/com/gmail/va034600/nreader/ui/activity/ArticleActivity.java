@@ -7,7 +7,7 @@ import android.webkit.WebView;
 import android.widget.TextView;
 
 import com.gmail.va034600.nreader.R;
-import com.gmail.va034600.nreader.business.bean.Article;
+import com.gmail.va034600.nreader.business.domain.bean.Article;
 
 public class ArticleActivity extends BaseActivity {
 	@Override
