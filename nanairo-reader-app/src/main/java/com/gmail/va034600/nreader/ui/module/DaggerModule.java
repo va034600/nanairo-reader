@@ -31,7 +31,7 @@ import com.gmail.va034600.nreader.ui.service.SampleService;
 import dagger.Module;
 import dagger.Provides;
 
-@Module(injects = {
+@Module(library=true, injects = {
 //
 		//
 		SubscriptionListActivity.class,
