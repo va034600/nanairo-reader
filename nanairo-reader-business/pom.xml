@@ -28,44 +28,5 @@
 			<artifactId>javax.inject</artifactId>
 			<version>1</version>
 		</dependency>
-		<!-- android rome -->
-		<dependency>
-			<groupId>com.google.code.rome.android</groupId>
-			<artifactId>android-rome-feed-reader</artifactId>
-			<version>1.0.0</version>
-			<scope>system</scope>
-			<systemPath>${basedir}/libs/android-rome-feed-reader-1.0.0.jar</systemPath>
-		</dependency>
-		<dependency>
-			<groupId>jdom</groupId>
-			<artifactId>jdom</artifactId>
-			<version>1.1.1</version>
-			<scope>system</scope>
-			<systemPath>${basedir}/libs/jdom-1.1.1-android-fork.jar</systemPath>
-		</dependency>
-		<!-- horrorss -->
-		<dependency>
-			<groupId>org.horrabin</groupId>
-			<artifactId>horrorss</artifactId>
-			<version>2.2.0</version>
-			<scope>system</scope>
-			<systemPath>${basedir}/libs/horrorss-2.2.0.jar</systemPath>
-		</dependency>
-		<dependency>
-			<groupId>com.hp.hql</groupId>
-			<artifactId>sparta</artifactId>
-			<version>1.0</version>
-			<scope>system</scope>
-			<systemPath>${basedir}/libs/sparta.jar</systemPath>
-		</dependency>
 	</dependencies>
-	<build>
-		<finalName>${project.artifactId}</finalName>
-		<plugins>
-			<plugin>
-				<groupId>com.jayway.maven.plugins.android.generation2</groupId>
-				<artifactId>android-maven-plugin</artifactId>
-			</plugin>
-		</plugins>
-	</build>
 </project>

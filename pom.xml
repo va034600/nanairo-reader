@@ -15,6 +15,7 @@
 	<modules>
 		<module>nanairo-reader-app</module>
 		<module>nanairo-reader-business</module>
+		<module>nanairo-reader-parser</module>
 		<module>nanairo-reader-data</module>
 	</modules>
 

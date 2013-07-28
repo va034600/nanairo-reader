@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<parent>
+		<artifactId>nanairo-reader</artifactId>
+		<groupId>com.gmail.va034600.nreader</groupId>
+		<version>0.0.1-SNAPSHOT</version>
+	</parent>
+	<modelVersion>4.0.0</modelVersion>
+	<artifactId>nanairo-reader-parser</artifactId>
+	<packaging>jar</packaging>
+
+	<dependencies>
+		<!-- nanairo -->
+		<dependency>
+			<groupId>com.gmail.va034600.nreader</groupId>
+			<artifactId>nanairo-reader-business</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		<!-- android -->
+		<dependency>
+			<groupId>com.google.android</groupId>
+			<artifactId>android</artifactId>
+		</dependency>
+		<!-- inject -->
+		<dependency>
+			<groupId>javax.inject</groupId>
+			<artifactId>javax.inject</artifactId>
+			<version>1</version>
+		</dependency>
+		<!-- android rome -->
+		<dependency>
+			<groupId>com.google.code.rome.android</groupId>
+			<artifactId>android-rome-feed-reader</artifactId>
+			<version>1.0.0</version>
+			<scope>system</scope>
+			<systemPath>${basedir}/libs/android-rome-feed-reader-1.0.0.jar</systemPath>
+		</dependency>
+		<dependency>
+			<groupId>jdom</groupId>
+			<artifactId>jdom</artifactId>
+			<version>1.1.1</version>
+			<scope>system</scope>
+			<systemPath>${basedir}/libs/jdom-1.1.1-android-fork.jar</systemPath>
+		</dependency>
+		<!-- horrorss -->
+		<dependency>
+			<groupId>org.horrabin</groupId>
+			<artifactId>horrorss</artifactId>
+			<version>2.2.0</version>
+			<scope>system</scope>
+			<systemPath>${basedir}/libs/horrorss-2.2.0.jar</systemPath>
+		</dependency>
+		<dependency>
+			<groupId>com.hp.hql</groupId>
+			<artifactId>sparta</artifactId>
+			<version>1.0</version>
+			<scope>system</scope>
+			<systemPath>${basedir}/libs/sparta.jar</systemPath>
+		</dependency>
+	</dependencies>
+</project>
