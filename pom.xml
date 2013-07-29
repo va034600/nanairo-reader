@@ -17,6 +17,7 @@
 		<module>nanairo-reader-business</module>
 		<module>nanairo-reader-parser</module>
 		<module>nanairo-reader-data</module>
+		<module>nanairo-reader-data-otemoto</module>
 	</modules>
 
 	<dependencyManagement>

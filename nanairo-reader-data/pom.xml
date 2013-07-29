@@ -9,29 +9,4 @@
 	<modelVersion>4.0.0</modelVersion>
 	<artifactId>nanairo-reader-data</artifactId>
 	<packaging>jar</packaging>
-
-	<dependencies>
-		<!-- otemoto -->
-		<dependency>
-			<groupId>com.gmail.va034600.otemoto</groupId>
-			<artifactId>otemoto</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
-			<scope>system</scope>
-			<systemPath>${basedir}/libs/otemoto-0.0.1-SNAPSHOT.jar</systemPath>
-		</dependency>
-		<!-- android -->
-		<dependency>
-			<groupId>com.google.android</groupId>
-			<artifactId>android</artifactId>
-		</dependency>
-	</dependencies>
-	<build>
-		<finalName>${project.artifactId}</finalName>
-		<plugins>
-			<plugin>
-				<groupId>com.jayway.maven.plugins.android.generation2</groupId>
-				<artifactId>android-maven-plugin</artifactId>
-			</plugin>
-		</plugins>
-	</build>
 </project>
