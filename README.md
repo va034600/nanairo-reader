@@ -10,24 +10,24 @@ nanairo-reader
 #パッケージング
 
 ```.m2/settings.xml に以下を追加
-    <profiles>
-    		<profile>
-    		<id>sign</id>
-    		<properties>
-    			<keystore.path>/Users/test/nanairo.keystore</keystore.path>
-    			<keystore.store.password>password</keystore.store.password>
-    			<keystore.key.password>password</keystore.key.password>
-    			<keystore.alias>abcalias</keystore.alias>
-    		</properties>
-    		<activation>
-    			<activeByDefault>true</activeByDefault>
-    			<property>
-    				<name>performRelease</name>
-    				<value>true</value>
-    			</property>
-    		</activation>
-    	</profile>
-    </profiles>
+&lt;profiles>
+		&lt;profile>
+		&lt;id>sign&lt;/id>
+		&lt;properties>
+			&lt;keystore.path>/Users/test/nanairo.keystore&lt;/keystore.path>
+			&lt;keystore.store.password>password&lt;/keystore.store.password>
+			&lt;keystore.key.password>password&lt;/keystore.key.password>
+			&lt;keystore.alias>abcalias&lt;/keystore.alias>
+		&lt;/properties>
+		&lt;activation>
+			&lt;activeByDefault>true&lt;/activeByDefault>
+			&lt;property>
+				&lt;name>performRelease&lt;/name>
+				&lt;value>true&lt;/value>
+			&lt;/property>
+		&lt;/activation>
+	&lt;/profile>
+&lt;/profiles>
 ```
 
 #コマンド
