@@ -8,6 +8,7 @@ nanairo-reader
 		m2eclipse
 
 #パッケージング
+##設定
 .m2/settings.xml に以下を追加
 
 	<profiles>
@@ -29,7 +30,7 @@ nanairo-reader
 		</profile>
 	</profiles>
 
-#コマンド
+##コマンド
 	mvn -Psign clean package
 
 
