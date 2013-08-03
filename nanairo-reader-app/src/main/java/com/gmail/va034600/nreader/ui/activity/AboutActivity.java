@@ -16,6 +16,6 @@ public class AboutActivity extends BaseActivity {
 		setContentView(webView);
 
 		// WebView内に，アプリが保持するHTMLを表示
-		webView.loadUrl("file:///android_asset/about.html");
+		webView.loadUrl("file:///android_asset/html/about.html");
 	}
 }
