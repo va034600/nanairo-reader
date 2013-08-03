@@ -135,8 +135,7 @@ public class SubscriptionListActivity extends BaseActivity {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		super.onCreateOptionsMenu(menu);
-		MenuInflater inflater = getMenuInflater();
-		inflater.inflate(R.menu.subscription_list, menu);
+		getMenuInflater().inflate(R.menu.subscription_list, menu);
 		return true;
 	}
 
