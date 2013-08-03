@@ -22,6 +22,7 @@ import com.gmail.va034600.nreader.data.dao.SubscriptionArticleDaoImpl;
 import com.gmail.va034600.nreader.data.dao.SubscriptionDao;
 import com.gmail.va034600.nreader.data.dao.SubscriptionDaoImpl;
 import com.gmail.va034600.nreader.ui.NanairoApplication;
+import com.gmail.va034600.nreader.ui.activity.AboutActivity;
 import com.gmail.va034600.nreader.ui.activity.ArticleActivity;
 import com.gmail.va034600.nreader.ui.activity.ArticleListActivity;
 import com.gmail.va034600.nreader.ui.activity.SubscriptionEntryActivity;
@@ -41,6 +42,8 @@ import dagger.Provides;
 		ArticleActivity.class,
 		//
 		SubscriptionEntryActivity.class,
+		//
+		AboutActivity.class,
 		//
 		SampleService.class,
 		//

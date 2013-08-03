@@ -15,6 +15,8 @@ import android.content.IntentFilter;
 import android.os.Bundle;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -128,6 +130,25 @@ public class SubscriptionListActivity extends BaseActivity {
 		}
 
 		return true;
+	}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		super.onCreateOptionsMenu(menu);
+		MenuInflater inflater = getMenuInflater();
+		inflater.inflate(R.menu.subscription_list, menu);
+		return true;
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case R.id.menuitem1:
+			Intent intent = new Intent(SubscriptionListActivity.this, AboutActivity.class);
+			startActivity(intent);
+			return true;
+		}
+		return false;
 	}
 
 	@Override
