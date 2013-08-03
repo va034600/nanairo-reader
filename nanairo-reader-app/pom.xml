@@ -55,7 +55,14 @@
 			<version>2.0</version>
 		</dependency>
 	</dependencies>
+
 	<build>
+		<resources>
+			<resource>
+				<filtering>true</filtering>
+				<directory>assets/html</directory>
+			</resource>
+		</resources>
 		<plugins>
 			<plugin>
 				<groupId>com.jayway.maven.plugins.android.generation2</groupId>
@@ -113,6 +120,31 @@
 									<keypass>${keystore.key.password}</keypass>
 									<alias>${keystore.alias}</alias>
 								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+					<plugin>
+						<groupId>com.jayway.maven.plugins.android.generation2</groupId>
+						<artifactId>android-maven-plugin</artifactId>
+						<inherited>true</inherited>
+						<configuration>
+							<sign>
+								<debug>false</debug>
+							</sign>
+							<zipalign>
+								<verbose>true</verbose>
+								<skip>false</skip>
+								<inputApk>${project.build.directory}/${project.artifactId}-${project.version}.apk</inputApk>
+								<outputApk>${project.build.directory}/${project.artifactId}-${project.version}-aligned.apk</outputApk>
+							</zipalign>
+						</configuration>
+						<executions>
+							<execution>
+								<id>alignApk</id>
+								<goals>
+									<goal>zipalign</goal>
+								</goals>
+								<phase>package</phase>
 							</execution>
 						</executions>
 					</plugin>
