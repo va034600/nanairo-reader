@@ -8,7 +8,7 @@
 
     <uses-sdk
         android:minSdkVersion="10"
-        android:targetSdkVersion="18" />
+        android:targetSdkVersion="10" />
 
     <application
         android:name=".ui.NanairoApplication"
