@@ -2,7 +2,7 @@ language: java
 jdk: oraclejdk7
 env:
   matrix:
-    - ANDROID_SDKS=android-10           ANDROID_TARGET=android-10  ANDROID_ABI=armeabi
+    - ANDROID_SDKS=android-10,build-tools-18.0.0           ANDROID_TARGET=android-10  ANDROID_ABI=armeabi  ANDROID_BUILD_TOOLS_VERSION=18.0.0
     #- ANDROID_SDKS=sysimg-16            ANDROID_TARGET=android-16  ANDROID_ABI=armeabi-v7a
     #- ANDROID_SDKS=android-17,sysimg-17 ANDROID_TARGET=android-17  ANDROID_ABI=armeabi-v7a
     #- ANDROID_SDKS=android-18           ANDROID_TARGET=android-18  ANDROID_ABI=armeabi
@@ -21,4 +21,8 @@ before_install:
   #- android update sdk --filter platform-tools,android-16,extra-android-support,$ANDROID_SDKS --no-ui --force > /dev/null
 
   - echo -e "y\n" > accept.txt
-  - android update sdk --filter platform-tools,android-16,extra-android-support,$ANDROID_SDKS --no-ui --force < accept.txt
+  - android update sdk --filter platform-tools,extra-android-support,$ANDROID_SDKS --no-ui --force < accept.txt
+
+  - if [ ! -e ${ANDROID_HOME}/platform-tools/aapt ]; then ln -s ${ANDROID_HOME}/build-tools/$ANDROID_BUILD_TOOLS_VERSION/aapt ${ANDROID_HOME}/platform-tools/aapt; fi
+  - if [ ! -e ${ANDROID_HOME}/platform-tools/aidl ]; then ln -s ${ANDROID_HOME}/build-tools/$ANDROID_BUILD_TOOLS_VERSION/aidl ${ANDROID_HOME}/platform-tools/aidl; fi
+  
