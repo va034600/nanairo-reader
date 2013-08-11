@@ -13,7 +13,7 @@
 	</properties>
 
 	<modules>
-<!-- 		<module>nanairo-appcompat</module> -->
+		<module>nanairo-appcompat</module>
 		<module>nanairo-reader-app</module>
 		<module>nanairo-reader-business</module>
 		<module>nanairo-reader-parser</module>

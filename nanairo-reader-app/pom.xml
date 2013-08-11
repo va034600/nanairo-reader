@@ -16,12 +16,12 @@
 
 	<dependencies>
 		<!-- nanairo -->
-<!-- 		<dependency> -->
-<!-- 			<groupId>com.gmail.va034600.nreader</groupId> -->
-<!-- 			<artifactId>nanairo-appcompat</artifactId> -->
-<!-- 			<version>0.0.1-SNAPSHOT</version> -->
-<!-- 			<type>apklib</type> -->
-<!-- 		</dependency> -->
+		<dependency>
+			<groupId>com.gmail.va034600.nreader</groupId>
+			<artifactId>nanairo-appcompat</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+			<type>apklib</type>
+		</dependency>
 		<dependency>
 			<groupId>com.gmail.va034600.nreader</groupId>
 			<artifactId>nanairo-reader-business</artifactId>
