@@ -16,6 +16,12 @@
 
 	<dependencies>
 		<!-- nanairo -->
+<!-- 		<dependency> -->
+<!-- 			<groupId>com.gmail.va034600.nreader</groupId> -->
+<!-- 			<artifactId>nanairo-appcompat</artifactId> -->
+<!-- 			<version>0.0.1-SNAPSHOT</version> -->
+<!-- 			<type>apklib</type> -->
+<!-- 		</dependency> -->
 		<dependency>
 			<groupId>com.gmail.va034600.nreader</groupId>
 			<artifactId>nanairo-reader-business</artifactId>
@@ -71,7 +77,7 @@
 					<undeployBeforeDeploy>true</undeployBeforeDeploy>
 
 					<sdk>
-						<platform>10</platform>
+						<platform>18</platform>
 					</sdk>
 				</configuration>
 				<extensions>true</extensions>
