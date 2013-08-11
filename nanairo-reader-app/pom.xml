@@ -77,7 +77,7 @@
 					<undeployBeforeDeploy>true</undeployBeforeDeploy>
 
 					<sdk>
-						<platform>10</platform>
+						<platform>18</platform>
 					</sdk>
 				</configuration>
 				<extensions>true</extensions>
