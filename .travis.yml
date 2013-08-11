@@ -2,7 +2,7 @@ language: java
 jdk: oraclejdk7
 env:
   matrix:
-    - ANDROID_SDKS=android-10,build-tools-18.0.0           ANDROID_TARGET=android-10  ANDROID_ABI=armeabi  ANDROID_BUILD_TOOLS_VERSION=18.0.0
+    - ANDROID_SDKS=android-10,build-tools-18.0.1           ANDROID_TARGET=android-10  ANDROID_ABI=armeabi  ANDROID_BUILD_TOOLS_VERSION=18.0.1
     #- ANDROID_SDKS=sysimg-16            ANDROID_TARGET=android-16  ANDROID_ABI=armeabi-v7a
     #- ANDROID_SDKS=android-17,sysimg-17 ANDROID_TARGET=android-17  ANDROID_ABI=armeabi-v7a
     #- ANDROID_SDKS=android-18           ANDROID_TARGET=android-18  ANDROID_ABI=armeabi
