@@ -53,7 +53,7 @@ public class ArticleArrayAdapter extends ArrayAdapter<Article> {
 		if (NanairoBusinessConstant.MIDOKU_ON == midoku) {
 			return Color.RED;
 		} else {
-			return Color.WHITE;
+			return Color.BLACK;
 		}
 	}
 }
